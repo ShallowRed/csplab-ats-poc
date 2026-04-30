@@ -51,6 +51,77 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/offres/nouvelle',
+    component: () => import('@/pages/OffreFormPage.vue'),
+    props: true,
+    meta: {
+      title: 'Nouvelle offre',
+      breadcrumb: [
+        { label: 'Pilotage' },
+        { label: 'Mes offres', to: '/offres' },
+        { label: 'Nouvelle offre' },
+      ],
+      viewSwitcher: null,
+    },
+  },
+  {
+    path: '/offres/:id',
+    component: () => import('@/pages/OffreDetailPage.vue'),
+    props: true,
+    meta: {
+      title: 'Offre',
+      breadcrumb: (route) => {
+        const id = String(route.params.id)
+        let titre = id
+        try {
+          const active = getActivePinia()
+          if (active) {
+            const offresStore = useOffresStore(active)
+            const offre = offresStore.getById(id)
+            if (offre) titre = offre.titre
+          }
+        } catch {
+          // pinia not active
+        }
+        return [
+          { label: 'Pilotage' },
+          { label: 'Mes offres', to: '/offres' },
+          { label: titre },
+        ]
+      },
+      viewSwitcher: null,
+    },
+  },
+  {
+    path: '/offres/:id/edition',
+    component: () => import('@/pages/OffreFormPage.vue'),
+    props: true,
+    meta: {
+      title: 'Modifier l\'offre',
+      breadcrumb: (route) => {
+        const id = String(route.params.id)
+        let titre = id
+        try {
+          const active = getActivePinia()
+          if (active) {
+            const offresStore = useOffresStore(active)
+            const offre = offresStore.getById(id)
+            if (offre) titre = offre.titre
+          }
+        } catch {
+          // pinia not active
+        }
+        return [
+          { label: 'Pilotage' },
+          { label: 'Mes offres', to: '/offres' },
+          { label: titre, to: `/offres/${id}` },
+          { label: 'Modifier' },
+        ]
+      },
+      viewSwitcher: null,
+    },
+  },
+  {
     path: '/candidatures',
     component: () => import('@/pages/CandidaturesPage.vue'),
     meta: {

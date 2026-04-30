@@ -50,16 +50,35 @@ export function createOffre(
   id: string,
   pipelineId: string,
   servicesList: string[],
-  localisationsList: string[]
+  localisationsList: string[],
+  options: {
+    statut?: Offre['statut']
+    typeContrat?: Offre['typeContrat']
+    responsableId?: string
+    intervieweursDefautIds?: string[]
+    etapesIds?: string[]
+    descriptif?: string
+    corps?: string
+    grade?: string
+  } = {}
 ): Offre {
+  const service = fake.helpers.arrayElement(servicesList)
   return {
     id,
     titre: fake.person.jobTitle(),
-    service: fake.helpers.arrayElement(servicesList),
+    service,
+    direction: service,
     localisation: fake.helpers.arrayElement(localisationsList),
-    statut: 'ouverte',
+    statut: options.statut ?? 'ouverte',
     dateOuverture: fake.date.past({ years: 0.5 }).toISOString().split('T')[0],
     pipelineId,
+    etapesIds: options.etapesIds,
+    responsableId: options.responsableId,
+    intervieweursDefautIds: options.intervieweursDefautIds,
+    descriptif: options.descriptif,
+    typeContrat: options.typeContrat ?? 'contractuel',
+    corps: options.corps,
+    grade: options.grade,
   }
 }
 

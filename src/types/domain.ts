@@ -1,11 +1,29 @@
+export type OffreStatut = 'brouillon' | 'ouverte' | 'fermee' | 'archivee'
+
+export type TypeContrat = 'titulaire' | 'contractuel' | 'apprentissage' | 'stage'
+
 export type Offre = {
   id: string
   titre: string
   service: string
+  direction: string
   localisation: string
-  statut: 'ouverte' | 'fermee' | 'archivee'
+  statut: OffreStatut
   dateOuverture: string
+  dateFermeture?: string
   pipelineId: string
+  etapesIds?: string[]
+  responsableId?: string
+  intervieweursDefautIds?: string[]
+  descriptif?: string
+  typeContrat: TypeContrat
+  corps?: string
+  grade?: string
+}
+
+export type NouvelleOffre = Omit<Offre, 'id' | 'dateOuverture' | 'statut'> & {
+  statut?: OffreStatut
+  dateOuverture?: string
 }
 
 export type Etape = {

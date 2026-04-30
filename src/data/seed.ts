@@ -48,9 +48,36 @@ function generatePipeline(): { pipeline: Pipeline; etapes: Etape[] } {
 }
 
 function generateOffres(pipelineId: string): Offre[] {
-  return Array.from({ length: 5 }, (_, i) =>
-    createOffre(fake, `offre-${i + 1}`, pipelineId, services, localisations)
-  )
+  const managerIds = ['int-3', 'int-4', 'int-5', 'int-6']
+  const defaultPools = [
+    ['int-1', 'int-7'],
+    ['int-2', 'int-7'],
+    ['int-1', 'int-8'],
+    ['int-2', 'int-8'],
+    ['int-1', 'int-7', 'int-3'],
+  ]
+  const typesContrat: Offre['typeContrat'][] = ['contractuel', 'titulaire', 'contractuel', 'apprentissage', 'titulaire']
+  const descriptifs = [
+    'Au sein d\'une équipe pluridisciplinaire, vous contribuerez aux projets de transformation numérique du service.\n\nVous serez en lien direct avec les usagers et les agents publics pour identifier les besoins, proposer des solutions et accompagner leur mise en œuvre.',
+    'Le poste s\'inscrit dans une dynamique de modernisation de l\'administration. Vous interviendrez sur des dossiers stratégiques et opérationnels.\n\nUne expérience préalable dans le secteur public ou un fort intérêt pour les politiques publiques est souhaitée.',
+    'Vous rejoindrez une équipe agile et bienveillante, engagée dans la création de produits numériques utiles aux citoyens.\n\nLe poste offre une grande autonomie et la possibilité de prendre des responsabilités rapidement.',
+    'Mission orientée terrain : vous travaillerez en étroite collaboration avec les services déconcentrés et les opérateurs publics.\n\nDes déplacements ponctuels sont à prévoir. Le télétravail partiel est possible.',
+    'Poste exigeant et valorisant, au cœur des enjeux de souveraineté numérique de l\'État.\n\nVous serez amené·e à piloter des projets complexes et à coordonner plusieurs acteurs internes et externes.',
+  ]
+  return Array.from({ length: 5 }, (_, i) => {
+    const responsableId = managerIds[i % managerIds.length]
+    const defaultInts = defaultPools[i].filter(id => id !== responsableId)
+    const typeContrat = typesContrat[i]
+    return createOffre(fake, `offre-${i + 1}`, pipelineId, services, localisations, {
+      statut: i === 0 ? 'brouillon' : i === 4 ? 'fermee' : 'ouverte',
+      responsableId,
+      intervieweursDefautIds: defaultInts,
+      descriptif: descriptifs[i],
+      typeContrat,
+      corps: typeContrat === 'titulaire' ? ['Attaché', 'Inspecteur', 'Ingénieur', 'Administrateur'][i % 4] : undefined,
+      grade: typeContrat === 'titulaire' ? ['Classe normale', 'Hors classe', 'Principal'][i % 3] : undefined,
+    })
+  })
 }
 
 function generateCandidats(): Candidat[] {
@@ -58,6 +85,7 @@ function generateCandidats(): Candidat[] {
 }
 
 function generateCandidatures(offres: Offre[], candidats: Candidat[]): Candidature[] {
+  const offresActives = offres.filter(o => o.statut !== 'brouillon' && o.statut !== 'archivee')
   const distribution = [
     { etapeId: 'etape-1', count: 25 },
     { etapeId: 'etape-2', count: 15 },
@@ -77,7 +105,7 @@ function generateCandidatures(offres: Offre[], candidats: Candidat[]): Candidatu
       const candidature = createCandidature(
         fake,
         `candid-${candidatIndex + 1}`,
-        fake.helpers.arrayElement(offres).id,
+        fake.helpers.arrayElement(offresActives.length > 0 ? offresActives : offres).id,
         candidats[candidatIndex].id,
         etapeId,
         tags
