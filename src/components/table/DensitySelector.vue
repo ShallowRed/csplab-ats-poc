@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LayoutList } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -28,9 +28,9 @@ const options: Array<{ value: DensiteAffichage; label: string }> = [
         size="sm"
         aria-label="Densité d'affichage"
       >
-        <LayoutList
-          class="h-4 w-4"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:list-check"
+          :size="16"
         />
         {{ options.find(o => o.value === density.densite)?.label ?? 'Normal' }}
       </Button>

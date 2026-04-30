@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { X } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
@@ -34,7 +34,10 @@ defineProps<{
         :aria-label="`Retirer le filtre ${chip.label}`"
         @click.stop="chip.onRemove()"
       >
-        <X class="h-3.5 w-3.5" />
+        <RiIcon
+          name="ri:close-line"
+          :size="14"
+        />
       </Button>
     </Badge>
   </div>

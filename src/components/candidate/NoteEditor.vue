@@ -3,7 +3,7 @@ import { onBeforeUnmount, watch } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import { Bold, Italic, List, ListOrdered } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 
 const props = defineProps<{
@@ -62,9 +62,9 @@ onBeforeUnmount(() => {
         aria-label="Gras"
         @click="editor?.chain().focus().toggleBold().run()"
       >
-        <Bold
-          class="h-3.5 w-3.5"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:bold"
+          :size="14"
         />
       </Button>
       <Button
@@ -77,9 +77,9 @@ onBeforeUnmount(() => {
         aria-label="Italique"
         @click="editor?.chain().focus().toggleItalic().run()"
       >
-        <Italic
-          class="h-3.5 w-3.5"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:italic"
+          :size="14"
         />
       </Button>
       <Button
@@ -92,9 +92,9 @@ onBeforeUnmount(() => {
         aria-label="Liste à puces"
         @click="editor?.chain().focus().toggleBulletList().run()"
       >
-        <List
-          class="h-3.5 w-3.5"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:list-unordered"
+          :size="14"
         />
       </Button>
       <Button
@@ -107,9 +107,9 @@ onBeforeUnmount(() => {
         aria-label="Liste numérotée"
         @click="editor?.chain().focus().toggleOrderedList().run()"
       >
-        <ListOrdered
-          class="h-3.5 w-3.5"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:list-ordered"
+          :size="14"
         />
       </Button>
     </div>

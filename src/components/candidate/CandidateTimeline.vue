@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import {
-  ArrowRight,
-  MessageSquare,
-  Calendar,
-  ClipboardCheck,
-  Mail,
-  Tag,
-} from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import type { EvenementTimeline } from '@/types/domain'
 import { seed } from '@/data/seed'
 
@@ -23,7 +16,7 @@ const auteurById = new Map([
 type Config = {
   label: (e: EvenementTimeline) => string
   color: string
-  icon: unknown
+  icon: string
 }
 
 const etapesById = new Map(seed.etapes.map(e => [e.id, e.libelle]))
@@ -36,12 +29,12 @@ const configs: Record<EvenementTimeline['type'], Config> = {
       return from ? `Passage de ${from} → ${to}` : `Déplacé vers ${to}`
     },
     color: 'timeline-item--blue',
-    icon: ArrowRight,
+    icon: 'ri:arrow-right-line',
   },
   'note': {
     label: () => 'Note ajoutée',
     color: 'timeline-item--grey',
-    icon: MessageSquare,
+    icon: 'ri:chat-3-line',
   },
   'entretien-planifie': {
     label: (e) => {
@@ -49,7 +42,7 @@ const configs: Record<EvenementTimeline['type'], Config> = {
       return `Entretien ${types[e.donnees.type as string] ?? ''} planifié`
     },
     color: 'timeline-item--orange',
-    icon: Calendar,
+    icon: 'ri:calendar-line',
   },
   'evaluation-soumise': {
     label: (e) => {
@@ -57,17 +50,17 @@ const configs: Record<EvenementTimeline['type'], Config> = {
       return `Évaluation soumise — ${rec[e.donnees.recommandation as string] ?? ''}`
     },
     color: 'timeline-item--green',
-    icon: ClipboardCheck,
+    icon: 'ri:clipboard-line',
   },
   'email-envoye': {
     label: () => 'Email envoyé',
     color: 'timeline-item--grey',
-    icon: Mail,
+    icon: 'ri:mail-line',
   },
   'tag-ajoute': {
     label: (e) => `Tag ajouté : ${e.donnees.tag as string}`,
     color: 'timeline-item--grey',
-    icon: Tag,
+    icon: 'ri:price-tag-3-line',
   },
 }
 
@@ -107,9 +100,9 @@ const items = computed(() =>
         class="timeline-item__icon"
         aria-hidden="true"
       >
-        <component
-          :is="item.config.icon"
-          class="h-3 w-3"
+        <RiIcon
+          :name="item.config.icon"
+          :size="12"
         />
       </div>
 

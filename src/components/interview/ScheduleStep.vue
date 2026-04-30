@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 import { seed } from '@/data/seed'
 import type { Intervieweur } from '@/types/domain'
@@ -174,7 +174,7 @@ function formatSlotLabel(date: string, heure: string): string {
           aria-label="Semaine précédente"
           @click="weekOffset--"
         >
-          <ChevronLeft class="h-4 w-4" />
+          <RiIcon name="ri:arrow-left-s-line" :size="16" />
         </Button>
         <span class="schedule-step__week-label">{{ weekLabel }}</span>
         <Button
@@ -185,7 +185,7 @@ function formatSlotLabel(date: string, heure: string): string {
           aria-label="Semaine suivante"
           @click="weekOffset++"
         >
-          <ChevronRight class="h-4 w-4" />
+          <RiIcon name="ri:arrow-right-s-line" :size="16" />
         </Button>
       </div>
 

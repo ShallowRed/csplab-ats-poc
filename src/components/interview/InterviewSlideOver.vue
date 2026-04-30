@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { X, Check } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -219,9 +219,9 @@ const stepLabels: Record<Step, string> = {
           aria-label="Fermer"
           @click="interviewStore.fermer()"
         >
-          <X
-            class="h-4 w-4"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:close-line"
+            :size="16"
           />
         </Button>
       </div>
@@ -245,10 +245,10 @@ const stepLabels: Record<Step, string> = {
           @click="goTo(Number(s) as Step)"
         >
           <span class="slideover-step__number">
-            <Check
+            <RiIcon
               v-if="step > Number(s)"
-              class="h-3 w-3"
-              aria-hidden="true"
+              name="ri:check-line"
+              :size="12"
             />
             <span
               v-else

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  X, Maximize2, ChevronLeft, ChevronRight, ExternalLink,
-  ChevronDown,
-} from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -214,9 +211,10 @@ watch(isOpen, (val) => {
                   aria-hidden="true"
                 />
                 {{ data.etape.libelle }}
-                <ChevronDown
-                  class="h-3 w-3 ml-1"
-                  aria-hidden="true"
+                <RiIcon
+                  name="ri:arrow-down-s-line"
+                  :size="12"
+                  class="ml-1"
                 />
               </Button>
             </DropdownMenuTrigger>
@@ -242,9 +240,9 @@ watch(isOpen, (val) => {
             aria-label="Ouvrir en plein écran"
             @click="goFullPage"
           >
-            <ExternalLink
-              class="h-4 w-4"
-              aria-hidden="true"
+            <RiIcon
+              name="ri:external-link-line"
+              :size="16"
             />
           </Button>
           <Button
@@ -255,9 +253,9 @@ watch(isOpen, (val) => {
             :aria-label="drawer.pleinEcran ? 'Réduire' : 'Agrandir'"
             @click="drawer.togglePleinEcran()"
           >
-            <Maximize2
-              class="h-4 w-4"
-              aria-hidden="true"
+            <RiIcon
+              name="ri:fullscreen-line"
+              :size="16"
             />
           </Button>
           <Button
@@ -269,9 +267,9 @@ watch(isOpen, (val) => {
             autofocus
             @click="drawer.fermer()"
           >
-            <X
-              class="h-4 w-4"
-              aria-hidden="true"
+            <RiIcon
+              name="ri:close-line"
+              :size="16"
             />
           </Button>
         </div>
@@ -464,9 +462,9 @@ watch(isOpen, (val) => {
           aria-label="Candidature précédente (K)"
           @click="prev"
         >
-          <ChevronLeft
-            class="h-4 w-4"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:arrow-left-s-line"
+            :size="16"
           />
           Précédent
         </Button>
@@ -487,9 +485,9 @@ watch(isOpen, (val) => {
           @click="next"
         >
           Suivant
-          <ChevronRight
-            class="h-4 w-4"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:arrow-right-s-line"
+            :size="16"
           />
         </Button>
       </div>

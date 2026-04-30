@@ -1,16 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import {
-  Briefcase,
-  Calendar,
-  Kanban,
-  LayoutDashboard,
-  Settings,
-  Table,
-  UserCheck,
-  Users,
-} from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useOffresStore } from '@/stores/offres'
 
@@ -19,7 +10,7 @@ type NavItem = {
   label: string
   to: string
   activePath?: string
-  icon: unknown
+  icon: string
   activeMatch: 'exact' | 'prefix'
 }
 
@@ -41,14 +32,14 @@ const sections = computed<NavSection[]>(() => [
         key: 'dashboard',
         label: 'Tableau de bord',
         to: '/',
-        icon: LayoutDashboard,
+        icon: 'ri:dashboard-line',
         activeMatch: 'exact',
       },
       {
         key: 'offres',
         label: 'Mes offres',
         to: '/offres',
-        icon: Briefcase,
+        icon: 'ri:briefcase-line',
         activeMatch: 'prefix',
       },
     ],
@@ -60,7 +51,7 @@ const sections = computed<NavSection[]>(() => [
         key: 'candidatures',
         label: 'Toutes les candidatures',
         to: '/candidatures',
-        icon: Users,
+        icon: 'ri:group-line',
         activeMatch: 'prefix',
       },
       {
@@ -68,7 +59,7 @@ const sections = computed<NavSection[]>(() => [
         label: 'Pipeline (kanban)',
         to: `/pipeline/${firstOffreId.value}`,
         activePath: '/pipeline',
-        icon: Kanban,
+        icon: 'ri:layout-column-line',
         activeMatch: 'prefix',
       },
       {
@@ -76,7 +67,7 @@ const sections = computed<NavSection[]>(() => [
         label: 'Vue table',
         to: `/candidatures/table/${firstOffreId.value}`,
         activePath: '/candidatures/table',
-        icon: Table,
+        icon: 'ri:table-line',
         activeMatch: 'prefix',
       },
     ],
@@ -88,14 +79,14 @@ const sections = computed<NavSection[]>(() => [
         key: 'entretiens',
         label: 'Mes entretiens',
         to: '/entretiens',
-        icon: Calendar,
+        icon: 'ri:calendar-line',
         activeMatch: 'prefix',
       },
       {
         key: 'intervieweurs',
         label: 'Intervieweurs',
         to: '/intervieweurs',
-        icon: UserCheck,
+        icon: 'ri:user-follow-line',
         activeMatch: 'prefix',
       },
     ],
@@ -107,7 +98,7 @@ const sections = computed<NavSection[]>(() => [
         key: 'preferences',
         label: 'Préférences',
         to: '/preferences',
-        icon: Settings,
+        icon: 'ri:settings-3-line',
         activeMatch: 'prefix',
       },
     ],
@@ -163,9 +154,10 @@ function isItemActive(item: NavItem): boolean {
                 aria-hidden="true"
               />
               <component
-                :is="item.icon"
+                :is="RiIcon"
+                :name="item.icon"
+                :size="16"
                 class="csplab-sidebar__icon"
-                aria-hidden="true"
               />
               <span class="csplab-sidebar__label">
                 {{ item.label }}
@@ -197,9 +189,10 @@ function isItemActive(item: NavItem): boolean {
         class="csplab-sidebar__settings"
         aria-label="Paramètres"
       >
-        <Settings
+        <RiIcon
+          name="ri:settings-3-line"
+          :size="16"
           class="csplab-sidebar__icon"
-          aria-hidden="true"
         />
       </button>
     </div>

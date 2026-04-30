@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RadioGroupIndicator, RadioGroupItem, type RadioGroupItemProps } from 'radix-vue'
-import { Circle } from 'lucide-vue-next'
 import { type HTMLAttributes, computed } from 'vue'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<RadioGroupItemProps & { class?: HTMLAttributes['class'] }>()
@@ -23,7 +23,7 @@ const delegatedProps = computed(() => {
     "
   >
     <RadioGroupIndicator class="flex items-center justify-center">
-      <Circle class="h-3.5 w-3.5 fill-primary" />
+      <RiIcon name="ri:checkbox-blank-circle-fill" :size="14" class="text-primary" />
     </RadioGroupIndicator>
   </RadioGroupItem>
 </template>

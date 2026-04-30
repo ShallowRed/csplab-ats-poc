@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, type ComponentPublicInstance } from 'vue'
-import { MoreVertical, Plus } from 'lucide-vue-next'
 import { useDroppable } from '@dnd-kit/vue'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import type { Candidat, Candidature, Etape, Intervieweur } from '@/types/domain'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -78,9 +78,9 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
             class="h-8 w-8"
             aria-label="Actions de colonne"
           >
-            <MoreVertical
-              class="h-4 w-4"
-              aria-hidden="true"
+            <RiIcon
+              name="ri:more-2-fill"
+              :size="16"
             />
           </Button>
         </DropdownMenuTrigger>
@@ -125,9 +125,9 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
           class="w-full justify-start"
           disabled
         >
-          <Plus
-            class="h-4 w-4"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:add-line"
+            :size="16"
           />
           + Ajouter
         </Button>

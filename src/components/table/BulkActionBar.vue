@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { X, ChevronDown, Tag, Archive, Mail } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -83,9 +83,9 @@ const label = computed(() => {
         size="sm"
         @click="selection.clear()"
       >
-        <X
-          class="h-4 w-4"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:close-line"
+          :size="16"
         />
         Désélectionner
       </Button>
@@ -101,9 +101,10 @@ const label = computed(() => {
             :disabled="loading"
           >
             Changer l'étape
-            <ChevronDown
-              class="h-4 w-4 ml-1"
-              aria-hidden="true"
+            <RiIcon
+              name="ri:arrow-down-s-line"
+              :size="16"
+              class="ml-1"
             />
           </Button>
         </DropdownMenuTrigger>
@@ -125,9 +126,9 @@ const label = computed(() => {
         :disabled="loading"
         @click="emailTemplate"
       >
-        <Mail
-          class="h-4 w-4"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:mail-line"
+          :size="16"
         />
         Email
       </Button>
@@ -138,9 +139,9 @@ const label = computed(() => {
         size="sm"
         :disabled="loading"
       >
-        <Tag
-          class="h-4 w-4"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:price-tag-3-line"
+          :size="16"
         />
         Tag
       </Button>
@@ -152,9 +153,9 @@ const label = computed(() => {
         :disabled="loading"
         @click="archiver"
       >
-        <Archive
-          class="h-4 w-4"
-          aria-hidden="true"
+        <RiIcon
+          name="ri:archive-line"
+          :size="16"
         />
         Archiver
       </Button>

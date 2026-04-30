@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { SelectTrigger, type SelectTriggerProps } from 'radix-vue'
-import { ChevronDown } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<SelectTriggerProps & { class?: HTMLAttributes['class'] }>()
@@ -23,6 +23,6 @@ const delegatedProps = computed(() => {
     "
   >
     <slot />
-    <ChevronDown class="h-4 w-4 opacity-50" />
+    <RiIcon name="ri:arrow-down-s-line" :size="16" class="opacity-50" />
   </SelectTrigger>
 </template>

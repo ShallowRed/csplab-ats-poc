@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { UserCheck } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePageHeader } from '@/stores/pageHeader'
 
@@ -24,9 +24,10 @@ onMounted(() => {
 
     <Card>
       <CardHeader class="csplab-page__card-header">
-        <UserCheck
+        <RiIcon
+          name="ri:user-follow-line"
+          :size="24"
           class="csplab-page__icon"
-          aria-hidden="true"
         />
         <CardTitle>
           Section disponible en phase 2 — non incluse dans le POC

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { SelectItem, SelectItemIndicator, type SelectItemProps, SelectItemText } from 'radix-vue'
-import { Check } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>()
@@ -24,7 +24,7 @@ const delegatedProps = computed(() => {
   >
     <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectItemIndicator>
-        <Check class="h-4 w-4" />
+        <RiIcon name="ri:check-line" :size="16" />
       </SelectItemIndicator>
     </span>
     <SelectItemText>

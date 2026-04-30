@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { Bell, Plus } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from './index'
 
 const meta = {
@@ -113,12 +113,12 @@ export const States: Story = {
 
 export const WithIcon: Story = {
   render: () => ({
-    components: { Button, Plus },
+    components: { Button, RiIcon },
     template: `
       <div class="flex gap-3 items-center">
-        <Button variant="primary"><Plus class="h-4 w-4" aria-hidden="true" />Ajouter</Button>
-        <Button variant="secondary"><Plus class="h-4 w-4" aria-hidden="true" />Ajouter</Button>
-        <Button variant="tertiary"><Plus class="h-4 w-4" aria-hidden="true" />Ajouter</Button>
+        <Button variant="primary"><RiIcon name="ri:add-line" :size="16" />Ajouter</Button>
+        <Button variant="secondary"><RiIcon name="ri:add-line" :size="16" />Ajouter</Button>
+        <Button variant="tertiary"><RiIcon name="ri:add-line" :size="16" />Ajouter</Button>
       </div>
     `,
   }),
@@ -126,13 +126,13 @@ export const WithIcon: Story = {
 
 export const IconOnly: Story = {
   render: () => ({
-    components: { Button, Bell },
+    components: { Button, RiIcon },
     template: `
       <div class="flex gap-3 items-center">
-        <Button variant="primary" size="icon" aria-label="Notifications"><Bell class="h-4 w-4" aria-hidden="true" /></Button>
-        <Button variant="secondary" size="icon" aria-label="Notifications"><Bell class="h-4 w-4" aria-hidden="true" /></Button>
-        <Button variant="tertiary" size="icon" aria-label="Notifications"><Bell class="h-4 w-4" aria-hidden="true" /></Button>
-        <Button variant="tertiary-no-outline" size="icon" aria-label="Notifications"><Bell class="h-4 w-4" aria-hidden="true" /></Button>
+        <Button variant="primary" size="icon" aria-label="Notifications"><RiIcon name="ri:notification-3-line" :size="16" /></Button>
+        <Button variant="secondary" size="icon" aria-label="Notifications"><RiIcon name="ri:notification-3-line" :size="16" /></Button>
+        <Button variant="tertiary" size="icon" aria-label="Notifications"><RiIcon name="ri:notification-3-line" :size="16" /></Button>
+        <Button variant="tertiary-no-outline" size="icon" aria-label="Notifications"><RiIcon name="ri:notification-3-line" :size="16" /></Button>
       </div>
     `,
   }),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Table } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePageHeader } from '@/stores/pageHeader'
 
@@ -43,9 +43,10 @@ onBeforeUnmount(() => {
 
     <Card>
       <CardHeader class="csplab-page__card-header">
-        <Table
+        <RiIcon
+          name="ri:table-line"
+          :size="24"
           class="csplab-page__icon"
-          aria-hidden="true"
         />
         <CardTitle>
           Vue table — Lot 5

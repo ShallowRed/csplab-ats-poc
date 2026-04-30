@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef, type ComponentPublicInstance } from 'vue'
 import { useRouter } from 'vue-router'
-import { Calendar, ClipboardCheck, Eye } from 'lucide-vue-next'
 import { useSortable } from '@dnd-kit/vue/sortable'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -139,9 +139,9 @@ function stop(event: Event): void {
                 class="h-7 w-7"
                 @click.stop="interview.ouvrir(props.candidature.id)"
               >
-                <Calendar
-                  class="h-4 w-4"
-                  aria-hidden="true"
+                <RiIcon
+                  name="ri:calendar-line"
+                  :size="16"
                 />
               </Button>
             </TooltipTrigger>
@@ -156,9 +156,9 @@ function stop(event: Event): void {
                 class="h-7 w-7"
                 @click.stop="openEvaluation"
               >
-                <ClipboardCheck
-                  class="h-4 w-4"
-                  aria-hidden="true"
+                <RiIcon
+                  name="ri:clipboard-line"
+                  :size="16"
                 />
               </Button>
             </TooltipTrigger>
@@ -173,9 +173,9 @@ function stop(event: Event): void {
                 class="h-7 w-7"
                 @click="stop"
               >
-                <Eye
-                  class="h-4 w-4"
-                  aria-hidden="true"
+                <RiIcon
+                  name="ri:eye-line"
+                  :size="16"
                 />
               </Button>
             </TooltipTrigger>

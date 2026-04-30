@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { X, SlidersHorizontal } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -58,9 +58,9 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
           variant="tertiary"
           size="sm"
         >
-          <SlidersHorizontal
-            class="h-4 w-4"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:equalizer-line"
+            :size="16"
           />
           Filtres
           <Badge
@@ -169,9 +169,9 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
           :aria-label="`Supprimer le filtre ${chip.label}`"
           @click="chip.onRemove()"
         >
-          <X
-            class="h-3 w-3"
-            aria-hidden="true"
+          <RiIcon
+            name="ri:close-line"
+            :size="12"
           />
         </button>
       </Badge>

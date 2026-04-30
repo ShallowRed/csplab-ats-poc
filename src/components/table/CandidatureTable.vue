@@ -10,7 +10,7 @@ import {
   type ColumnFiltersState,
   type VisibilityState,
 } from '@tanstack/vue-table'
-import { ArrowUp, ArrowDown, ArrowUpDown, MoreHorizontal } from 'lucide-vue-next'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -254,20 +254,21 @@ defineExpose({ filteredCount: computed(() => filteredRows.value.length) })
               @click="toggleSort(col)"
             >
               <span>{{ { nom: 'Candidat', etape: 'Étape', date: 'Candidaté le', score: 'Score', assigne: 'Assigné à' }[col] }}</span>
-              <ArrowUp
+              <RiIcon
                 v-if="sortIcon(col) === 'asc'"
-                class="h-3 w-3"
-                aria-hidden="true"
+                name="ri:arrow-up-line"
+                :size="12"
               />
-              <ArrowDown
+              <RiIcon
                 v-else-if="sortIcon(col) === 'desc'"
-                class="h-3 w-3"
-                aria-hidden="true"
+                name="ri:arrow-down-line"
+                :size="12"
               />
-              <ArrowUpDown
+              <RiIcon
                 v-else
-                class="h-3 w-3 opacity-30"
-                aria-hidden="true"
+                name="ri:expand-up-down-line"
+                :size="12"
+                class="opacity-30"
               />
             </button>
           </th>
@@ -405,9 +406,9 @@ defineExpose({ filteredCount: computed(() => filteredRows.value.length) })
                   class="h-7 w-7"
                   :aria-label="`Actions pour ${row.original.candidat.prenom} ${row.original.candidat.nom}`"
                 >
-                  <MoreHorizontal
-                    class="h-4 w-4"
-                    aria-hidden="true"
+                  <RiIcon
+                    name="ri:more-fill"
+                    :size="16"
                   />
                 </Button>
               </DropdownMenuTrigger>
