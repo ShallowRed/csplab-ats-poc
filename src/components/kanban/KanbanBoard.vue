@@ -8,8 +8,8 @@ import type { Candidat, Candidature, Etape, Intervieweur, Offre } from '@/types/
 import { useCandidaturesStore } from '@/stores/candidatures'
 import { useOffresStore } from '@/stores/offres'
 import { useToastStore } from '@/stores/toast'
-import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { EmptyState } from '@/components/ui/empty-state'
 import KanbanColumn from './KanbanColumn.vue'
 import RefusalDropZone from './RefusalDropZone.vue'
 import RefusalReasonDialog from './RefusalReasonDialog.vue'
@@ -344,7 +344,7 @@ onMounted(async () => {
   }
 })
 
-const isInitialLoading = computed(() => etapesLoading.value || candidaturesStore.chargement)
+const isInitialLoading = computed(() => etapesLoading.value || candidaturesStore.isLoading)
 const isEmpty = computed(() => !isInitialLoading.value && candidaturesStore.candidatures.length === 0)
 </script>
 
@@ -385,11 +385,11 @@ const isEmpty = computed(() => !isInitialLoading.value && candidaturesStore.cand
       v-else-if="isEmpty"
       class="csplab-kanban__empty"
     >
-      <Card class="max-w-[520px] w-full">
-        <CardContent class="p-6 text-center text-muted-foreground">
-          Aucune candidature pour cette offre.
-        </CardContent>
-      </Card>
+      <EmptyState
+        icon="ri:inbox-line"
+        title="Aucune candidature pour cette offre"
+        size="md"
+      />
     </div>
 
     <DragDropProvider

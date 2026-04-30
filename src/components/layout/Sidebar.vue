@@ -29,17 +29,17 @@ const sections = computed<NavSection[]>(() => [
     label: 'Pilotage',
     items: [
       {
-        key: 'dashboard',
-        label: 'Tableau de bord',
-        to: '/',
-        icon: 'ri:dashboard-line',
-        activeMatch: 'exact',
-      },
-      {
         key: 'offres',
         label: 'Mes offres',
         to: '/offres',
         icon: 'ri:briefcase-line',
+        activeMatch: 'prefix',
+      },
+      {
+        key: 'dashboard',
+        label: 'Tableau de bord',
+        to: '/tableau-de-bord',
+        icon: 'ri:dashboard-line',
         activeMatch: 'prefix',
       },
     ],
@@ -56,7 +56,7 @@ const sections = computed<NavSection[]>(() => [
       },
       {
         key: 'pipeline',
-        label: 'Pipeline (kanban)',
+        label: 'Pipeline',
         to: `/pipeline/${firstOffreId.value}`,
         activePath: '/pipeline',
         icon: 'ri:layout-column-line',

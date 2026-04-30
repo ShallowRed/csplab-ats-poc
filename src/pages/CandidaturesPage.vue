@@ -62,7 +62,7 @@ onMounted(async () => {
     />
 
     <div
-      v-if="candidaturesStore.chargement"
+      v-if="candidaturesStore.isLoading"
       class="candidatures-page__skeleton"
     >
       <Skeleton

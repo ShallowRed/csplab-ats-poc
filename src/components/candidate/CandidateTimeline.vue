@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
+import { EmptyState } from '@/components/ui/empty-state'
 import type { EvenementTimeline } from '@/types/domain'
 import { seed } from '@/data/seed'
 
@@ -85,9 +86,13 @@ const items = computed(() =>
   >
     <li
       v-if="items.length === 0"
-      class="candidate-timeline__empty"
+      class="candidate-timeline__empty-item"
     >
-      Aucune activité enregistrée.
+      <EmptyState
+        icon="ri:time-line"
+        title="Aucune activité enregistrée"
+        size="sm"
+      />
     </li>
 
     <li
@@ -136,11 +141,8 @@ const items = computed(() =>
   gap: 0;
 }
 
-.candidate-timeline__empty {
-  color: var(--text-mention-grey);
-  font-size: var(--csplab-font-size-sm);
-  text-align: center;
-  padding: var(--csplab-space-6);
+.candidate-timeline__empty-item {
+  list-style: none;
 }
 
 .timeline-item {

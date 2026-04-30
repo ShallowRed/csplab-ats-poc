@@ -30,6 +30,10 @@ function getFirstOffreId(): string | null {
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
+    redirect: '/offres',
+  },
+  {
+    path: '/tableau-de-bord',
     component: () => import('@/pages/DashboardPage.vue'),
     meta: {
       title: 'Tableau de bord',

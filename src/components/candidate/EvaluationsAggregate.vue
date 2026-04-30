@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import type { Entretien, Evaluation } from '@/types/domain'
+import { EmptyState } from '@/components/ui/empty-state'
 import { seed } from '@/data/seed'
 
 const props = defineProps<{
@@ -61,12 +62,12 @@ const scoreAggrege = computed(() => {
 
 <template>
   <div class="eval-aggregate">
-    <div
+    <EmptyState
       v-if="rows.length === 0"
-      class="eval-aggregate__empty"
-    >
-      Aucune évaluation soumise.
-    </div>
+      icon="ri:check-double-line"
+      title="Aucune évaluation soumise"
+      size="sm"
+    />
 
     <template v-else>
       <div
@@ -132,13 +133,6 @@ const scoreAggrege = computed(() => {
 </template>
 
 <style scoped>
-.eval-aggregate__empty {
-  color: var(--text-mention-grey);
-  font-size: var(--csplab-font-size-sm);
-  text-align: center;
-  padding: var(--csplab-space-6);
-}
-
 .eval-aggregate__summary {
   display: flex;
   align-items: center;

@@ -6,7 +6,7 @@ import { useToastStore } from './toast'
 
 export const useCandidaturesStore = defineStore('candidatures', () => {
   const candidatures = ref<Candidature[]>([])
-  const chargement = ref(false)
+  const isLoading = ref(false)
   const erreur = ref<string | null>(null)
   const toast = useToastStore()
 
@@ -29,7 +29,7 @@ export const useCandidaturesStore = defineStore('candidatures', () => {
   })
 
   async function chargerCandidatures(offreId?: string) {
-    chargement.value = true
+    isLoading.value = true
     erreur.value = null
     try {
       const filtre = offreId ? { offreId, etapeIds: [], scoreMin: null, dateDebut: null, dateFin: null, intervieweurIds: [], recherche: '' } : undefined
@@ -38,7 +38,7 @@ export const useCandidaturesStore = defineStore('candidatures', () => {
       erreur.value = e instanceof Error ? e.message : 'Erreur de chargement'
       toast.error('Échec du chargement des candidatures')
     } finally {
-      chargement.value = false
+      isLoading.value = false
     }
   }
 
@@ -122,7 +122,7 @@ export const useCandidaturesStore = defineStore('candidatures', () => {
 
   return {
     candidatures,
-    chargement,
+    isLoading,
     erreur,
     parOffre,
     parEtape,

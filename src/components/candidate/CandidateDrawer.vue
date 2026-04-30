@@ -16,6 +16,7 @@ import {
 import CandidateTimeline from './CandidateTimeline.vue'
 import NoteEditor from './NoteEditor.vue'
 import EvaluationsAggregate from './EvaluationsAggregate.vue'
+import { EmptyState } from '@/components/ui/empty-state'
 import { useDrawerStore } from '@/stores/drawer'
 import { useCandidaturesStore } from '@/stores/candidatures'
 import { useToastStore } from '@/stores/toast'
@@ -445,9 +446,12 @@ watch(isOpen, (val) => {
             value="documents"
             class="candidate-drawer__tab-content"
           >
-            <div class="candidate-drawer__empty">
-              Aucun document — fonctionnalité phase 2.
-            </div>
+            <EmptyState
+              icon="ri:file-line"
+              title="Aucun document"
+              description="Fonctionnalité disponible en phase 2"
+              size="sm"
+            />
           </TabsContent>
         </Tabs>
       </div>
@@ -665,13 +669,6 @@ a.candidate-drawer__field-value {
 .candidate-drawer__note-actions {
   display: flex;
   justify-content: flex-end;
-}
-
-.candidate-drawer__empty {
-  text-align: center;
-  color: var(--text-mention-grey);
-  font-size: var(--csplab-font-size-sm);
-  padding: var(--csplab-space-8);
 }
 
 .candidate-drawer__footer {

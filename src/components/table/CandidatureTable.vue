@@ -21,6 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { EmptyState } from '@/components/ui/empty-state'
 import { useSelectionStore } from '@/stores/selection'
 import { useDrawerStore } from '@/stores/drawer'
 import { useDensityStore } from '@/stores/density'
@@ -283,7 +284,12 @@ defineExpose({ filteredCount: computed(() => filteredRows.value.length) })
             colspan="8"
             class="cand-table__empty"
           >
-            Aucune candidature ne correspond aux filtres.
+            <EmptyState
+              icon="ri:filter-off-line"
+              title="Aucune candidature ne correspond aux filtres"
+              description="Modifiez ou réinitialisez les filtres pour afficher des candidatures"
+              size="md"
+            />
           </td>
         </tr>
 
@@ -564,9 +570,7 @@ defineExpose({ filteredCount: computed(() => filteredRows.value.length) })
 }
 
 .cand-table__empty {
-  padding: var(--csplab-space-8);
-  text-align: center;
-  color: var(--text-mention-grey);
+  padding: 0;
 }
 
 /* Density variants */

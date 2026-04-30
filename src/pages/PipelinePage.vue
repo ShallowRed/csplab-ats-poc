@@ -69,7 +69,7 @@ watch(
         class="csplab-pipeline__table"
       >
         <div
-          v-if="candidaturesStore.chargement"
+          v-if="candidaturesStore.isLoading"
           class="csplab-pipeline__skeleton"
         >
           <Skeleton

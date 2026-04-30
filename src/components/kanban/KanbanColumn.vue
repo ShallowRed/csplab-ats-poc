@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { EmptyState } from '@/components/ui/empty-state'
 import KanbanCard from './KanbanCard.vue'
 
 const props = defineProps<{
@@ -95,12 +96,11 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
       class="csplab-kanban-column__body"
       :class="(isDropTarget || props.keyboardDropActive) ? 'csplab-kanban-column__body--drop' : undefined"
     >
-      <div
+      <EmptyState
         v-if="props.candidatures.length === 0"
-        class="csplab-kanban-column__empty"
-      >
-        Aucun candidat à cette étape
-      </div>
+        title="Aucun candidat à cette étape"
+        size="sm"
+      />
 
       <div
         v-else
@@ -189,15 +189,6 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
 
 .csplab-kanban-column__body--drop {
   border-color: var(--border-action-high-blue-france);
-}
-
-.csplab-kanban-column__empty {
-  height: 100%;
-  display: grid;
-  place-items: center;
-  color: var(--text-mention-grey);
-  font-size: var(--csplab-font-size-sm);
-  text-align: center;
 }
 
 .csplab-kanban-column__list {

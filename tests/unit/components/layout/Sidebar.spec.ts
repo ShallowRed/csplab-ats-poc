@@ -27,7 +27,7 @@ describe('Sidebar', () => {
     expect(wrapper.text()).toContain('Tableau de bord')
     expect(wrapper.text()).toContain('Mes offres')
     expect(wrapper.text()).toContain('Toutes les candidatures')
-    expect(wrapper.text()).toContain('Pipeline (kanban)')
+    expect(wrapper.text()).toContain('Pipeline')
     expect(wrapper.text()).toContain('Mes entretiens')
     expect(wrapper.text()).toContain('Intervieweurs')
     expect(wrapper.text()).toContain('Préférences')

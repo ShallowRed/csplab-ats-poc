@@ -24,7 +24,7 @@ describe('Candidatures Store', () => {
     await store.chargerCandidatures()
 
     expect(store.candidatures.length).toBeGreaterThan(0)
-    expect(store.chargement).toBe(false)
+    expect(store.isLoading).toBe(false)
     expect(store.erreur).toBe(null)
   })
 
