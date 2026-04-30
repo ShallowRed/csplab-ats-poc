@@ -8,5 +8,5 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div :class="cn('animate-pulse rounded-md bg-primary/10', props.class)" />
+  <div :class="cn('animate-pulse rounded-sm bg-primary/10', props.class)" />
 </template>

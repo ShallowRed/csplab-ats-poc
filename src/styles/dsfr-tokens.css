@@ -67,7 +67,10 @@
   --border-disabled-grey: #e5e5e5;
 
   /* Focus */
-  --focus-ring: 2px solid #0a76f6;
+  --csplab-focus-ring-color: #0a76f6;
+  --csplab-focus-ring-width: 2px;
+  --csplab-focus-ring-offset: 2px;
+  --focus-ring: var(--csplab-focus-ring-width) solid var(--csplab-focus-ring-color);
 
   /* Statuts métier CSPLab */
   --csplab-status-draft: #929292;

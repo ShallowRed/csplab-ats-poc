@@ -1,3 +1,12 @@
 {
-  "recommendations": ["Vue.volar"]
+  "recommendations": [
+    // Cross-editor config
+    "editorconfig.editorconfig",
+    // Node / npm
+    "christian-kohler.npm-intellisense",
+    // JavaScript
+    "dbaeumer.vscode-eslint",
+    // Vue.js
+    "vue.volar",
+  ]
 }

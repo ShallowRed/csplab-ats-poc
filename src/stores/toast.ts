@@ -7,9 +7,8 @@ type ToastOptions = {
 
 export const useToastStore = defineStore('toast', () => {
   function success(message: string, options?: ToastOptions) {
-    const duration = options?.undo ? 8000 : 5000
     sonnerToast.success(message, {
-      duration,
+      duration: 5000,
       action: options?.undo
         ? {
             label: 'Annuler',

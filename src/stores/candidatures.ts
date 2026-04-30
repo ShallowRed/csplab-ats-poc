@@ -42,9 +42,14 @@ export const useCandidaturesStore = defineStore('candidatures', () => {
     }
   }
 
-  async function changerEtape(candidatureId: string, etapeId: string, motif?: string) {
+  async function changerEtape(
+    candidatureId: string,
+    etapeId: string,
+    motif?: string,
+    options?: { toast?: boolean },
+  ): Promise<boolean> {
     const candidature = candidatures.value.find(c => c.id === candidatureId)
-    if (!candidature) return
+    if (!candidature) return false
 
     const ancienneEtapeId = candidature.etapeId
     candidature.etapeId = etapeId
@@ -52,15 +57,19 @@ export const useCandidaturesStore = defineStore('candidatures', () => {
 
     try {
       await mockApi.changerEtape(candidatureId, etapeId, motif)
-      toast.success('Étape modifiée', {
-        undo: async () => {
-          candidature.etapeId = ancienneEtapeId
-          await mockApi.changerEtape(candidatureId, ancienneEtapeId, 'Annulation')
-        }
-      })
+      if (options?.toast !== false) {
+        toast.success('Étape modifiée', {
+          undo: async () => {
+            candidature.etapeId = ancienneEtapeId
+            await mockApi.changerEtape(candidatureId, ancienneEtapeId, 'Annulation')
+          },
+        })
+      }
+      return true
     } catch {
       candidature.etapeId = ancienneEtapeId
       toast.error('Échec du changement d\'étape')
+      return false
     }
   }
 

@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Kanban } from 'lucide-vue-next'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePageHeader } from '@/stores/pageHeader'
+import { Button } from '@/components/ui/button'
+import FilterChips from '@/components/filters/FilterChips.vue'
+import KanbanBoard from '@/components/kanban/KanbanBoard.vue'
+import { useFiltersStore } from '@/stores/filters'
 
 const props = defineProps<{ offreId?: string }>()
 
 const route = useRoute()
 const router = useRouter()
 const pageHeader = usePageHeader()
+const filters = useFiltersStore()
 
 const offreId = computed(() => props.offreId ?? '')
 
@@ -27,6 +30,10 @@ watchEffect(() => {
       if (value === 'table' && offreId.value) router.push(`/candidatures/table/${offreId.value}`)
     },
   })
+
+  if (offreId.value) {
+    filters.setOffreId(offreId.value)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -35,58 +42,71 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="csplab-page">
-    <h1 class="csplab-page__title">
-      Pipeline — kanban
-    </h1>
+  <div class="csplab-pipeline">
+    <div class="csplab-pipeline__filters">
+      <div class="csplab-pipeline__chips">
+        <FilterChips :chips="filters.chipsActifs" />
+      </div>
 
-    <Card>
-      <CardHeader class="csplab-page__card-header">
-        <Kanban
-          class="csplab-page__icon"
-          aria-hidden="true"
-        />
-        <CardTitle>
-          Vue kanban — Lot 4
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p class="csplab-page__muted">
-          Placeholder : le kanban (colonnes, drag & drop) sera livré au Lot 4.
-        </p>
-      </CardContent>
-    </Card>
+      <div class="csplab-pipeline__actions">
+        <Button
+          type="button"
+          variant="outline"
+        >
+          Filtrer
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          @click="filters.reset()"
+        >
+          Réinitialiser
+        </Button>
+      </div>
+    </div>
+
+    <div class="csplab-pipeline__board">
+      <KanbanBoard
+        v-if="offreId"
+        :offre-id="offreId"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.csplab-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
+.csplab-pipeline {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.csplab-page__title {
-  font-size: var(--csplab-font-size-2xl);
-  font-weight: 700;
-  color: var(--text-title-grey);
-  margin: 0 0 var(--csplab-space-4);
+.csplab-pipeline__filters {
+  flex: 0 0 auto;
+  padding: var(--csplab-space-4);
+  border-bottom: 1px solid var(--border-default-grey);
+  background: var(--background-default-grey);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--csplab-space-4);
 }
 
-.csplab-page__card-header {
+.csplab-pipeline__chips {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.csplab-pipeline__actions {
   display: flex;
   align-items: center;
   gap: var(--csplab-space-2);
 }
 
-.csplab-page__icon {
-  width: 24px;
-  height: 24px;
-  color: var(--text-mention-grey);
-}
-
-.csplab-page__muted {
-  margin: 0;
-  color: var(--text-mention-grey);
+.csplab-pipeline__board {
+  flex: 1;
+  min-height: 0;
 }
 </style>
