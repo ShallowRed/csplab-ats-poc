@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import Sidebar from './Sidebar.vue'
 import HeaderContextual from './HeaderContextual.vue'
 import CandidateDrawer from '@/components/candidate/CandidateDrawer.vue'
+import InterviewSlideOver from '@/components/interview/InterviewSlideOver.vue'
 import { RouterView } from 'vue-router'
 import { useCandidaturesStore } from '@/stores/candidatures'
 
@@ -42,6 +43,7 @@ const orderedIds = computed(() => candidaturesStore.candidatures.map(c => c.id))
   </div>
 
   <CandidateDrawer :ordered-ids="orderedIds" />
+  <InterviewSlideOver />
 </template>
 
 <style scoped>

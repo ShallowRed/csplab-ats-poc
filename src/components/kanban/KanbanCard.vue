@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import type { Candidat, Candidature, Intervieweur } from '@/types/domain'
 import { useDrawerStore } from '@/stores/drawer'
 import { useSelectionStore } from '@/stores/selection'
+import { useInterviewStore } from '@/stores/interview'
 
 type DebugState = {
   hover?: boolean
@@ -55,6 +56,7 @@ const { isDragging } = useSortable({
 
 const drawer = useDrawerStore()
 const selection = useSelectionStore()
+const interview = useInterviewStore()
 
 const fullName = computed(() => `${props.candidat.prenom} ${props.candidat.nom}`)
 
@@ -123,7 +125,7 @@ function stop(event: Event): void {
                 variant="tertiary-no-outline"
                 size="icon"
                 class="h-7 w-7"
-                @click="stop"
+                @click.stop="interview.ouvrir(props.candidature.id)"
               >
                 <Calendar
                   class="h-4 w-4"
