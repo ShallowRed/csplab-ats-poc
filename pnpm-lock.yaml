@@ -11,6 +11,9 @@ importers:
       '@dnd-kit/vue':
         specifier: ^0.4.0
         version: 0.4.0(vue@3.5.33(typescript@6.0.3))
+      '@tanstack/vue-table':
+        specifier: ^8.21.3
+        version: 8.21.3(vue@3.5.33(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^12.2.0
         version: 12.8.2(typescript@6.0.3)
@@ -41,6 +44,9 @@ importers:
       vue-sonner:
         specifier: ^1.2.1
         version: 1.3.2
+      vue-virtual-scroller:
+        specifier: ^3.0.2
+        version: 3.0.2(vue@3.5.33(typescript@6.0.3))
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^3.2.3
@@ -1083,8 +1089,18 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
+  '@tanstack/table-core@8.21.3':
+    resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
+    engines: {node: '>=12'}
+
   '@tanstack/virtual-core@3.14.0':
     resolution: {integrity: sha512-JLANqGy/D6k4Ujmh8Tr25lGimuOXNiaVyXaCAZS0W+1390sADdGnyUdSWNIfd49gebtIxGMij4IktRVzrdr12Q==}
+
+  '@tanstack/vue-table@8.21.3':
+    resolution: {integrity: sha512-rusRyd77c5tDPloPskctMyPLFEQUeBzxdQ+2Eow4F7gDPlPOB1UnnhzfpdvqZ8ZyX2rRNGmqNnQWm87OI2OQPw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: '>=3.2'
 
   '@tanstack/vue-virtual@3.13.24':
     resolution: {integrity: sha512-A0k2qF0zFSUStXSZkGXABouXr2Tw2Ztl/cVIYG9qy84uR8W7UNjAcX3DvzBS3YnDcwvLxab8v7dbmYBZ39itDA==}
@@ -3007,6 +3023,11 @@ packages:
     peerDependencies:
       typescript: '>=5.0.0'
 
+  vue-virtual-scroller@3.0.2:
+    resolution: {integrity: sha512-zneKxsBecfFBpH2NAk8zF0IWBRSYRaXnXK/dPQ/AnXE9xlbRyW6sSO9EUb5L5cSFz2Dpfb2giN30/y+/Xvu5PQ==}
+    peerDependencies:
+      vue: ^3.3.0
+
   vue@3.5.33:
     resolution: {integrity: sha512-1AgChhx5w3ALgT4oK3acm2Es/7jyZhWSVUfs3rOBlGQC0rjEDkS7G4lWlJJGGNQD+BV3reCwbQrOe1mPNwKHBQ==}
     peerDependencies:
@@ -3865,7 +3886,14 @@ snapshots:
       tailwindcss: 4.2.4
       vite: 6.4.2(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)
 
+  '@tanstack/table-core@8.21.3': {}
+
   '@tanstack/virtual-core@3.14.0': {}
+
+  '@tanstack/vue-table@8.21.3(vue@3.5.33(typescript@6.0.3))':
+    dependencies:
+      '@tanstack/table-core': 8.21.3
+      vue: 3.5.33(typescript@6.0.3)
 
   '@tanstack/vue-virtual@3.13.24(vue@3.5.33(typescript@6.0.3))':
     dependencies:
@@ -5908,6 +5936,10 @@ snapshots:
       '@volar/typescript': 2.4.28
       '@vue/language-core': 3.2.7
       typescript: 6.0.3
+
+  vue-virtual-scroller@3.0.2(vue@3.5.33(typescript@6.0.3)):
+    dependencies:
+      vue: 3.5.33(typescript@6.0.3)
 
   vue@3.5.33(typescript@6.0.3):
     dependencies:

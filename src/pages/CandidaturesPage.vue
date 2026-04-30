@@ -1,74 +1,133 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { Users } from 'lucide-vue-next'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePageHeader } from '@/stores/pageHeader'
+import { useCandidaturesStore } from '@/stores/candidatures'
+import { useSelectionStore } from '@/stores/selection'
+import { useFiltersStore } from '@/stores/filters'
+import CandidatureTable from '@/components/table/CandidatureTable.vue'
+import FilterChips from '@/components/table/FilterChips.vue'
+import BulkActionBar from '@/components/table/BulkActionBar.vue'
+import DensitySelector from '@/components/table/DensitySelector.vue'
+import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const route = useRoute()
 const pageHeader = usePageHeader()
+const candidaturesStore = useCandidaturesStore()
+const selection = useSelectionStore()
+const filters = useFiltersStore()
 
-onMounted(() => {
+const tableRef = ref<InstanceType<typeof CandidatureTable> | null>(null)
+const totalFiltered = computed(() => tableRef.value?.filteredCount ?? candidaturesStore.candidatures.length)
+
+onMounted(async () => {
+  const offreId = typeof route.params.offreId === 'string' ? route.params.offreId : undefined
   const title = typeof route.meta.title === 'string' ? route.meta.title : 'Toutes les candidatures'
+
   pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([{ label: 'Candidatures' }, { label: title, to: '/candidatures' }])
+  pageHeader.setBreadcrumb([{ label: 'Candidatures' }, { label: title }])
   pageHeader.setViewSwitcher(null)
+
+  if (offreId) {
+    filters.setOffreId(offreId)
+    await candidaturesStore.chargerCandidatures(offreId)
+  } else {
+    filters.setOffreId(null)
+    await candidaturesStore.chargerCandidatures()
+  }
 })
 </script>
 
 <template>
-  <div class="csplab-page">
-    <h1 class="csplab-page__title">
-      Toutes les candidatures
-    </h1>
-
-    <Card>
-      <CardHeader class="csplab-page__card-header">
-        <Users
-          class="csplab-page__icon"
-          aria-hidden="true"
+  <div class="candidatures-page">
+    <div class="candidatures-page__toolbar">
+      <div class="candidatures-page__toolbar-left">
+        <FilterChips />
+        <Input
+          v-model="filters.filtre.recherche"
+          type="search"
+          placeholder="Rechercher un candidat…"
+          class="candidatures-page__search"
+          aria-label="Rechercher un candidat"
         />
-        <CardTitle>
-          Section disponible en phase 2 — non incluse dans le POC
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p class="csplab-page__muted">
-          La vue liste + filtres globaux sera consolidée en phase 2.
-        </p>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div class="candidatures-page__toolbar-right">
+        <span class="candidatures-page__count">
+          {{ totalFiltered }} résultat{{ totalFiltered !== 1 ? 's' : '' }}
+        </span>
+        <DensitySelector />
+      </div>
+    </div>
+
+    <BulkActionBar
+      v-if="selection.count > 0"
+      :total-filtered="totalFiltered"
+    />
+
+    <div
+      v-if="candidaturesStore.chargement"
+      class="candidatures-page__skeleton"
+    >
+      <Skeleton
+        v-for="i in 8"
+        :key="i"
+        class="h-12 w-full"
+      />
+    </div>
+
+    <CandidatureTable
+      v-else
+      ref="tableRef"
+      :candidatures="candidaturesStore.candidatures"
+    />
   </div>
 </template>
 
 <style scoped>
-.csplab-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
+.candidatures-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-4);
+  padding: var(--csplab-space-4);
+  height: 100%;
+  min-height: 0;
 }
 
-.csplab-page__title {
-  font-size: var(--csplab-font-size-2xl);
-  font-weight: 700;
-  color: var(--text-title-grey);
-  margin: 0 0 var(--csplab-space-4);
-}
-
-.csplab-page__card-header {
+.candidatures-page__toolbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--csplab-space-3);
+}
+
+.candidatures-page__toolbar-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: var(--csplab-space-2);
 }
 
-.csplab-page__icon {
-  width: 24px;
-  height: 24px;
+.candidatures-page__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--csplab-space-3);
+}
+
+.candidatures-page__search {
+  width: 240px;
+}
+
+.candidatures-page__count {
+  font-size: var(--csplab-font-size-sm);
   color: var(--text-mention-grey);
 }
 
-.csplab-page__muted {
-  margin: 0;
-  color: var(--text-mention-grey);
+.candidatures-page__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-2);
 }
 </style>
