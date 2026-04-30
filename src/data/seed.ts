@@ -20,8 +20,10 @@ import type {
   EvenementTimeline,
   Intervieweur,
   ModeleEvaluation,
+  MotifRefus,
   Offre,
   Pipeline,
+  Template,
 } from '../types/domain'
 
 const SEED = 42
@@ -277,6 +279,54 @@ function generateEvenements(
   return evenements.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 }
 
+function generateMotifsRefus(): MotifRefus[] {
+  return [
+    {
+      id: 'motif-1',
+      libelle: 'Profil non aligné avec le poste',
+      texteType: 'Bonjour {candidat.prenom},\n\nNous vous remercions pour votre candidature à {offre.intitule}. Après analyse, nous estimons que votre profil ne correspond pas aux compétences recherchées pour ce poste.\n\nNous vous souhaitons plein succès dans vos recherches.',
+    },
+    {
+      id: 'motif-2',
+      libelle: 'Manque d\'expérience requise',
+      texteType: 'Bonjour {candidat.prenom},\n\nMerci pour l\'intérêt porté à notre offre {offre.intitule}. Le niveau d\'expérience demandé pour ce poste ne correspond pas à votre parcours actuel.\n\nNous restons à votre écoute pour de futures opportunités.',
+    },
+    {
+      id: 'motif-3',
+      libelle: 'Niveau de rémunération non aligné',
+      texteType: 'Bonjour {candidat.prenom},\n\nMalgré l\'intérêt de votre profil pour {offre.intitule}, nous ne pouvons pas répondre favorablement à vos prétentions salariales.\n\nNous vous souhaitons bonne continuation.',
+    },
+    {
+      id: 'motif-4',
+      libelle: 'Indisponibilité',
+      texteType: 'Bonjour {candidat.prenom},\n\nVotre indisponibilité aux dates clés du processus de recrutement pour {offre.intitule} ne nous permet pas de poursuivre les échanges.\n\nNous restons attentifs à de futures collaborations.',
+    },
+  ]
+}
+
+function generateTemplates(): Template[] {
+  return [
+    {
+      id: 'tpl-1',
+      nom: 'Accusé de réception',
+      sujet: 'Votre candidature à {offre.intitule}',
+      corps: 'Bonjour {candidat.prenom} {candidat.nom},\n\nNous accusons réception de votre candidature pour le poste {offre.intitule}. Notre équipe va l\'étudier dans les meilleurs délais.\n\nVous serez recontacté·e prochainement.\n\nCordialement,\nL\'équipe recrutement',
+    },
+    {
+      id: 'tpl-2',
+      nom: 'Convocation entretien',
+      sujet: 'Invitation à un entretien — {offre.intitule}',
+      corps: 'Bonjour {candidat.prenom},\n\nVotre profil a retenu notre attention pour le poste {offre.intitule}. Nous souhaitons organiser un entretien.\n\nMerci de confirmer votre disponibilité via : {lien.entretien}\n\nÀ très bientôt,',
+    },
+    {
+      id: 'tpl-3',
+      nom: 'Proposition d\'embauche',
+      sujet: 'Proposition pour le poste {offre.intitule}',
+      corps: 'Bonjour {candidat.prenom},\n\nÀ l\'issue de notre processus, nous avons le plaisir de vous proposer le poste {offre.intitule}.\n\nVous trouverez les détails et les prochaines étapes en pièce jointe.\n\nDans l\'attente de votre retour,',
+    },
+  ]
+}
+
 function generateSeed() {
   const { pipeline, etapes } = generatePipeline()
   const offres = generateOffres(pipeline.id)
@@ -287,6 +337,8 @@ function generateSeed() {
   const entretiens = generateEntretiens(candidatures)
   const evaluations = generateEvaluations(entretiens, modelesEvaluation)
   const evenements = generateEvenements(candidatures, entretiens, evaluations)
+  const motifsRefus = generateMotifsRefus()
+  const templates = generateTemplates()
 
   return {
     pipelines: [pipeline],
@@ -299,6 +351,8 @@ function generateSeed() {
     entretiens,
     evaluations,
     evenements,
+    motifsRefus,
+    templates,
   }
 }
 

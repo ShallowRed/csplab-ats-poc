@@ -87,10 +87,17 @@ const sections = computed<NavSection[]>(() => [
     label: 'Paramètres',
     items: [
       {
+        key: 'parametres',
+        label: 'Paramètres',
+        to: '/parametres',
+        icon: 'ri:settings-3-line',
+        activeMatch: 'prefix',
+      },
+      {
         key: 'preferences',
         label: 'Préférences',
         to: '/preferences',
-        icon: 'ri:settings-3-line',
+        icon: 'ri:user-settings-line',
         activeMatch: 'prefix',
       },
     ],

@@ -218,6 +218,15 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/parametres',
+    component: () => import('@/pages/SettingsPage.vue'),
+    meta: {
+      title: 'Paramètres',
+      breadcrumb: [{ label: 'Accueil', to: '/' }, { label: 'Paramètres' }],
+      viewSwitcher: null,
+    },
+  },
+  {
     path: '/:catchAll(.*)',
     component: () => import('@/pages/NotFoundPage.vue'),
     meta: {

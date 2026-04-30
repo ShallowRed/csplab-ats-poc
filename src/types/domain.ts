@@ -34,6 +34,7 @@ export type Etape = {
   couleur: 'csplab-status-draft' | 'csplab-status-submitted' | 'csplab-status-screening' | 'csplab-status-interview' | 'csplab-status-offer' | 'csplab-status-rejected' | 'csplab-status-archived'
   estTerminale: boolean
   visibleKanban: boolean
+  code?: string
 }
 
 export type Candidat = {
@@ -65,6 +66,20 @@ export type Intervieweur = {
   email: string
   avatarUrl?: string
   role: 'rh' | 'manager' | 'expert'
+  equipe?: string
+}
+
+export type MotifRefus = {
+  id: string
+  libelle: string
+  texteType: string
+}
+
+export type Template = {
+  id: string
+  nom: string
+  sujet: string
+  corps: string
 }
 
 export type Entretien = {
