@@ -12,14 +12,14 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0(vue@3.5.33(typescript@6.0.3))
       '@schedule-x/calendar':
-        specifier: ^4.5.0
-        version: 4.5.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)(temporal-polyfill@0.3.0)
+        specifier: ^2.36.0
+        version: 2.36.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)
       '@schedule-x/theme-default':
-        specifier: ^4.5.0
-        version: 4.5.0
+        specifier: ^2.36.0
+        version: 2.36.0
       '@schedule-x/vue':
-        specifier: ^4.1.0
-        version: 4.1.0(@schedule-x/calendar@4.5.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)(temporal-polyfill@0.3.0))(@schedule-x/date-picker@4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(vue@3.5.33(typescript@6.0.3))
+        specifier: ^2.34.0
+        version: 2.34.0(@schedule-x/calendar@2.36.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(@schedule-x/date-picker@4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(vue@3.5.33(typescript@6.0.3))
       '@tanstack/vue-table':
         specifier: ^8.21.3
         version: 8.21.3(vue@3.5.33(typescript@6.0.3))
@@ -904,12 +904,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@schedule-x/calendar@4.5.0':
-    resolution: {integrity: sha512-KEDtvder+nOLuHv0yWKvNBbJBsvxfBdbL/p1ZwX86sjC63Mp6u3zZt73a6V1a+8DbFSnBQpa+cReIUO3zjf7/A==}
+  '@schedule-x/calendar@2.36.0':
+    resolution: {integrity: sha512-UqPMoxjok3SFNvgx1+PY5Whmoig+gU7sjy80z68A9QQ1FjIt1Q3ODPZKdA3G0spDss9lDtKilpO393vWpXJyfg==}
     peerDependencies:
       '@preact/signals': ^2.0.2
       preact: ^10.19.2
-      temporal-polyfill: 0.3.0
 
   '@schedule-x/date-picker@4.2.0':
     resolution: {integrity: sha512-qgGgG3+MccTCLd2Acw1hGpDWOrlsrFMvG75lScsNi6KHwVIHc2ckKUmV8rhe0ObvbHZqOKM6YQmAJO0lkMyW/w==}
@@ -917,14 +916,14 @@ packages:
       '@preact/signals': ^2.0.2
       preact: ^10.19.2
 
-  '@schedule-x/theme-default@4.5.0':
-    resolution: {integrity: sha512-T+OvouoRUPKpR2weZlt/7EvUEjMRmmQeZVfWMnKykoSWuZ2w+ypBncplXuf6mstio+ty2Mx3X/rThr1iJB7XXw==}
+  '@schedule-x/theme-default@2.36.0':
+    resolution: {integrity: sha512-jkN9/srYS54dO2h12iCvNMMrLEiod6BAoUc47KbOgGE66zyUU+kmQwUOYQ3A2LrKyIWjwtCp3Ewdd4h/HHvG9A==}
 
-  '@schedule-x/vue@4.1.0':
-    resolution: {integrity: sha512-PYOkl28cgJVS6RLidbE2cbrS8cns2xxnqjfdmWTUu6AW/UmB5JTcy1g5okeCMTVKAURpcB6rHj+LoXMdhbDhFQ==}
+  '@schedule-x/vue@2.34.0':
+    resolution: {integrity: sha512-E+imTtvDQsOld8jcyGH0rndCzMECuafb8v0DU+zXftlxEaGdFtFDuN84uAJs/PcEB1lIj/FXCm7Kqd8euEswSg==}
     peerDependencies:
-      '@schedule-x/calendar': ^3.4.0 || ^4.0.0
-      '@schedule-x/date-picker': 4.2.0
+      '@schedule-x/calendar': 2.36.0
+      '@schedule-x/date-picker': 2.36.0
       vue: ^3
 
   '@storybook/addon-a11y@8.6.18':
@@ -2976,12 +2975,6 @@ packages:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
 
-  temporal-polyfill@0.3.0:
-    resolution: {integrity: sha512-qNsTkX9K8hi+FHDfHmf22e/OGuXmfBm9RqNismxBrnSmZVJKegQ+HYYXT+R7Ha8F/YSm2Y34vmzD4cxMu2u95g==}
-
-  temporal-spec@0.3.0:
-    resolution: {integrity: sha512-n+noVpIqz4hYgFSMOSiINNOUOMFtV5cZQNCmmszA6GiVFVRt3G7AqVyhXjhCSmowvQn+NsGn+jMDMKJYHd3bSQ==}
-
   test-exclude@7.0.2:
     resolution: {integrity: sha512-u9E6A+ZDYdp7a4WnarkXPZOx8Ilz46+kby6p1yZ8zsGTz9gYa6FIS7lj2oezzNKmtdyyJNNmmXDppga5GB7kSw==}
     engines: {node: '>=18'}
@@ -3923,22 +3916,21 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.60.2':
     optional: true
 
-  '@schedule-x/calendar@4.5.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)(temporal-polyfill@0.3.0)':
+  '@schedule-x/calendar@2.36.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)':
     dependencies:
       '@preact/signals': 2.9.0(preact@10.29.1)
       preact: 10.29.1
-      temporal-polyfill: 0.3.0
 
   '@schedule-x/date-picker@4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)':
     dependencies:
       '@preact/signals': 2.9.0(preact@10.29.1)
       preact: 10.29.1
 
-  '@schedule-x/theme-default@4.5.0': {}
+  '@schedule-x/theme-default@2.36.0': {}
 
-  '@schedule-x/vue@4.1.0(@schedule-x/calendar@4.5.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)(temporal-polyfill@0.3.0))(@schedule-x/date-picker@4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(vue@3.5.33(typescript@6.0.3))':
+  '@schedule-x/vue@2.34.0(@schedule-x/calendar@2.36.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(@schedule-x/date-picker@4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1))(vue@3.5.33(typescript@6.0.3))':
     dependencies:
-      '@schedule-x/calendar': 4.5.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)(temporal-polyfill@0.3.0)
+      '@schedule-x/calendar': 2.36.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)
       '@schedule-x/date-picker': 4.2.0(@preact/signals@2.9.0(preact@10.29.1))(preact@10.29.1)
       vue: 3.5.33(typescript@6.0.3)
 
@@ -6205,12 +6197,6 @@ snapshots:
   tailwindcss@4.2.4: {}
 
   tapable@2.3.3: {}
-
-  temporal-polyfill@0.3.0:
-    dependencies:
-      temporal-spec: 0.3.0
-
-  temporal-spec@0.3.0: {}
 
   test-exclude@7.0.2:
     dependencies:

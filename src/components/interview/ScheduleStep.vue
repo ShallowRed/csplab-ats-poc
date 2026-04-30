@@ -3,6 +3,7 @@ import { computed, onMounted, ref, shallowRef } from 'vue'
 import { ScheduleXCalendar } from '@schedule-x/vue'
 import { createCalendar, createViewWeek } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
+import type { CalendarApp } from '@schedule-x/calendar'
 import { Button } from '@/components/ui/button'
 import { seed } from '@/data/seed'
 import type { Intervieweur } from '@/types/domain'
@@ -97,22 +98,21 @@ const slotsByDate = computed(() => {
 })
 
 const calendarEl = shallowRef<HTMLElement | null>(null)
+const calendar = shallowRef<CalendarApp | null>(null)
 
-const calendarEvents = computed(() =>
-  generateBusySlots().map((s, i) => ({ id: String(i), ...s })),
-)
+onMounted(() => {
+  const now = new Date()
+  const todayStr = now.toISOString().split('T')[0]
+  const events = generateBusySlots().map((s, i) => ({ id: String(i), ...s }))
 
-const now = new Date()
-const todayStr = now.toISOString().split('T')[0]
-
-const calendar = createCalendar({
-  views: [createViewWeek()],
-  defaultView: createViewWeek().name,
-  selectedDate: todayStr,
-  events: calendarEvents.value,
-  locale: 'fr-FR',
-  firstDayOfWeek: 1,
-  callbacks: {},
+  calendar.value = createCalendar({
+    views: [createViewWeek()],
+    defaultView: createViewWeek().name,
+    selectedDate: todayStr,
+    events,
+    locale: 'fr-FR',
+    firstDayOfWeek: 1,
+  })
 })
 
 function selectSlot(date: string, heure: string): void {
@@ -173,7 +173,10 @@ const groupedDates = computed(() => [...slotsByDate.value.entries()])
     </div>
 
     <div class="schedule-step__calendar-wrap">
-      <ScheduleXCalendar :calendar-app="calendar" />
+      <ScheduleXCalendar
+        v-if="calendar"
+        :calendar-app="calendar"
+      />
     </div>
 
     <div class="schedule-step__slots">
