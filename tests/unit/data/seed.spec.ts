@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { seed } from '../../../src/data/seed'
-import { createSeededFaker } from '../../../src/data/factories'
 
 describe('Seed Data', () => {
   it('should be deterministic', () => {

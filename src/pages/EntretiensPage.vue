@@ -1,0 +1,74 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { Calendar } from 'lucide-vue-next'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { usePageHeader } from '@/stores/pageHeader'
+
+const route = useRoute()
+const pageHeader = usePageHeader()
+
+onMounted(() => {
+  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Mes entretiens'
+  pageHeader.setTitle(title)
+  pageHeader.setBreadcrumb([{ label: 'Entretiens' }, { label: title, to: '/entretiens' }])
+  pageHeader.setViewSwitcher(null)
+})
+</script>
+
+<template>
+  <div class="csplab-page">
+    <h1 class="csplab-page__title">
+      Mes entretiens
+    </h1>
+
+    <Card>
+      <CardHeader class="csplab-page__card-header">
+        <Calendar
+          class="csplab-page__icon"
+          aria-hidden="true"
+        />
+        <CardTitle>
+          Section disponible en phase 2 — non incluse dans le POC
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p class="csplab-page__muted">
+          Le planning et les listes d'entretiens sont prévus hors POC.
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+</template>
+
+<style scoped>
+.csplab-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--csplab-space-6);
+}
+
+.csplab-page__title {
+  font-size: var(--csplab-font-size-2xl);
+  font-weight: 700;
+  color: var(--text-title-grey);
+  margin: 0 0 var(--csplab-space-4);
+}
+
+.csplab-page__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--csplab-space-2);
+}
+
+.csplab-page__icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-mention-grey);
+}
+
+.csplab-page__muted {
+  margin: 0;
+  color: var(--text-mention-grey);
+}
+</style>

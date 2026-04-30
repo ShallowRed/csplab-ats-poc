@@ -1,5 +1,13 @@
 import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3'
+import { createPinia } from 'pinia'
 import '../src/styles/index.css'
+import { storybookRouter } from '../src/router/storybook'
+
+setup((app) => {
+  app.use(createPinia())
+  app.use(storybookRouter)
+})
 
 const preview: Preview = {
   parameters: {

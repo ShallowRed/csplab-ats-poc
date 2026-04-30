@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
-import { TabsRoot, type TabsRootEmits, type TabsRootProps, useForwardPropsEmits } from 'radix-vue'
+import { TabsRoot, type TabsRootProps, useForwardPropsEmits } from 'radix-vue'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<TabsRootProps & { class?: HTMLAttributes['class'] }>()
-const emits = defineEmits<TabsRootEmits>()
+type TabsModelValue = string | number
+
+const emits = defineEmits<{
+  'update:modelValue': [payload: TabsModelValue]
+}>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props

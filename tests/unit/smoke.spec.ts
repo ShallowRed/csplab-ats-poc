@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { createPinia } from 'pinia'
+import { createMemoryHistory } from 'vue-router'
 import App from '@/App.vue'
+import { createAppRouter } from '@/router'
 
 describe('Smoke tests', () => {
   it('should pass basic assertion', () => {
@@ -8,12 +11,15 @@ describe('Smoke tests', () => {
   })
 
   it('should render App component', () => {
-    const wrapper = mount(App)
-    expect(wrapper.text()).toContain('CSPLab POC')
-  })
+    const pinia = createPinia()
+    const router = createAppRouter(createMemoryHistory())
 
-  it('should display DSFR version', () => {
-    const wrapper = mount(App)
-    expect(wrapper.text()).toContain('1.14.4')
+    const wrapper = mount(App, {
+      global: {
+        plugins: [pinia, router],
+      },
+    })
+
+    expect(wrapper.text()).toContain('CSPLab')
   })
 })

@@ -12,7 +12,7 @@ describe('Tabs', () => {
         return { activeTab }
       },
       template: `
-        <Tabs v-model="activeTab">
+        <Tabs v-model="activeTab" activation-mode="manual">
           <TabsList>
             <TabsTrigger value="tab1">Tab 1</TabsTrigger>
             <TabsTrigger value="tab2">Tab 2</TabsTrigger>
@@ -35,7 +35,7 @@ describe('Tabs', () => {
         return { activeTab }
       },
       template: `
-        <Tabs v-model="activeTab">
+        <Tabs v-model="activeTab" activation-mode="manual">
           <TabsList>
             <TabsTrigger value="tab1">Tab 1</TabsTrigger>
             <TabsTrigger value="tab2">Tab 2</TabsTrigger>
@@ -47,6 +47,7 @@ describe('Tabs', () => {
     })
 
     const triggers = wrapper.findAll('[role="tab"]')
+    await triggers[1].trigger('mousedown')
     await triggers[1].trigger('click')
     
     expect(activeTab.value).toBe('tab2')

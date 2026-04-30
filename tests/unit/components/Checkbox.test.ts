@@ -20,7 +20,7 @@ describe('Checkbox', () => {
       },
     })
 
-    await wrapper.trigger('click')
+    await wrapper.get('[role="checkbox"]').trigger('click')
     expect(checked.value).toBe(true)
   })
 
@@ -30,8 +30,8 @@ describe('Checkbox', () => {
         disabled: true,
       },
     })
-    
-    expect(wrapper.attributes('disabled')).toBeDefined()
+
+    expect(wrapper.get('[role="checkbox"]').attributes('disabled')).toBeDefined()
   })
 
   it('shows checked state visually', async () => {
@@ -40,7 +40,7 @@ describe('Checkbox', () => {
         checked: true,
       },
     })
-    
-    expect(wrapper.attributes('data-state')).toBe('checked')
+
+    expect(wrapper.get('[role="checkbox"]').attributes('data-state')).toBe('checked')
   })
 })
