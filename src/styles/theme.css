@@ -5,7 +5,36 @@
   /* Neutralize default Tailwind palette */
   --color-*: initial;
   
-  /* Map DSFR tokens to Tailwind semantic colors */
+  /* shadcn-vue semantic colors mapped to DSFR tokens */
+  --color-background: var(--background-default-grey);
+  --color-foreground: var(--text-default-grey);
+  
+  --color-primary: var(--background-action-high-blue-france);
+  --color-primary-foreground: var(--text-inverted-grey);
+  
+  --color-secondary: var(--background-alt-grey);
+  --color-secondary-foreground: var(--text-default-grey);
+  
+  --color-muted: var(--background-alt-grey);
+  --color-muted-foreground: var(--text-mention-grey);
+  
+  --color-accent: var(--background-alt-blue-france);
+  --color-accent-foreground: var(--text-action-high-blue-france);
+  
+  --color-destructive: var(--background-contrast-error);
+  --color-destructive-foreground: var(--text-default-error);
+  
+  --color-border: var(--border-default-grey);
+  --color-input: var(--border-default-grey);
+  --color-ring: #0a76f6;
+  
+  --color-card: var(--background-default-grey);
+  --color-card-foreground: var(--text-default-grey);
+  
+  --color-popover: var(--background-default-grey);
+  --color-popover-foreground: var(--text-default-grey);
+  
+  /* Map DSFR tokens to Tailwind semantic colors (legacy) */
   --color-action: var(--background-action-high-blue-france);
   --color-action-hover: var(--background-action-high-blue-france-hover);
   --color-action-active: var(--background-action-high-blue-france-active);
@@ -15,7 +44,6 @@
   --color-error: var(--background-contrast-error);
   --color-info: var(--background-contrast-info);
   
-  --color-muted: var(--text-mention-grey);
   --color-surface: var(--background-default-grey);
   --color-surface-alt: var(--background-alt-grey);
   --color-surface-contrast: var(--background-contrast-grey);
@@ -65,6 +93,7 @@
   --radius-md: var(--csplab-radius-md);
   --radius-lg: var(--csplab-radius-lg);
   --radius-full: var(--csplab-radius-full);
+  --radius: var(--csplab-radius-md);
   
   /* Shadows */
   --shadow-sm: var(--csplab-shadow-sm);
