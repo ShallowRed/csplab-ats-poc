@@ -140,7 +140,7 @@ function onAction(row: Row): void {
 </script>
 
 <template>
-  <div class="entretiens-page csplab-page-surface">
+  <div class="entretiens-page">
     <PageToolbar>
       <template #left>
         <label class="entretiens-page__filter-group">

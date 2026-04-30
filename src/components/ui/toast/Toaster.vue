@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { Toaster as Sonner } from 'vue-sonner'
+import { useThemeStore } from '@/stores/theme'
 
 defineProps<{
   class?: string
 }>()
+
+const themeStore = useThemeStore()
 </script>
 
 <template>
   <Sonner
-    theme="light"
+    :theme="themeStore.theme"
     position="bottom-right"
     :duration="5000"
     :toast-options="{

@@ -4,6 +4,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useOffresStore } from '@/stores/offres'
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher.vue'
 
 type NavItem = {
   key: string
@@ -169,17 +170,9 @@ function isItemActive(item: NavItem): boolean {
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        class="csplab-sidebar__settings"
-        aria-label="Paramètres"
-      >
-        <RiIcon
-          name="ri:settings-3-line"
-          :size="16"
-          class="csplab-sidebar__icon"
-        />
-      </button>
+      <div class="csplab-sidebar__actions">
+        <ThemeSwitcher />
+      </div>
     </div>
   </div>
 </template>
@@ -300,6 +293,12 @@ function isItemActive(item: NavItem): boolean {
   justify-content: space-between;
   padding: 0 var(--csplab-space-4);
   border-top: 1px solid var(--border-default-grey);
+}
+
+.csplab-sidebar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--csplab-space-1);
 }
 
 .csplab-sidebar__user {
