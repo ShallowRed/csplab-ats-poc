@@ -129,7 +129,7 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
             name="ri:add-line"
             :size="16"
           />
-          + Ajouter
+          Ajouter
         </Button>
       </div>
     </div>
