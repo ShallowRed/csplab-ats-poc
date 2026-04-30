@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, shallowRef } from 'vue'
-import { ScheduleXCalendar } from '@schedule-x/vue'
-import { createCalendar, createViewWeek } from '@schedule-x/calendar'
-import '@schedule-x/theme-default/dist/index.css'
-import type { CalendarApp } from '@schedule-x/calendar'
+import { computed, ref } from 'vue'
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { seed } from '@/data/seed'
 import type { Intervieweur } from '@/types/domain'
@@ -27,101 +24,79 @@ const selectedIntervieweurs = computed(() =>
   props.intervieweurIds.map(id => intervieweursById.get(id)).filter(Boolean) as Intervieweur[],
 )
 
-// Generate mock busy slots for selected interviewers
-function generateBusySlots(): Array<{ start: string; end: string; title: string }> {
-  const slots: Array<{ start: string; end: string; title: string }> = []
-  const now = new Date()
-  now.setHours(0, 0, 0, 0)
+// --- Week navigation ---
+const today = new Date()
+today.setHours(0, 0, 0, 0)
 
-  const today = new Date(now)
-  for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-    const day = new Date(today)
-    day.setDate(day.getDate() + dayOffset)
-    if (day.getDay() === 0 || day.getDay() === 6) continue
+const weekOffset = ref(0)
 
-    const dateStr = day.toISOString().split('T')[0]
+const weekStart = computed(() => {
+  const d = new Date(today)
+  d.setDate(d.getDate() + weekOffset.value * 7)
+  // Go to Monday
+  const day = d.getDay()
+  const diff = day === 0 ? -6 : 1 - day
+  d.setDate(d.getDate() + diff)
+  return d
+})
 
-    // Pseudo-random busy slots based on day/intervieweur
+const weekDays = computed(() => {
+  return Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(weekStart.value)
+    d.setDate(d.getDate() + i)
+    return d
+  })
+})
+
+const weekLabel = computed(() => {
+  const start = weekDays.value[0]
+  const end = weekDays.value[4]
+  const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
+  return `${fmt(start)} — ${fmt(end)}`
+})
+
+// --- Busy slots (pseudo-random per interviewer/day) ---
+function dateStr(d: Date): string {
+  return d.toISOString().split('T')[0]
+}
+
+const busyByDate = computed(() => {
+  const map = new Map<string, Set<number>>()
+  weekDays.value.forEach((day, dayIdx) => {
+    const key = dateStr(day)
+    const busy = new Set<number>()
     props.intervieweurIds.forEach((intId, i) => {
-      const seed1 = (dayOffset * 7 + i * 3) % 5
-      const hours = [9, 10, 14, 15, 16][seed1]
-      const intervieweur = intervieweursById.get(intId)
-      const label = intervieweur ? `${intervieweur.prenom} ${intervieweur.nom}` : 'Intervieweur'
-      slots.push({
-        start: `${dateStr} ${String(hours).padStart(2, '0')}:00`,
-        end: `${dateStr} ${String(hours + 1).padStart(2, '0')}:00`,
-        title: `Occupé — ${label}`,
-      })
+      const h = [9, 10, 14, 15, 16][(dayIdx * 7 + i * 3) % 5]
+      busy.add(h)
     })
-  }
-  return slots
-}
-
-// Free slots: 9h-12h and 14h-18h each weekday, minus busy slots
-function generateFreeSlots(): Array<{ date: string; heure: string; label: string }> {
-  const busy = generateBusySlots()
-  const busySet = new Set(busy.map(s => s.start))
-  const result: Array<{ date: string; heure: string; label: string }> = []
-
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-
-  for (let dayOffset = 1; dayOffset <= 10; dayOffset++) {
-    const day = new Date(today)
-    day.setDate(day.getDate() + dayOffset)
-    if (day.getDay() === 0 || day.getDay() === 6) continue
-
-    const dateStr = day.toISOString().split('T')[0]
-    const dayLabel = day.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
-
-    const hours = [9, 10, 11, 14, 15, 16, 17]
-    hours.forEach(h => {
-      const key = `${dateStr} ${String(h).padStart(2, '0')}:00`
-      if (!busySet.has(key)) {
-        result.push({ date: dateStr, heure: `${String(h).padStart(2, '0')}:00`, label: dayLabel })
-      }
-    })
-  }
-  return result
-}
-
-const freeSlots = computed(() => generateFreeSlots())
-
-const slotsByDate = computed(() => {
-  const map = new Map<string, typeof freeSlots.value>()
-  freeSlots.value.forEach(slot => {
-    const arr = map.get(slot.date) ?? []
-    arr.push(slot)
-    map.set(slot.date, arr)
+    map.set(key, busy)
   })
   return map
 })
 
-const calendarEl = shallowRef<HTMLElement | null>(null)
-const calendar = shallowRef<CalendarApp | null>(null)
+// --- Slots grid: 8h–18h ---
+const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
-onMounted(() => {
-  const now = new Date()
-  const todayStr = now.toISOString().split('T')[0]
-  const events = generateBusySlots().map((s, i) => ({ id: String(i), ...s }))
-
-  calendar.value = createCalendar({
-    views: [createViewWeek()],
-    defaultView: createViewWeek().name,
-    selectedDate: todayStr,
-    events,
-    locale: 'fr-FR',
-    firstDayOfWeek: 1,
-  })
-})
-
-function selectSlot(date: string, heure: string): void {
-  selectedSlot.value = { date, heure, duree: selectedDuree.value }
-  emit('update:modelValue', selectedSlot.value)
+function isBusy(date: Date, hour: number): boolean {
+  return busyByDate.value.get(dateStr(date))?.has(hour) ?? false
 }
 
-function isSelected(date: string, heure: string): boolean {
-  return selectedSlot.value?.date === date && selectedSlot.value?.heure === heure
+function isPast(date: Date, hour: number): boolean {
+  const slot = new Date(date)
+  slot.setHours(hour, 0, 0, 0)
+  return slot <= new Date()
+}
+
+function isSelected(date: Date, hour: number): boolean {
+  return selectedSlot.value?.date === dateStr(date) &&
+    selectedSlot.value?.heure === `${String(hour).padStart(2, '0')}:00`
+}
+
+function selectSlot(date: Date, hour: number): void {
+  if (isBusy(date, hour) || isPast(date, hour)) return
+  const heure = `${String(hour).padStart(2, '0')}:00`
+  selectedSlot.value = { date: dateStr(date), heure, duree: selectedDuree.value }
+  emit('update:modelValue', selectedSlot.value)
 }
 
 function onDureeChange(duree: number): void {
@@ -132,17 +107,27 @@ function onDureeChange(duree: number): void {
   }
 }
 
-const groupedDates = computed(() => [...slotsByDate.value.entries()])
+function dayLabel(d: Date): string {
+  return d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' })
+}
+
+function formatSlotLabel(date: string, heure: string): string {
+  const d = new Date(`${date}T00:00:00`)
+  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) + ' à ' + heure
+}
 </script>
 
 <template>
   <div class="schedule-step">
-    <div class="schedule-step__duree">
-      <span class="schedule-step__label">Durée</span>
+    <!-- Durée -->
+    <div class="schedule-step__section">
+      <div class="schedule-step__section-label">
+        Durée de l'entretien
+      </div>
       <div
         class="schedule-step__duree-options"
         role="radiogroup"
-        aria-label="Durée de l'entretien"
+        aria-label="Durée"
       >
         <Button
           v-for="d in dureeOptions"
@@ -158,61 +143,129 @@ const groupedDates = computed(() => [...slotsByDate.value.entries()])
       </div>
     </div>
 
+    <!-- Intervieweurs sélectionnés -->
     <div
       v-if="selectedIntervieweurs.length > 0"
-      class="schedule-step__intervieweurs"
+      class="schedule-step__section"
     >
-      <span class="schedule-step__label">Disponibilités de</span>
-      <span
-        v-for="int in selectedIntervieweurs"
-        :key="int.id"
-        class="schedule-step__int-name"
-      >
-        {{ int.prenom }} {{ int.nom }}
-      </span>
+      <div class="schedule-step__section-label">
+        Disponibilités consultées
+      </div>
+      <div class="schedule-step__int-pills">
+        <span
+          v-for="int in selectedIntervieweurs"
+          :key="int.id"
+          class="schedule-step__int-pill"
+        >
+          {{ int.prenom }} {{ int.nom }}
+        </span>
+      </div>
     </div>
 
-    <div class="schedule-step__calendar-wrap">
-      <ScheduleXCalendar
-        v-if="calendar"
-        :calendar-app="calendar"
-      />
-    </div>
-
-    <div class="schedule-step__slots">
-      <div class="schedule-step__slots-title">
-        Créneaux libres disponibles
+    <!-- Grille semaine -->
+    <div class="schedule-step__section">
+      <div class="schedule-step__week-nav">
+        <Button
+          type="button"
+          variant="tertiary"
+          size="icon"
+          class="h-7 w-7"
+          :disabled="weekOffset === 0"
+          aria-label="Semaine précédente"
+          @click="weekOffset--"
+        >
+          <ChevronLeft class="h-4 w-4" />
+        </Button>
+        <span class="schedule-step__week-label">{{ weekLabel }}</span>
+        <Button
+          type="button"
+          variant="tertiary"
+          size="icon"
+          class="h-7 w-7"
+          aria-label="Semaine suivante"
+          @click="weekOffset++"
+        >
+          <ChevronRight class="h-4 w-4" />
+        </Button>
       </div>
 
       <div
-        v-if="groupedDates.length === 0"
-        class="schedule-step__no-slots"
+        class="schedule-step__grid"
+        role="grid"
+        :aria-label="`Grille de créneaux — semaine du ${weekLabel}`"
       >
-        Aucun créneau disponible dans les 2 prochaines semaines.
-      </div>
-
-      <div
-        v-for="[date, slots] in groupedDates.slice(0, 5)"
-        :key="date"
-        class="schedule-step__day-group"
-      >
-        <div class="schedule-step__day-label">
-          {{ slots[0].label }}
+        <!-- En-tête jours -->
+        <div
+          class="schedule-step__grid-corner"
+          role="presentation"
+        />
+        <div
+          v-for="day in weekDays"
+          :key="dateStr(day)"
+          class="schedule-step__grid-day-header"
+          role="columnheader"
+        >
+          {{ dayLabel(day) }}
         </div>
-        <div class="schedule-step__day-slots">
-          <Button
-            v-for="slot in slots"
-            :key="`${slot.date}-${slot.heure}`"
-            type="button"
-            :variant="isSelected(slot.date, slot.heure) ? 'primary' : 'tertiary'"
-            size="sm"
-            :aria-pressed="isSelected(slot.date, slot.heure)"
-            @click="selectSlot(slot.date, slot.heure)"
+
+        <!-- Lignes heures -->
+        <template
+          v-for="hour in hours"
+          :key="hour"
+        >
+          <div
+            class="schedule-step__grid-hour"
+            role="rowheader"
+            :aria-label="`${hour}h`"
           >
-            {{ slot.heure }}
-          </Button>
+            {{ hour }}h
+          </div>
+          <button
+            v-for="day in weekDays"
+            :key="`${dateStr(day)}-${hour}`"
+            type="button"
+            class="schedule-step__slot"
+            :class="{
+              'schedule-step__slot--busy': isBusy(day, hour),
+              'schedule-step__slot--past': isPast(day, hour),
+              'schedule-step__slot--selected': isSelected(day, hour),
+              'schedule-step__slot--free': !isBusy(day, hour) && !isPast(day, hour),
+            }"
+            :disabled="isBusy(day, hour) || isPast(day, hour)"
+            :aria-label="`${dayLabel(day)} ${hour}h — ${isBusy(day, hour) ? 'occupé' : isPast(day, hour) ? 'passé' : 'disponible'}`"
+            :aria-pressed="isSelected(day, hour)"
+            role="gridcell"
+            @click="selectSlot(day, hour)"
+          />
+        </template>
+      </div>
+
+      <!-- Légende -->
+      <div class="schedule-step__legend">
+        <div class="schedule-step__legend-item">
+          <div class="schedule-step__legend-dot schedule-step__legend-dot--free" />
+          <span>Disponible</span>
+        </div>
+        <div class="schedule-step__legend-item">
+          <div class="schedule-step__legend-dot schedule-step__legend-dot--busy" />
+          <span>Occupé</span>
+        </div>
+        <div class="schedule-step__legend-item">
+          <div class="schedule-step__legend-dot schedule-step__legend-dot--selected" />
+          <span>Sélectionné</span>
         </div>
       </div>
+    </div>
+
+    <!-- Créneau sélectionné -->
+    <div
+      v-if="selectedSlot"
+      class="schedule-step__selected-summary"
+      role="status"
+      aria-live="polite"
+    >
+      ✓ {{ formatSlotLabel(selectedSlot.date, selectedSlot.heure) }}
+      ({{ selectedSlot.duree }} min)
     </div>
   </div>
 </template>
@@ -224,17 +277,16 @@ const groupedDates = computed(() => [...slotsByDate.value.entries()])
   gap: var(--csplab-space-5);
 }
 
-.schedule-step__label {
+.schedule-step__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-2);
+}
+
+.schedule-step__section-label {
   font-size: var(--csplab-font-size-sm);
   font-weight: 600;
   color: var(--text-mention-grey);
-  margin-bottom: var(--csplab-space-2);
-  display: block;
-}
-
-.schedule-step__duree {
-  display: flex;
-  flex-direction: column;
 }
 
 .schedule-step__duree-options {
@@ -243,68 +295,133 @@ const groupedDates = computed(() => [...slotsByDate.value.entries()])
   gap: var(--csplab-space-2);
 }
 
-.schedule-step__intervieweurs {
+.schedule-step__int-pills {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: var(--csplab-space-2);
-  font-size: var(--csplab-font-size-sm);
 }
 
-.schedule-step__int-name {
+.schedule-step__int-pill {
+  font-size: var(--csplab-font-size-xs);
   font-weight: 500;
-  color: var(--text-default-grey);
   background: var(--background-alt-grey);
   border-radius: var(--csplab-radius-sm);
   padding: 2px var(--csplab-space-2);
 }
 
-.schedule-step__calendar-wrap {
-  border: 1px solid var(--border-default-grey);
-  border-radius: var(--csplab-radius-md);
-  overflow: hidden;
-  height: 340px;
-}
-
-.schedule-step__calendar-wrap :deep(.sx__calendar) {
-  height: 100%;
-}
-
-.schedule-step__slots {
+.schedule-step__week-nav {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--csplab-space-3);
 }
 
-.schedule-step__slots-title {
+.schedule-step__week-label {
+  flex: 1;
+  text-align: center;
   font-size: var(--csplab-font-size-sm);
   font-weight: 600;
-  color: var(--text-mention-grey);
+  color: var(--text-default-grey);
 }
 
-.schedule-step__no-slots {
-  font-size: var(--csplab-font-size-sm);
-  color: var(--text-mention-grey);
+/* Grid layout: 1 col (hours) + 5 cols (days) */
+.schedule-step__grid {
+  display: grid;
+  grid-template-columns: 36px repeat(5, 1fr);
+  gap: 2px;
+  border: 1px solid var(--border-default-grey);
+  border-radius: var(--csplab-radius-md);
+  overflow: hidden;
+  background: var(--border-default-grey);
+}
+
+.schedule-step__grid-corner {
+  background: var(--background-alt-grey);
+}
+
+.schedule-step__grid-day-header {
+  background: var(--background-alt-grey);
   text-align: center;
-  padding: var(--csplab-space-4);
+  font-size: var(--csplab-font-size-xs);
+  font-weight: 600;
+  color: var(--text-mention-grey);
+  padding: var(--csplab-space-2) 0;
 }
 
-.schedule-step__day-group {
+.schedule-step__grid-hour {
+  background: var(--background-alt-grey);
+  font-size: 10px;
+  color: var(--text-mention-grey);
   display: flex;
-  flex-direction: column;
-  gap: var(--csplab-space-2);
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
 }
 
-.schedule-step__day-label {
+.schedule-step__slot {
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  transition: background 80ms ease;
+}
+
+.schedule-step__slot--free {
+  background: var(--background-default-grey);
+}
+
+.schedule-step__slot--free:hover {
+  background: var(--background-contrast-blue-france);
+}
+
+.schedule-step__slot--busy {
+  background: var(--background-contrast-error);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.schedule-step__slot--past {
+  background: var(--background-alt-grey);
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.schedule-step__slot--selected {
+  background: var(--background-action-high-blue-france) !important;
+}
+
+.schedule-step__legend {
+  display: flex;
+  gap: var(--csplab-space-4);
+  font-size: var(--csplab-font-size-xs);
+  color: var(--text-mention-grey);
+}
+
+.schedule-step__legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--csplab-space-1);
+}
+
+.schedule-step__legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.schedule-step__legend-dot--free { background: var(--background-default-grey); border: 1px solid var(--border-default-grey); }
+.schedule-step__legend-dot--busy { background: var(--background-contrast-error); }
+.schedule-step__legend-dot--selected { background: var(--background-action-high-blue-france); }
+
+.schedule-step__selected-summary {
+  padding: var(--csplab-space-3);
+  background: var(--background-contrast-blue-france);
+  border: 1px solid var(--border-action-high-blue-france);
+  border-radius: var(--csplab-radius-md);
   font-size: var(--csplab-font-size-sm);
   font-weight: 500;
-  color: var(--text-default-grey);
-  text-transform: capitalize;
+  color: var(--text-action-high-blue-france);
 }
 
-.schedule-step__day-slots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--csplab-space-2);
+@media (prefers-reduced-motion: reduce) {
+  .schedule-step__slot { transition: none; }
 }
 </style>
