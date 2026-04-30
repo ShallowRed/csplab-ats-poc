@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { EmptyState } from '@/components/ui/empty-state'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Label } from '@/components/ui/label'
 import {
@@ -240,20 +240,7 @@ function roleLabel(role: Intervieweur['role']): string {
       :model-value="activeTab"
       @update:model-value="(v) => (activeTab = v as TabKey)"
     >
-      <TabsList variant="pill" class="csplab-settings__tablist">
-        <TabsTrigger value="etapes" variant="pill">
-          Étapes du pipeline
-        </TabsTrigger>
-        <TabsTrigger value="motifs" variant="pill">
-          Motifs de refus
-        </TabsTrigger>
-        <TabsTrigger value="templates" variant="pill">
-          Templates email
-        </TabsTrigger>
-        <TabsTrigger value="intervieweurs" variant="pill">
-          Intervieweurs
-        </TabsTrigger>
-      </TabsList>
+      <!-- Onglets rendus dans le header global via meta.viewSwitcher -->
 
       <!-- ===== Étapes ===== -->
       <TabsContent value="etapes" class="csplab-settings__tab">
@@ -647,10 +634,6 @@ function roleLabel(role: Intervieweur['role']): string {
   display: flex;
   flex-direction: column;
   gap: var(--csplab-space-4);
-}
-
-.csplab-settings__tablist {
-  margin-bottom: var(--csplab-space-4);
 }
 
 .csplab-settings__tab {

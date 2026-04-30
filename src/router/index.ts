@@ -223,7 +223,21 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: 'Paramètres',
       breadcrumb: [{ label: 'Accueil', to: '/' }, { label: 'Paramètres' }],
-      viewSwitcher: null,
+      viewSwitcher: (route, router) => ({
+        current: typeof route.query.tab === 'string' && ['motifs', 'templates', 'intervieweurs'].includes(route.query.tab)
+          ? route.query.tab
+          : 'etapes',
+        items: [
+          { value: 'etapes', label: 'Étapes du pipeline', icon: 'ri:flow-chart' },
+          { value: 'motifs', label: 'Motifs de refus', icon: 'ri:close-circle-line' },
+          { value: 'templates', label: 'Templates email', icon: 'ri:mail-line' },
+          { value: 'intervieweurs', label: 'Intervieweurs', icon: 'ri:team-line' },
+        ],
+        onChange: (value) => {
+          const nextQuery = { ...route.query, tab: value === 'etapes' ? undefined : value }
+          router.push({ path: route.path, query: nextQuery })
+        },
+      }),
     },
   },
   {

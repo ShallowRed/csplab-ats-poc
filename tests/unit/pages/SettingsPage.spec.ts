@@ -25,47 +25,47 @@ describe('SettingsPage', () => {
     setActivePinia(createPinia())
   })
 
-  it('rend les 4 tab triggers', async () => {
+  it('rend les 4 panneaux de contenu', async () => {
     const router = makeRouter('/parametres')
     await router.isReady()
     const wrapper = mount(SettingsPage, { global: { plugins: [router] } })
     await wrapper.vm.$nextTick()
 
-    const triggers = wrapper.findAll('[role="tab"]')
-    const labels = triggers.map(t => t.text())
-    expect(labels).toContain('Étapes du pipeline')
-    expect(labels).toContain('Motifs de refus')
-    expect(labels).toContain('Templates email')
-    expect(labels).toContain('Intervieweurs')
+    const panels = wrapper.findAll('[role="tabpanel"]')
+    const values = panels.map(p => p.attributes('data-tabs-value') ?? p.attributes('aria-labelledby') ?? '')
+    expect(panels.length).toBeGreaterThanOrEqual(4)
+    // Le panneau actif par défaut est "etapes"
+    const active = panels.find(p => p.attributes('data-state') === 'active')
+    expect(active?.text().toLowerCase()).toContain('étape')
   })
 
-  it('?tab=motifs active le tab Motifs', async () => {
+  it('?tab=motifs active le panneau Motifs', async () => {
     const router = makeRouter('/parametres?tab=motifs')
     await router.isReady()
     const wrapper = mount(SettingsPage, { global: { plugins: [router] } })
     await wrapper.vm.$nextTick()
 
-    const motifsTrigger = wrapper.findAll('[role="tab"]').find(t => t.text().includes('Motifs'))
-    expect(motifsTrigger?.attributes('data-state')).toBe('active')
+    const active = wrapper.findAll('[role="tabpanel"]').find(p => p.attributes('data-state') === 'active')
+    expect(active?.text().toLowerCase()).toContain('motif')
   })
 
-  it('?tab=templates active le tab Templates', async () => {
+  it('?tab=templates active le panneau Templates', async () => {
     const router = makeRouter('/parametres?tab=templates')
     await router.isReady()
     const wrapper = mount(SettingsPage, { global: { plugins: [router] } })
     await wrapper.vm.$nextTick()
 
-    const trigger = wrapper.findAll('[role="tab"]').find(t => t.text().includes('Templates'))
-    expect(trigger?.attributes('data-state')).toBe('active')
+    const active = wrapper.findAll('[role="tabpanel"]').find(p => p.attributes('data-state') === 'active')
+    expect(active?.text().toLowerCase()).toContain('template')
   })
 
-  it('?tab=intervieweurs active le tab Intervieweurs', async () => {
+  it('?tab=intervieweurs active le panneau Intervieweurs', async () => {
     const router = makeRouter('/parametres?tab=intervieweurs')
     await router.isReady()
     const wrapper = mount(SettingsPage, { global: { plugins: [router] } })
     await wrapper.vm.$nextTick()
 
-    const trigger = wrapper.findAll('[role="tab"]').find(t => t.text().includes('Intervieweurs'))
-    expect(trigger?.attributes('data-state')).toBe('active')
+    const active = wrapper.findAll('[role="tabpanel"]').find(p => p.attributes('data-state') === 'active')
+    expect(active?.text().toLowerCase()).toContain('intervieweur')
   })
 })
