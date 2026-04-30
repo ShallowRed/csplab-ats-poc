@@ -17,7 +17,7 @@ const delegatedProps = computed(() => {
     v-bind="delegatedProps"
     :class="
       cn(
-        'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         props.class,
       )
     "
@@ -25,7 +25,10 @@ const delegatedProps = computed(() => {
     <slot />
     <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <ComboboxItemIndicator>
-        <RiIcon name="ri:check-line" :size="16" />
+        <RiIcon
+          name="ri:check-line"
+          :size="16"
+        />
       </ComboboxItemIndicator>
     </span>
   </ComboboxItem>

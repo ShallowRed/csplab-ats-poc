@@ -1,4 +1,5 @@
 @import './theme.css';
+@import './cursor.css';
 
 body {
   font-family: var(--csplab-font-family);
