@@ -179,7 +179,7 @@ function onDuplicate(id: string): void {
 </script>
 
 <template>
-  <div class="offres-page csplab-page-surface">
+  <div class="offres-page">
     <PageToolbar>
       <template #left>
         <details class="offres-page__filter">

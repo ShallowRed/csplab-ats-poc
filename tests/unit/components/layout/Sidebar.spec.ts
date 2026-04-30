@@ -10,7 +10,7 @@ describe('Sidebar', () => {
     const pinia = createPinia()
     const router = createAppRouter(createMemoryHistory())
 
-    await router.push('/preferences')
+    await router.push('/parametres')
     await router.isReady()
 
     const wrapper = mount(Sidebar, {
@@ -29,8 +29,6 @@ describe('Sidebar', () => {
     expect(wrapper.text()).toContain('Toutes les candidatures')
     expect(wrapper.text()).toContain('Pipeline')
     expect(wrapper.text()).toContain('Mes entretiens')
-    expect(wrapper.text()).toContain('Intervieweurs')
-    expect(wrapper.text()).toContain('Préférences')
   })
 
   it('marks the active item based on current route', async () => {
@@ -50,8 +48,8 @@ describe('Sidebar', () => {
     expect(pipeline.classes()).toContain('csplab-sidebar__link--active')
     expect(pipeline.attributes('aria-current')).toBe('page')
 
-    const preferences = wrapper.get('[data-testid="sidebar-link-preferences"]')
-    expect(preferences.classes()).not.toContain('csplab-sidebar__link--active')
-    expect(preferences.attributes('aria-current')).toBeUndefined()
+    const offres = wrapper.get('[data-testid="sidebar-link-offres"]')
+    expect(offres.classes()).not.toContain('csplab-sidebar__link--active')
+    expect(offres.attributes('aria-current')).toBeUndefined()
   })
 })

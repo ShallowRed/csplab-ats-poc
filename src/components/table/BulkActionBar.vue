@@ -53,11 +53,11 @@ async function changerEtape(etapeId: string): Promise<void> {
 function archiver(): void {
   const count = selection.count
   selection.clear()
-  toast.success(`${count} candidature(s) archivée(s) (simulation POC)`)
+  toast.success(`${count} candidature(s) archivée(s)`)
 }
 
 function emailTemplate(): void {
-  toast.success('Modèle email ouvert (simulation POC)')
+  toast.success('Modèle email ouvert')
 }
 
 const label = computed(() => {

@@ -29,17 +29,17 @@ const sections = computed<NavSection[]>(() => [
     label: 'Pilotage',
     items: [
       {
-        key: 'offres',
-        label: 'Mes offres',
-        to: '/offres',
-        icon: 'ri:briefcase-line',
-        activeMatch: 'prefix',
-      },
-      {
         key: 'dashboard',
         label: 'Tableau de bord',
         to: '/tableau-de-bord',
         icon: 'ri:dashboard-line',
+        activeMatch: 'prefix',
+      },
+      {
+        key: 'offres',
+        label: 'Mes offres',
+        to: '/offres',
+        icon: 'ri:briefcase-line',
         activeMatch: 'prefix',
       },
     ],
@@ -74,13 +74,6 @@ const sections = computed<NavSection[]>(() => [
         icon: 'ri:calendar-line',
         activeMatch: 'prefix',
       },
-      {
-        key: 'intervieweurs',
-        label: 'Intervieweurs',
-        to: '/intervieweurs',
-        icon: 'ri:user-follow-line',
-        activeMatch: 'prefix',
-      },
     ],
   },
   {
@@ -91,13 +84,6 @@ const sections = computed<NavSection[]>(() => [
         label: 'Paramètres',
         to: '/parametres',
         icon: 'ri:settings-3-line',
-        activeMatch: 'prefix',
-      },
-      {
-        key: 'preferences',
-        label: 'Préférences',
-        to: '/preferences',
-        icon: 'ri:user-settings-line',
         activeMatch: 'prefix',
       },
     ],

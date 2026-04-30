@@ -14,8 +14,7 @@ const testPaths = [
   '/pipeline/offre-1?view=table',
   '/entretiens',
   '/entretiens/ent-1/evaluation',
-  '/intervieweurs',
-  '/preferences',
+  '/parametres',
   '/route-inexistante-404',
 ]
 

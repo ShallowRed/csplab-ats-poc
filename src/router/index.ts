@@ -200,24 +200,6 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/intervieweurs',
-    component: () => import('@/pages/IntervieweursPage.vue'),
-    meta: {
-      title: 'Intervieweurs',
-      breadcrumb: [{ label: 'Entretiens' }, { label: 'Intervieweurs', to: '/intervieweurs' }],
-      viewSwitcher: null,
-    },
-  },
-  {
-    path: '/preferences',
-    component: () => import('@/pages/PreferencesPage.vue'),
-    meta: {
-      title: 'Préférences',
-      breadcrumb: [{ label: 'Paramètres' }, { label: 'Préférences', to: '/preferences' }],
-      viewSwitcher: null,
-    },
-  },
-  {
     path: '/parametres',
     component: () => import('@/pages/SettingsPage.vue'),
     meta: {

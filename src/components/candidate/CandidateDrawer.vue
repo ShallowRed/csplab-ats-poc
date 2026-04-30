@@ -449,7 +449,7 @@ watch(isOpen, (val) => {
             <EmptyState
               icon="ri:file-line"
               title="Aucun document"
-              description="Fonctionnalité disponible en phase 2"
+              description="Bientôt disponible"
               size="sm"
             />
           </TabsContent>
