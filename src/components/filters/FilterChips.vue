@@ -1,29 +1,38 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useFiltersStore } from '@/stores/filters'
 
-type Chip = {
-  id: string
-  label: string
-  onRemove: () => void
-}
+withDefaults(
+  defineProps<{
+    showReset?: boolean
+  }>(),
+  {
+    showReset: true,
+  },
+)
 
-defineProps<{
-  chips: Chip[]
-}>()
+const filters = useFiltersStore()
+
+const chips = computed(() => filters.chipsActifs)
+const hasActiveFilters = computed(() => chips.value.length > 0)
 </script>
 
 <template>
   <div
-    v-if="chips.length > 0"
+    v-if="hasActiveFilters"
     class="flex flex-wrap items-center gap-2"
+    role="list"
+    aria-label="Filtres actifs"
   >
     <Badge
       v-for="chip in chips"
       :key="chip.id"
       variant="secondary"
       class="gap-2"
+      role="listitem"
     >
       <span class="truncate max-w-[240px]">{{ chip.label }}</span>
       <Button
@@ -40,5 +49,15 @@ defineProps<{
         />
       </Button>
     </Badge>
+
+    <Button
+      v-if="showReset"
+      type="button"
+      variant="tertiary-no-outline"
+      size="sm"
+      @click="filters.reset()"
+    >
+      Tout effacer
+    </Button>
   </div>
 </template>

@@ -5,7 +5,8 @@ import { useCandidaturesStore } from '@/stores/candidatures'
 import { useSelectionStore } from '@/stores/selection'
 import { useFiltersStore } from '@/stores/filters'
 import CandidatureTable from '@/components/table/CandidatureTable.vue'
-import FilterChips from '@/components/table/FilterChips.vue'
+import FilterChips from '@/components/filters/FilterChips.vue'
+import FilterPopover from '@/components/filters/FilterPopover.vue'
 import BulkActionBar from '@/components/table/BulkActionBar.vue'
 import DensitySelector from '@/components/table/DensitySelector.vue'
 import { Input } from '@/components/ui/input'
@@ -36,6 +37,7 @@ onMounted(async () => {
   <div class="candidatures-page">
     <div class="candidatures-page__toolbar">
       <div class="candidatures-page__toolbar-left">
+        <FilterPopover />
         <FilterChips />
         <Input
           v-model="filters.filtre.recherche"

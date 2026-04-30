@@ -39,7 +39,7 @@ watch(
   <div class="csplab-pipeline">
     <div class="csplab-pipeline__filters">
       <div class="csplab-pipeline__chips">
-        <FilterChips :chips="filters.chipsActifs" />
+        <FilterChips :show-reset="false" />
       </div>
 
       <div class="csplab-pipeline__actions">
