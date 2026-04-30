@@ -13,13 +13,13 @@ Valider une architecture UI 3 couches pour une app métier CSPLab conforme au DS
 | Technologie | Version | Usage |
 |-------------|---------|-------|
 | Vue | 3.5 | Framework UI |
-| Vite | 8 | Build tool |
+| Vite | 6 | Build tool (LTS) |
 | TypeScript | 6 (strict) | Type safety |
 | Vue Router | 4 | Routing |
 | Pinia | 3 | State management |
 | Tailwind CSS | v4 | Utility-first styling |
-| Storybook | 10 | Component documentation |
-| Vitest | 4 | Unit testing |
+| Storybook | 8 | Component documentation |
+| Vitest | 2 | Unit testing |
 | ESLint + Prettier | - | Linting & formatting |
 
 ## Architecture 3 Couches
@@ -89,9 +89,27 @@ Fondations posées :
 
 ## Notes Techniques
 
-### Compatibilité Tailwind v4 + Vite 8
+### Downgrade Vite 8→6 (30 avril 2026)
 
-`@tailwindcss/vite` 4.0.0 déclare `peerDependencies: vite ^5.2.0 || ^6`, mais Vite 8 fonctionne avec `--legacy-peer-deps`. Aucun bug constaté en développement. À surveiller en production.
+**Problème** : Après le Lot 1 (installation shadcn-vue), le build de production était cassé :
+```
+TypeError: Cannot convert undefined or null to object
+    at B.generate (node_modules/@tailwindcss/vite/dist/index.mjs:1:5598)
+```
+
+**Cause** : Incompatibilité `@tailwindcss/vite@4.0.0` + `vite@8.0.10`. Le plugin Tailwind v4 n'est officiellement testé que sur Vite 5/6.
+
+**Solution** : Downgrade Vite 8→6 (LTS) + dépendances associées :
+- `vite: ^6.0.0`
+- `@vitejs/plugin-vue: ^5.2.0`
+- `vitest: ^2.1.8`
+- `storybook: ^8.4.7` (Storybook 10 requiert Vite 7+)
+
+Résultat : Build de production restauré, tous les checks passent.
+
+### Compatibilité Tailwind v4 + Vite 6
+
+`@tailwindcss/vite` 4.0.0 est pleinement compatible avec Vite 6 (déclaré dans `peerDependencies: vite ^5.2.0 || ^6`). Aucun flag `--legacy-peer-deps` nécessaire.
 
 ### Fonte Marianne
 

@@ -30,7 +30,8 @@ export default tseslint.config(
   {
     rules: {
       'vue/multi-word-component-names': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
+      'vue/require-default-prop': 'off'
     }
   }
 )

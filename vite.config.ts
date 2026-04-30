@@ -14,6 +14,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  // @ts-expect-error - Vitest config types
   test: {
     globals: true,
     environment: 'jsdom',
