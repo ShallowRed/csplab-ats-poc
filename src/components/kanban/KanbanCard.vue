@@ -84,6 +84,16 @@ function openDrawer(): void {
   drawer.ouvrir(props.candidature.id)
 }
 
+function onCardClick(event: MouseEvent): void {
+  if (event.metaKey || event.ctrlKey || event.shiftKey) {
+    event.preventDefault()
+    event.stopPropagation()
+    selection.toggle(props.candidature.id)
+    return
+  }
+  openDrawer()
+}
+
 function openEvaluation(): void {
   const entretien = seed.entretiens.find(e => e.candidatureId === props.candidature.id)
   if (entretien) {
@@ -122,7 +132,7 @@ function stop(event: Event): void {
         (props.debug?.dragging ?? false) && 'csplab-kanban-card--dragging',
         isDragging && 'csplab-kanban-card--dragging',
       )"
-      @click="openDrawer"
+      @click="onCardClick"
       @keydown="onKeydown"
     >
       <div class="csplab-kanban-card__inner">

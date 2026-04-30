@@ -9,6 +9,7 @@ import FilterChips from '@/components/filters/FilterChips.vue'
 import FilterPopover from '@/components/filters/FilterPopover.vue'
 import BulkActionBar from '@/components/table/BulkActionBar.vue'
 import DensitySelector from '@/components/table/DensitySelector.vue'
+import PageToolbar from '@/components/layout/PageToolbar.vue'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -35,8 +36,8 @@ onMounted(async () => {
 
 <template>
   <div class="candidatures-page">
-    <div class="candidatures-page__toolbar">
-      <div class="candidatures-page__toolbar-left">
+    <PageToolbar :selection-active="selection.count > 0">
+      <template #left>
         <FilterPopover />
         <FilterChips />
         <Input
@@ -46,37 +47,38 @@ onMounted(async () => {
           class="candidatures-page__search"
           aria-label="Rechercher un candidat"
         />
-      </div>
+      </template>
 
-      <div class="candidatures-page__toolbar-right">
+      <template #right>
         <span class="candidatures-page__count">
           {{ totalFiltered }} résultat{{ totalFiltered !== 1 ? 's' : '' }}
         </span>
         <DensitySelector />
+      </template>
+
+      <template #selection>
+        <BulkActionBar :total-filtered="totalFiltered" />
+      </template>
+    </PageToolbar>
+
+    <div class="candidatures-page__body">
+      <div
+        v-if="candidaturesStore.isLoading"
+        class="candidatures-page__skeleton"
+      >
+        <Skeleton
+          v-for="i in 8"
+          :key="i"
+          class="h-12 w-full"
+        />
       </div>
-    </div>
 
-    <BulkActionBar
-      v-if="selection.count > 0"
-      :total-filtered="totalFiltered"
-    />
-
-    <div
-      v-if="candidaturesStore.isLoading"
-      class="candidatures-page__skeleton"
-    >
-      <Skeleton
-        v-for="i in 8"
-        :key="i"
-        class="h-12 w-full"
+      <CandidatureTable
+        v-else
+        ref="tableRef"
+        :candidatures="candidaturesStore.candidatures"
       />
     </div>
-
-    <CandidatureTable
-      v-else
-      ref="tableRef"
-      :candidatures="candidaturesStore.candidatures"
-    />
   </div>
 </template>
 
@@ -84,31 +86,18 @@ onMounted(async () => {
 .candidatures-page {
   display: flex;
   flex-direction: column;
-  gap: var(--csplab-space-4);
-  padding: var(--csplab-space-4);
   height: 100%;
   min-height: 0;
 }
 
-.candidatures-page__toolbar {
+.candidatures-page__body {
+  flex: 1;
+  min-height: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--csplab-space-3);
-}
-
-.candidatures-page__toolbar-left {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--csplab-space-2);
-}
-
-.candidatures-page__toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: var(--csplab-space-3);
+  flex-direction: column;
+  gap: var(--csplab-space-4);
+  padding: var(--csplab-space-4);
+  overflow: auto;
 }
 
 .candidatures-page__search {
@@ -118,6 +107,7 @@ onMounted(async () => {
 .candidatures-page__count {
   font-size: var(--csplab-font-size-sm);
   color: var(--text-mention-grey);
+  white-space: nowrap;
 }
 
 .candidatures-page__skeleton {
@@ -126,3 +116,4 @@ onMounted(async () => {
   gap: var(--csplab-space-2);
 }
 </style>
+

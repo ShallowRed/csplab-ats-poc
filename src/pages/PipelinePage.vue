@@ -5,18 +5,48 @@ import { Button } from '@/components/ui/button'
 import FilterChips from '@/components/filters/FilterChips.vue'
 import KanbanBoard from '@/components/kanban/KanbanBoard.vue'
 import CandidatureTable from '@/components/table/CandidatureTable.vue'
+import BulkActionBar from '@/components/table/BulkActionBar.vue'
+import PageToolbar from '@/components/layout/PageToolbar.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFiltersStore } from '@/stores/filters'
 import { useCandidaturesStore } from '@/stores/candidatures'
+import { useSelectionStore } from '@/stores/selection'
+import { seed } from '@/data/seed'
 
 const props = defineProps<{ offreId?: string }>()
 
 const route = useRoute()
 const filters = useFiltersStore()
 const candidaturesStore = useCandidaturesStore()
+const selection = useSelectionStore()
+
+const candidatsById = new Map(seed.candidats.map(c => [c.id, c]))
 
 const offreId = computed(() => props.offreId ?? '')
 const view = computed<'kanban' | 'table'>(() => (route.query.view === 'table' ? 'table' : 'kanban'))
+
+const totalFilteredCount = computed(() => {
+  const f = filters.filtre
+  return candidaturesStore.candidatures.filter((c) => {
+    if (f.etapeIds.length > 0 && !f.etapeIds.includes(c.etapeId)) return false
+    if (f.scoreMin !== null && (c.score ?? 0) < f.scoreMin) return false
+    if (f.intervieweurIds.length > 0) {
+      if (!c.assigneA || !f.intervieweurIds.includes(c.assigneA)) return false
+    }
+    if (f.recherche) {
+      const candidat = candidatsById.get(c.candidatId)
+      if (!candidat) return false
+      const q = f.recherche.toLowerCase()
+      const name = `${candidat.prenom} ${candidat.nom}`.toLowerCase()
+      if (!name.includes(q)) return false
+    }
+    return true
+  }).length
+})
+
+const showKanbanHint = computed(
+  () => view.value === 'kanban' && selection.count === 0,
+)
 
 watchEffect(() => {
   if (offreId.value) {
@@ -30,6 +60,12 @@ watch(
     if (mode === 'table' && id) {
       void candidaturesStore.chargerCandidatures(id)
     }
+    if (mode === 'kanban' && id) {
+      // Charger aussi pour le calcul du totalFilteredCount kanban
+      if (candidaturesStore.candidatures.length === 0) {
+        void candidaturesStore.chargerCandidatures(id)
+      }
+    }
   },
   { immediate: true },
 )
@@ -37,12 +73,12 @@ watch(
 
 <template>
   <div class="csplab-pipeline">
-    <div class="csplab-pipeline__filters">
-      <div class="csplab-pipeline__chips">
+    <PageToolbar :selection-active="selection.count > 0">
+      <template #left>
         <FilterChips :show-reset="false" />
-      </div>
+      </template>
 
-      <div class="csplab-pipeline__actions">
+      <template #right>
         <Button
           type="button"
           variant="tertiary"
@@ -56,8 +92,19 @@ watch(
         >
           Réinitialiser
         </Button>
-      </div>
-    </div>
+      </template>
+
+      <template #selection>
+        <BulkActionBar :total-filtered="totalFilteredCount" />
+      </template>
+    </PageToolbar>
+
+    <p
+      v-if="showKanbanHint"
+      class="csplab-pipeline__hint"
+    >
+      ⌘+clic pour sélectionner plusieurs candidatures
+    </p>
 
     <div class="csplab-pipeline__board">
       <KanbanBoard
@@ -95,27 +142,12 @@ watch(
   min-height: 0;
 }
 
-.csplab-pipeline__filters {
+.csplab-pipeline__hint {
   flex: 0 0 auto;
-  padding: var(--csplab-space-4);
-  border-bottom: 1px solid var(--border-default-grey);
-  background: var(--background-default-grey);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--csplab-space-4);
-}
-
-.csplab-pipeline__chips {
-  min-width: 0;
-  flex: 1;
-  overflow: hidden;
-}
-
-.csplab-pipeline__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--csplab-space-2);
+  padding: var(--csplab-space-1) var(--csplab-space-4);
+  font-size: var(--csplab-font-size-xs);
+  color: var(--text-mention-grey);
+  margin: 0;
 }
 
 .csplab-pipeline__board {

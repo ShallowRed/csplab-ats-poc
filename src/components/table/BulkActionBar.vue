@@ -170,10 +170,7 @@ const label = computed(() => {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--csplab-space-3);
-  padding: var(--csplab-space-2) var(--csplab-space-4);
-  background: var(--background-contrast-blue-france);
-  border: 1px solid var(--border-action-high-blue-france);
-  border-radius: var(--csplab-radius-md);
+  width: 100%;
 }
 
 .bulk-bar__left {

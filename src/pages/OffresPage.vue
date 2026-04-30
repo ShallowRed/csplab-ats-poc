@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { EmptyState } from '@/components/ui/empty-state'
 import OffreStatusBadge from '@/components/offres/OffreStatusBadge.vue'
+import PageToolbar from '@/components/layout/PageToolbar.vue'
 import { useOffresStore } from '@/stores/offres'
 import { seed } from '@/data/seed'
 import type { Offre, OffreStatut } from '@/types/domain'
@@ -179,8 +180,8 @@ function onDuplicate(id: string): void {
 
 <template>
   <div class="offres-page">
-    <div class="offres-page__toolbar">
-      <div class="offres-page__filters">
+    <PageToolbar>
+      <template #left>
         <details class="offres-page__filter">
           <summary class="offres-page__filter-trigger">
             <span>Statut</span>
@@ -289,21 +290,23 @@ function onDuplicate(id: string): void {
         >
           Tout effacer
         </Button>
-      </div>
+      </template>
 
-      <Button
-        type="button"
-        variant="primary"
-        @click="goNouvelle"
-      >
-        <RiIcon
-          name="ri:add-line"
-          :size="16"
-          class="mr-1"
-        />
-        Nouvelle offre
-      </Button>
-    </div>
+      <template #right>
+        <Button
+          type="button"
+          variant="primary"
+          @click="goNouvelle"
+        >
+          <RiIcon
+            name="ri:add-line"
+            :size="16"
+            class="mr-1"
+          />
+          Nouvelle offre
+        </Button>
+      </template>
+    </PageToolbar>
 
     <div
       v-if="offresStore.offresVisibles.length === 0"
@@ -577,24 +580,6 @@ function onDuplicate(id: string): void {
   display: flex;
   flex-direction: column;
   min-height: 0;
-}
-
-.offres-page__toolbar {
-  flex: 0 0 auto;
-  padding: var(--csplab-space-4);
-  border-bottom: 1px solid var(--border-default-grey);
-  background: var(--background-default-grey);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--csplab-space-4);
-}
-
-.offres-page__filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--csplab-space-2);
 }
 
 .offres-page__filter {
