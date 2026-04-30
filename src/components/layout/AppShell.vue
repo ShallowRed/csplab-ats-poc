@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import Sidebar from './Sidebar.vue'
 import HeaderContextual from './HeaderContextual.vue'
+import CandidateDrawer from '@/components/candidate/CandidateDrawer.vue'
 import { RouterView } from 'vue-router'
+import { useCandidaturesStore } from '@/stores/candidatures'
+
+const candidaturesStore = useCandidaturesStore()
+const orderedIds = computed(() => candidaturesStore.candidatures.map(c => c.id))
 </script>
 
 <template>
@@ -34,6 +40,8 @@ import { RouterView } from 'vue-router'
       </main>
     </div>
   </div>
+
+  <CandidateDrawer :ordered-ids="orderedIds" />
 </template>
 
 <style scoped>
