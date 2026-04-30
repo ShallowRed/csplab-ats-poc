@@ -1,25 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { usePageHeader } from '@/stores/pageHeader'
 
-const props = defineProps<{ id: string }>()
-
-const route = useRoute()
-const pageHeader = usePageHeader()
-
-onMounted(() => {
-  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Fiche candidat'
-  pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([
-    { label: 'Candidatures' },
-    { label: 'Toutes les candidatures', to: '/candidatures' },
-    { label: `Candidature ${props.id}` },
-  ])
-  pageHeader.setViewSwitcher(null)
-})
+defineProps<{ id: string }>()
 </script>
 
 <template>

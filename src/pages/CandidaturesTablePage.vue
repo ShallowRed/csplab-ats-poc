@@ -1,38 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { usePageHeader } from '@/stores/pageHeader'
 
-const props = defineProps<{ offreId: string }>()
-
-const route = useRoute()
-const router = useRouter()
-const pageHeader = usePageHeader()
-
-const offreId = computed(() => props.offreId)
-
-watchEffect(() => {
-  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Pipeline'
-  pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([
-    { label: 'Candidatures' },
-    { label: 'Pipeline', to: `/pipeline/${offreId.value}` },
-    { label: 'Table', to: route.fullPath },
-  ])
-
-  pageHeader.setViewSwitcher({
-    current: 'table',
-    onChange: (value) => {
-      if (value === 'kanban') router.push(`/pipeline/${offreId.value}`)
-    },
-  })
-})
-
-onBeforeUnmount(() => {
-  pageHeader.setViewSwitcher(null)
-})
+defineProps<{ offreId: string }>()
 </script>
 
 <template>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { usePageHeader } from '@/stores/pageHeader'
 import { useCandidaturesStore } from '@/stores/candidatures'
 import { useSelectionStore } from '@/stores/selection'
 import { useFiltersStore } from '@/stores/filters'
@@ -13,7 +12,6 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const route = useRoute()
-const pageHeader = usePageHeader()
 const candidaturesStore = useCandidaturesStore()
 const selection = useSelectionStore()
 const filters = useFiltersStore()
@@ -23,11 +21,6 @@ const totalFiltered = computed(() => tableRef.value?.filteredCount ?? candidatur
 
 onMounted(async () => {
   const offreId = typeof route.params.offreId === 'string' ? route.params.offreId : undefined
-  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Toutes les candidatures'
-
-  pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([{ label: 'Candidatures' }, { label: title }])
-  pageHeader.setViewSwitcher(null)
 
   if (offreId) {
     filters.setOffreId(offreId)

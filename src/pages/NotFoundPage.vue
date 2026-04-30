@@ -1,16 +1,6 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { usePageHeader } from '@/stores/pageHeader'
 import { Button } from '@/components/ui/button'
-
-const pageHeader = usePageHeader()
-
-onMounted(() => {
-  pageHeader.setTitle('Page introuvable')
-  pageHeader.setBreadcrumb([{ label: 'Erreur' }, { label: '404' }])
-  pageHeader.setViewSwitcher(null)
-})
 </script>
 
 <template>

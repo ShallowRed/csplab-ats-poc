@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { usePageHeader } from '@/stores/pageHeader'
+import { computed, watchEffect } from 'vue'
 import { Button } from '@/components/ui/button'
 import FilterChips from '@/components/filters/FilterChips.vue'
 import KanbanBoard from '@/components/kanban/KanbanBoard.vue'
@@ -9,35 +7,14 @@ import { useFiltersStore } from '@/stores/filters'
 
 const props = defineProps<{ offreId?: string }>()
 
-const route = useRoute()
-const router = useRouter()
-const pageHeader = usePageHeader()
 const filters = useFiltersStore()
 
 const offreId = computed(() => props.offreId ?? '')
 
 watchEffect(() => {
-  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Pipeline'
-  pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([
-    { label: 'Candidatures' },
-    { label: 'Pipeline', to: route.fullPath },
-  ])
-
-  pageHeader.setViewSwitcher({
-    current: 'kanban',
-    onChange: (value) => {
-      if (value === 'table' && offreId.value) router.push(`/candidatures/table/${offreId.value}`)
-    },
-  })
-
   if (offreId.value) {
     filters.setOffreId(offreId.value)
   }
-})
-
-onBeforeUnmount(() => {
-  pageHeader.setViewSwitcher(null)
 })
 </script>
 

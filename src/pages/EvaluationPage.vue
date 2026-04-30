@@ -56,9 +56,6 @@ async function saveDraft(): Promise<void> {
 }
 
 onMounted(async () => {
-  pageHeader.setTitle('Évaluation')
-  pageHeader.setViewSwitcher(null)
-
   // Find entretien in seed / mockApi data
   const found = seed.entretiens.find(e => e.id === props.id)
     ?? seed.entretiens[0] // fallback for dev navigation without a real id

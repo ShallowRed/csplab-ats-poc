@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { usePageHeader } from '@/stores/pageHeader'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const route = useRoute()
-const pageHeader = usePageHeader()
 
 onMounted(() => {
-  const title = typeof route.meta.title === 'string' ? route.meta.title : 'Tableau de bord'
-  pageHeader.setTitle(title)
-  pageHeader.setBreadcrumb([{ label: 'Pilotage' }, { label: title }])
-
   router.replace('/pipeline')
 })
 </script>
