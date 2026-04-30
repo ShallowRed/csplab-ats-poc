@@ -1,0 +1,73 @@
+@import './dsfr-tokens.css';
+@import 'tailwindcss';
+
+@theme inline {
+  /* Neutralize default Tailwind palette */
+  --color-*: initial;
+  
+  /* Map DSFR tokens to Tailwind semantic colors */
+  --color-action: var(--background-action-high-blue-france);
+  --color-action-hover: var(--background-action-high-blue-france-hover);
+  --color-action-active: var(--background-action-high-blue-france-active);
+  
+  --color-success: var(--background-contrast-success);
+  --color-warning: var(--background-contrast-warning);
+  --color-error: var(--background-contrast-error);
+  --color-info: var(--background-contrast-info);
+  
+  --color-muted: var(--text-mention-grey);
+  --color-surface: var(--background-default-grey);
+  --color-surface-alt: var(--background-alt-grey);
+  --color-surface-contrast: var(--background-contrast-grey);
+  
+  --color-text-default: var(--text-default-grey);
+  --color-text-title: var(--text-title-grey);
+  --color-text-inverted: var(--text-inverted-grey);
+  
+  --color-border-default: var(--border-default-grey);
+  --color-border-action: var(--border-action-high-blue-france);
+  
+  --color-status-draft: var(--csplab-status-draft);
+  --color-status-submitted: var(--csplab-status-submitted);
+  --color-status-screening: var(--csplab-status-screening);
+  --color-status-interview: var(--csplab-status-interview);
+  --color-status-offer: var(--csplab-status-offer);
+  --color-status-rejected: var(--csplab-status-rejected);
+  --color-status-archived: var(--csplab-status-archived);
+  
+  /* Typography */
+  --font-sans: var(--csplab-font-family);
+  
+  --text-xs: var(--csplab-font-size-xs);
+  --text-sm: var(--csplab-font-size-sm);
+  --text-base: var(--csplab-font-size-base);
+  --text-md: var(--csplab-font-size-md);
+  --text-lg: var(--csplab-font-size-lg);
+  --text-xl: var(--csplab-font-size-xl);
+  --text-2xl: var(--csplab-font-size-2xl);
+  
+  /* Spacing */
+  --spacing-0: var(--csplab-space-0);
+  --spacing-1: var(--csplab-space-1);
+  --spacing-2: var(--csplab-space-2);
+  --spacing-3: var(--csplab-space-3);
+  --spacing-4: var(--csplab-space-4);
+  --spacing-5: var(--csplab-space-5);
+  --spacing-6: var(--csplab-space-6);
+  --spacing-8: var(--csplab-space-8);
+  --spacing-10: var(--csplab-space-10);
+  --spacing-12: var(--csplab-space-12);
+  --spacing-16: var(--csplab-space-16);
+  
+  /* Radius */
+  --radius-none: var(--csplab-radius-none);
+  --radius-sm: var(--csplab-radius-sm);
+  --radius-md: var(--csplab-radius-md);
+  --radius-lg: var(--csplab-radius-lg);
+  --radius-full: var(--csplab-radius-full);
+  
+  /* Shadows */
+  --shadow-sm: var(--csplab-shadow-sm);
+  --shadow-md: var(--csplab-shadow-md);
+  --shadow-lg: var(--csplab-shadow-lg);
+}
