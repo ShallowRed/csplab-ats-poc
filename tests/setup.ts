@@ -1,13 +1,14 @@
 import { beforeAll, afterAll, afterEach } from 'vitest'
 
-beforeAll(() => {
-  // Setup global test environment
-})
+// jsdom doesn't implement ResizeObserver; stub it for components using @dnd-kit
+if (typeof globalThis.ResizeObserver === 'undefined') {
+  globalThis.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+}
 
-afterEach(() => {
-  // Cleanup after each test
-})
-
-afterAll(() => {
-  // Cleanup after all tests
-})
+beforeAll(() => {})
+afterEach(() => {})
+afterAll(() => {})

@@ -23,6 +23,7 @@ const props = defineProps<{
   candidature: Candidature
   candidat: Candidat
   intervieweurAssigne?: Intervieweur
+  offreTitre?: string
   etapeId: string
   index: number
   debug?: DebugState
@@ -187,7 +188,7 @@ function stop(event: Event): void {
         </div>
 
         <div class="csplab-kanban-card__sub">
-          Poste candidaté
+          {{ props.offreTitre ?? 'Poste candidaté' }}
         </div>
 
         <div class="csplab-kanban-card__tags">
@@ -250,6 +251,7 @@ function stop(event: Event): void {
   position: relative;
   padding: var(--csplab-space-3);
   background: var(--background-default-grey);
+  border: 1px solid var(--border-default-grey);
   box-shadow: var(--csplab-shadow-sm);
   cursor: grab;
   user-select: none;

@@ -18,6 +18,7 @@ const props = defineProps<{
   candidatures: Candidature[]
   candidatsById: ReadonlyMap<string, Candidat>
   intervieweursById: ReadonlyMap<string, Intervieweur>
+  offreTitre?: string
   keyboardDropActive?: boolean
 }>()
 
@@ -111,6 +112,7 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
           :candidature="candidature"
           :candidat="props.candidatsById.get(candidature.candidatId)!"
           :intervieweur-assigne="candidature.assigneA ? props.intervieweursById.get(candidature.assigneA) : undefined"
+          :offre-titre="props.offreTitre"
           :etape-id="props.etape.id"
           :index="idx"
         />

@@ -407,6 +407,7 @@ const isEmpty = computed(() => !isInitialLoading.value && candidaturesStore.cand
           :candidatures="candidaturesByEtape.get(etape.id) ?? []"
           :candidats-by-id="candidatsById"
           :intervieweurs-by-id="intervieweursById"
+          :offre-titre="offre?.titre"
           :keyboard-drop-active="keyboardActiveId !== null && keyboardOverEtapeId === etape.id"
         />
 
