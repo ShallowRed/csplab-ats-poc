@@ -56,25 +56,6 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/candidatures/table/:offreId',
-    component: () => import('@/pages/CandidaturesTablePage.vue'),
-    props: true,
-    meta: {
-      title: 'Pipeline',
-      breadcrumb: (route) => [
-        { label: 'Candidatures' },
-        { label: 'Pipeline', to: `/pipeline/${route.params.offreId}` },
-        { label: 'Table', to: route.fullPath },
-      ],
-      viewSwitcher: (route, router) => ({
-        current: 'table',
-        onChange: (value) => {
-          if (value === 'kanban') router.push(`/pipeline/${route.params.offreId}`)
-        },
-      }),
-    },
-  },
-  {
     path: '/candidatures/:id',
     component: () => import('@/pages/CandidatureFullPage.vue'),
     props: true,
@@ -94,15 +75,23 @@ export const routes: RouteRecordRaw[] = [
     props: true,
     meta: {
       title: 'Pipeline',
-      breadcrumb: (route) => [
-        { label: 'Candidatures' },
-        { label: 'Pipeline', to: route.fullPath },
-      ],
+      breadcrumb: (route) => {
+        const view = route.query.view === 'table' ? 'Table' : 'Kanban'
+        return [
+          { label: 'Candidatures' },
+          { label: 'Pipeline' },
+          { label: view },
+        ]
+      },
       viewSwitcher: (route, router) => ({
-        current: 'kanban',
+        current: route.query.view === 'table' ? 'table' : 'kanban',
+        items: [
+          { value: 'kanban', label: 'Kanban', icon: 'ri:layout-column-line' },
+          { value: 'table', label: 'Table', icon: 'ri:table-line' },
+        ],
         onChange: (value) => {
-          const offreId = typeof route.params.offreId === 'string' ? route.params.offreId : ''
-          if (value === 'table' && offreId) router.push(`/candidatures/table/${offreId}`)
+          const nextQuery = { ...route.query, view: value === 'table' ? 'table' : undefined }
+          router.push({ path: route.path, query: nextQuery })
         },
       }),
     },

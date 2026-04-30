@@ -8,9 +8,16 @@ export type BreadcrumbItem = {
 
 export type ViewMode = 'table' | 'kanban'
 
+export type ViewSwitcherItem = {
+  value: string
+  label: string
+  icon?: string
+}
+
 export type ViewSwitcher = {
-  current: ViewMode
-  onChange: (value: ViewMode) => void
+  current: string
+  items: ViewSwitcherItem[]
+  onChange: (value: string) => void
 }
 
 export const usePageHeader = defineStore('pageHeader', () => {

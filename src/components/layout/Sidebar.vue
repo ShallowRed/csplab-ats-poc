@@ -62,14 +62,6 @@ const sections = computed<NavSection[]>(() => [
         icon: 'ri:layout-column-line',
         activeMatch: 'prefix',
       },
-      {
-        key: 'candidatures-table',
-        label: 'Vue table',
-        to: `/candidatures/table/${firstOffreId.value}`,
-        activePath: '/candidatures/table',
-        icon: 'ri:table-line',
-        activeMatch: 'prefix',
-      },
     ],
   },
   {

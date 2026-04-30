@@ -2,11 +2,12 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { usePageHeader, type ViewMode } from '@/stores/pageHeader'
+import RiIcon from '@/components/ui/icon/RiIcon.vue'
+import { usePageHeader } from '@/stores/pageHeader'
 
 const pageHeader = usePageHeader()
 
-const viewModel = computed<ViewMode | undefined>({
+const viewModel = computed<string | undefined>({
   get() {
     return pageHeader.viewSwitcher?.current
   },
@@ -69,11 +70,19 @@ const viewModel = computed<ViewMode | undefined>({
         v-model="viewModel"
       >
         <TabsList class="csplab-header__tabs">
-          <TabsTrigger value="kanban">
-            Kanban
-          </TabsTrigger>
-          <TabsTrigger value="table">
-            Table
+          <TabsTrigger
+            v-for="item in pageHeader.viewSwitcher.items"
+            :key="item.value"
+            :value="item.value"
+            class="csplab-header__tab"
+          >
+            <RiIcon
+              v-if="item.icon"
+              :name="item.icon"
+              :size="16"
+              class="csplab-header__tab-icon"
+            />
+            {{ item.label }}
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -154,6 +163,16 @@ const viewModel = computed<ViewMode | undefined>({
 
 .csplab-header__tabs {
   background: var(--background-alt-grey);
+}
+
+.csplab-header__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--csplab-space-1);
+}
+
+.csplab-header__tab-icon {
+  flex-shrink: 0;
 }
 
 .csplab-header__right {

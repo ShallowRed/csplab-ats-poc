@@ -28,7 +28,6 @@ describe('Sidebar', () => {
     expect(wrapper.text()).toContain('Mes offres')
     expect(wrapper.text()).toContain('Toutes les candidatures')
     expect(wrapper.text()).toContain('Pipeline (kanban)')
-    expect(wrapper.text()).toContain('Vue table')
     expect(wrapper.text()).toContain('Mes entretiens')
     expect(wrapper.text()).toContain('Intervieweurs')
     expect(wrapper.text()).toContain('Préférences')
@@ -38,7 +37,7 @@ describe('Sidebar', () => {
     const pinia = createPinia()
     const router = createAppRouter(createMemoryHistory())
 
-    await router.push('/candidatures/table/offre-1')
+    await router.push('/pipeline/offre-1?view=table')
     await router.isReady()
 
     const wrapper = mount(Sidebar, {
@@ -47,9 +46,9 @@ describe('Sidebar', () => {
       },
     })
 
-    const candidatures = wrapper.get('[data-testid="sidebar-link-candidatures"]')
-    expect(candidatures.classes()).toContain('csplab-sidebar__link--active')
-    expect(candidatures.attributes('aria-current')).toBe('page')
+    const pipeline = wrapper.get('[data-testid="sidebar-link-pipeline"]')
+    expect(pipeline.classes()).toContain('csplab-sidebar__link--active')
+    expect(pipeline.attributes('aria-current')).toBe('page')
 
     const preferences = wrapper.get('[data-testid="sidebar-link-preferences"]')
     expect(preferences.classes()).not.toContain('csplab-sidebar__link--active')
