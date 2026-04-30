@@ -84,7 +84,7 @@ const orderedIds = computed(() => candidaturesStore.candidatures.map(c => c.id))
 .csplab-shell__main {
   min-width: 0;
   display: grid;
-  grid-template-rows: 56px 1fr;
+  grid-template-rows: auto 1fr;
   overflow: hidden;
 }
 
