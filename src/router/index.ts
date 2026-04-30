@@ -30,7 +30,7 @@ function getFirstOffreId(): string | null {
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/offres',
+    redirect: '/tableau-de-bord',
   },
   {
     path: '/tableau-de-bord',
