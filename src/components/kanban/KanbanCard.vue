@@ -119,7 +119,7 @@ function stop(event: Event): void {
             <TooltipTrigger as-child>
               <Button
                 type="button"
-                variant="ghost"
+                variant="tertiary-no-outline"
                 size="icon"
                 class="h-7 w-7"
                 @click="stop"
@@ -136,7 +136,7 @@ function stop(event: Event): void {
             <TooltipTrigger as-child>
               <Button
                 type="button"
-                variant="ghost"
+                variant="tertiary-no-outline"
                 size="icon"
                 class="h-7 w-7"
                 @click="stop"
@@ -153,7 +153,7 @@ function stop(event: Event): void {
             <TooltipTrigger as-child>
               <Button
                 type="button"
-                variant="ghost"
+                variant="tertiary-no-outline"
                 size="icon"
                 class="h-7 w-7"
                 @click="stop"

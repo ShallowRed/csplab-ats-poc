@@ -24,7 +24,7 @@ export const Default: Story = {
     template: `
       <Dialog v-model:open="open">
         <DialogTrigger as-child>
-          <Button variant="outline">Open Dialog</Button>
+          <Button variant="tertiary">Open Dialog</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>Edit profile</DialogHeader>

@@ -34,6 +34,7 @@
   --text-title-grey: #161616;
   --text-title-blue-france: #000091;
   --text-action-high-blue-france: #000091;
+  --text-action-high-grey: #3a3a3a;
   --text-mention-grey: #666666;
   --text-disabled-grey: #929292;
   --text-inverted-grey: #ffffff;
@@ -54,6 +55,11 @@
   --background-action-high-blue-france: #000091;
   --background-action-high-blue-france-hover: #1212ff;
   --background-action-high-blue-france-active: #2323ff;
+  --background-action-high-red-marianne: #c9191e;
+  --background-action-high-red-marianne-hover: #f55a59;
+  --background-action-high-red-marianne-active: #f95c5e;
+  --background-default-grey-hover: #f6f6f6;
+  --background-default-grey-active: #eeeeee;
   --background-disabled-grey: #e5e5e5;
 
   /* Borders */
@@ -136,6 +142,7 @@
   --text-title-grey: #f5f5f5;
   --text-title-blue-france: #8585f6;
   --text-action-high-blue-france: #8585f6;
+  --text-action-high-grey: #cecece;
   --text-mention-grey: #9c9c9c;
   --text-disabled-grey: #666666;
   --text-inverted-grey: #161616;
@@ -147,6 +154,11 @@
   --background-action-high-blue-france: #8585f6;
   --background-action-high-blue-france-hover: #a4a4ff;
   --background-action-high-blue-france-active: #b8b8ff;
+  --background-action-high-red-marianne: #ff7b7b;
+  --background-action-high-red-marianne-hover: #ffb1b1;
+  --background-action-high-red-marianne-active: #ffc7c7;
+  --background-default-grey-hover: #242424;
+  --background-default-grey-active: #2a2a2a;
   --background-disabled-grey: #2a2a2a;
 
   --border-default-grey: #3a3a3a;

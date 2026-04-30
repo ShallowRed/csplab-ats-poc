@@ -97,7 +97,7 @@ function onConfirm(): void {
       <DialogFooter class="gap-2">
         <Button
           type="button"
-          variant="outline"
+          variant="tertiary"
           @click="onCancel"
         >
           Annuler

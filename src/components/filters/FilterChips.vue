@@ -28,7 +28,7 @@ defineProps<{
       <span class="truncate max-w-[240px]">{{ chip.label }}</span>
       <Button
         type="button"
-        variant="ghost"
+        variant="tertiary-no-outline"
         size="icon"
         class="h-5 w-5"
         :aria-label="`Retirer le filtre ${chip.label}`"

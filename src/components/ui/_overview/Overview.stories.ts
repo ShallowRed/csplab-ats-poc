@@ -61,12 +61,11 @@ export const AllComponents: Story = {
         <section>
           <h3 class="text-xl font-semibold mb-3">Button</h3>
           <div class="flex gap-3 flex-wrap">
-            <Button>Default</Button>
-            <Button variant="destructive">Destructive</Button>
-            <Button variant="outline">Outline</Button>
+            <Button>Primary</Button>
             <Button variant="secondary">Secondary</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button variant="link">Link</Button>
+            <Button variant="tertiary">Tertiary</Button>
+            <Button variant="tertiary-no-outline">Tertiary no outline</Button>
+            <Button variant="destructive">Destructive</Button>
           </div>
         </section>
 

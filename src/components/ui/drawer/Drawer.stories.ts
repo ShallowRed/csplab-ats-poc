@@ -22,7 +22,7 @@ export const Default: Story = {
     template: `
       <Drawer v-model:open="open">
         <DrawerTrigger as-child>
-          <Button variant="outline">Open Drawer</Button>
+          <Button variant="tertiary">Open Drawer</Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>Fiche candidat</DrawerHeader>
@@ -39,7 +39,7 @@ export const Default: Story = {
           </div>
           <DrawerFooter>
             <Button>Save</Button>
-            <Button variant="outline" @click="open = false">Cancel</Button>
+            <Button variant="tertiary" @click="open = false">Cancel</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

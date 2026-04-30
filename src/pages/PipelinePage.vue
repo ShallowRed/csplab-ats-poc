@@ -51,13 +51,13 @@ onBeforeUnmount(() => {
       <div class="csplab-pipeline__actions">
         <Button
           type="button"
-          variant="outline"
+          variant="tertiary"
         >
           Filtrer
         </Button>
         <Button
           type="button"
-          variant="ghost"
+          variant="tertiary-no-outline"
           @click="filters.reset()"
         >
           Réinitialiser

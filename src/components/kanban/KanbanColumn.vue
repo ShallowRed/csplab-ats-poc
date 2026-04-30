@@ -72,7 +72,7 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
         <DropdownMenuTrigger as-child>
           <Button
             type="button"
-            variant="ghost"
+            variant="tertiary-no-outline"
             size="icon"
             class="h-8 w-8"
             aria-label="Actions de colonne"
@@ -119,7 +119,7 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
       <div class="csplab-kanban-column__footer">
         <Button
           type="button"
-          variant="ghost"
+          variant="tertiary-no-outline"
           class="w-full justify-start"
           disabled
         >

@@ -5,31 +5,33 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:bg-[var(--background-disabled-grey)] disabled:text-[var(--text-disabled-grey)] disabled:border-transparent',
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow hover:bg-[var(--background-action-high-blue-france-hover)] active:bg-[var(--background-action-high-blue-france-active)]',
-        destructive:
-          'bg-destructive text-destructive-foreground shadow-sm hover:opacity-90',
-        outline:
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        primary:
+          'bg-[var(--background-action-high-blue-france)] text-[var(--text-inverted-grey)] hover:bg-[var(--background-action-high-blue-france-hover)] active:bg-[var(--background-action-high-blue-france-active)]',
         secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:opacity-80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'bg-transparent text-[var(--text-action-high-blue-france)] border border-[var(--border-action-high-blue-france)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
+        tertiary:
+          'bg-transparent text-[var(--text-action-high-grey)] border border-[var(--border-default-grey)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
+        'tertiary-no-outline':
+          'bg-transparent text-[var(--text-action-high-grey)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
+        destructive:
+          'bg-[var(--background-action-high-red-marianne)] text-[var(--text-inverted-grey)] hover:bg-[var(--background-action-high-red-marianne-hover)] active:bg-[var(--background-action-high-red-marianne-active)]',
+        link:
+          'bg-transparent text-[var(--text-action-high-blue-france)] underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-sm px-3 text-xs',
-        lg: 'h-10 rounded-sm px-8',
-        icon: 'h-9 w-9',
+        sm: 'py-1 px-3 text-sm',
+        md: 'py-2 px-4 text-sm',
+        lg: 'py-3 px-6 text-base',
+        icon: 'h-9 w-9 p-0',
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: 'primary',
+      size: 'md',
     },
   },
 )

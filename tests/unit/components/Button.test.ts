@@ -51,6 +51,6 @@ describe('Button', () => {
       },
     })
     
-    expect(wrapper.classes()).toContain('bg-destructive')
+    expect(wrapper.classes()).toContain('bg-[var(--background-action-high-red-marianne)]')
   })
 })
