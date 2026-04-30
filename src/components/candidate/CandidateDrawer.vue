@@ -407,6 +407,35 @@ watch(isOpen, (val) => {
             value="entretiens"
             class="candidate-drawer__tab-content"
           >
+            <div
+              v-if="data.entretiens.length > 0"
+              class="candidate-drawer__entretiens-list"
+            >
+              <div
+                v-for="entretien in data.entretiens"
+                :key="entretien.id"
+                class="candidate-drawer__entretien-row"
+              >
+                <div class="candidate-drawer__entretien-info">
+                  <span class="candidate-drawer__entretien-type">
+                    {{ { rh: 'RH', technique: 'Technique', manager: 'Manager', jury: 'Jury' }[entretien.type] }}
+                  </span>
+                  <span class="candidate-drawer__entretien-date">
+                    {{ new Date(entretien.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) }}
+                  </span>
+                </div>
+                <Button
+                  v-if="entretien.statut === 'realise' || entretien.statut === 'planifie'"
+                  type="button"
+                  variant="tertiary"
+                  size="sm"
+                  @click="router.push(`/entretiens/${entretien.id}/evaluation`); drawer.fermer()"
+                >
+                  Évaluer
+                </Button>
+              </div>
+            </div>
+
             <EvaluationsAggregate
               :entretiens="data.entretiens"
               :evaluations="data.evaluations"
@@ -665,5 +694,38 @@ a.candidate-drawer__field-value {
   .candidate-drawer {
     animation: none;
   }
+}
+
+.candidate-drawer__entretiens-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-2);
+  margin-bottom: var(--csplab-space-5);
+}
+
+.candidate-drawer__entretien-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--csplab-space-3);
+  padding: var(--csplab-space-2) var(--csplab-space-3);
+  border: 1px solid var(--border-default-grey);
+  border-radius: var(--csplab-radius-md);
+}
+
+.candidate-drawer__entretien-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.candidate-drawer__entretien-type {
+  font-weight: 600;
+  font-size: var(--csplab-font-size-sm);
+}
+
+.candidate-drawer__entretien-date {
+  font-size: var(--csplab-font-size-xs);
+  color: var(--text-mention-grey);
 }
 </style>

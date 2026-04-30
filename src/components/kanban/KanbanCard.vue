@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef, type ComponentPublicInstance } from 'vue'
+import { useRouter } from 'vue-router'
 import { Calendar, ClipboardCheck, Eye } from 'lucide-vue-next'
 import { useSortable } from '@dnd-kit/vue/sortable'
 import { Card } from '@/components/ui/card'
@@ -12,6 +13,7 @@ import type { Candidat, Candidature, Intervieweur } from '@/types/domain'
 import { useDrawerStore } from '@/stores/drawer'
 import { useSelectionStore } from '@/stores/selection'
 import { useInterviewStore } from '@/stores/interview'
+import { seed } from '@/data/seed'
 
 type DebugState = {
   hover?: boolean
@@ -54,6 +56,7 @@ const { isDragging } = useSortable({
   data: computed(() => ({ etapeId: props.etapeId })),
 })
 
+const router = useRouter()
 const drawer = useDrawerStore()
 const selection = useSelectionStore()
 const interview = useInterviewStore()
@@ -79,6 +82,15 @@ const isSelected = computed(() => props.debug?.selected ?? selection.isSelected(
 
 function openDrawer(): void {
   drawer.ouvrir(props.candidature.id)
+}
+
+function openEvaluation(): void {
+  const entretien = seed.entretiens.find(e => e.candidatureId === props.candidature.id)
+  if (entretien) {
+    router.push(`/entretiens/${entretien.id}/evaluation`)
+  } else {
+    drawer.ouvrir(props.candidature.id)
+  }
 }
 
 function onKeydown(event: KeyboardEvent): void {
@@ -142,7 +154,7 @@ function stop(event: Event): void {
                 variant="tertiary-no-outline"
                 size="icon"
                 class="h-7 w-7"
-                @click="stop"
+                @click.stop="openEvaluation"
               >
                 <ClipboardCheck
                   class="h-4 w-4"
