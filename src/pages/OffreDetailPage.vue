@@ -79,7 +79,7 @@ function goBack(): void {
 </script>
 
 <template>
-  <div class="offre-detail">
+  <div class="offre-detail csplab-page-surface">
     <div
       v-if="!offre"
       class="offre-detail__missing"
@@ -132,244 +132,216 @@ function goBack(): void {
         </div>
       </div>
 
-      <div class="offre-detail__grid">
-        <div class="offre-detail__main">
-          <Card>
-            <CardHeader>
-              <CardTitle>Descriptif</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                v-if="offre.descriptif"
-                class="offre-detail__prose"
+      <div class="offre-detail__scroll">
+        <div class="offre-detail__container csplab-page-content">
+          <header class="offre-detail__header">
+            <ul class="offre-detail__meta">
+              <li>{{ offre.direction }}</li>
+              <li class="offre-detail__meta-type">
+                {{ offre.typeContrat }}
+              </li>
+              <li>{{ offre.localisation }}</li>
+              <li>Ouverte le {{ formatDate(offre.dateOuverture) }}</li>
+              <li
+                v-if="offre.dateFermeture"
               >
-                <p
-                  v-for="(paragraph, idx) in offre.descriptif.split(/\n\n+/).filter(Boolean)"
-                  :key="idx"
-                >
-                  {{ paragraph }}
-                </p>
+                Fermée le {{ formatDate(offre.dateFermeture) }}
+              </li>
+            </ul>
+
+            <div class="offre-detail__counter">
+              <div class="offre-detail__counter-text">
+                <span class="offre-detail__counter-num">{{ counts.total }}</span>
+                <span class="offre-detail__counter-label"> candidatures</span>
+                <span class="offre-detail__counter-sep">·</span>
+                <span class="offre-detail__counter-num">{{ counts.aTraiter }}</span>
+                <span class="offre-detail__counter-label"> à traiter</span>
               </div>
-              <p
-                v-else
-                class="offre-detail__muted"
-              >
-                Aucun descriptif renseigné.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Critères</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <dl class="offre-detail__dl">
-                <div class="offre-detail__dl-row">
-                  <dt>Intitulé</dt>
-                  <dd>{{ offre.titre }}</dd>
-                </div>
-                <div class="offre-detail__dl-row">
-                  <dt>Type de contrat</dt>
-                  <dd class="offre-detail__type">
-                    {{ offre.typeContrat }}
-                  </dd>
-                </div>
-                <div
-                  v-if="offre.corps"
-                  class="offre-detail__dl-row"
-                >
-                  <dt>Corps</dt>
-                  <dd>{{ offre.corps }}</dd>
-                </div>
-                <div
-                  v-if="offre.grade"
-                  class="offre-detail__dl-row"
-                >
-                  <dt>Grade</dt>
-                  <dd>{{ offre.grade }}</dd>
-                </div>
-                <div class="offre-detail__dl-row">
-                  <dt>Lieu</dt>
-                  <dd>{{ offre.localisation }}</dd>
-                </div>
-              </dl>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Étapes du pipeline</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ol
-                v-if="etapes.length > 0"
-                class="offre-detail__steps"
-              >
-                <li
-                  v-for="etape in etapes"
-                  :key="etape.id"
-                  class="offre-detail__step"
-                >
-                  <span
-                    class="offre-detail__step-dot"
-                    :style="{ background: `var(--${etape.couleur})` }"
-                    aria-hidden="true"
-                  />
-                  <span class="offre-detail__step-label">{{ etape.libelle }}</span>
-                </li>
-              </ol>
-              <p
-                v-else
-                class="offre-detail__muted"
-              >
-                Aucune étape définie.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <aside class="offre-detail__side">
-          <Card>
-            <CardHeader>
-              <CardTitle>Statut</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div class="offre-detail__status-line">
-                <OffreStatusBadge :statut="offre.statut" />
-              </div>
-              <dl class="offre-detail__dl">
-                <div class="offre-detail__dl-row">
-                  <dt>Ouverte le</dt>
-                  <dd>{{ formatDate(offre.dateOuverture) }}</dd>
-                </div>
-                <div
-                  v-if="offre.dateFermeture"
-                  class="offre-detail__dl-row"
-                >
-                  <dt>Fermée le</dt>
-                  <dd>{{ formatDate(offre.dateFermeture) }}</dd>
-                </div>
-                <div class="offre-detail__dl-row">
-                  <dt>Direction</dt>
-                  <dd>
-                    <Badge variant="secondary">
-                      {{ offre.direction }}
-                    </Badge>
-                  </dd>
-                </div>
-              </dl>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader class="offre-detail__card-header-row">
-              <CardTitle>Pipeline</CardTitle>
               <button
                 type="button"
-                class="offre-detail__link"
+                class="offre-detail__counter-link"
                 @click="goPipeline"
               >
-                Ouvrir
+                Ouvrir le pipeline
+                <RiIcon
+                  name="ri:arrow-right-line"
+                  :size="14"
+                />
               </button>
-            </CardHeader>
-            <CardContent>
-              <div class="offre-detail__totals">
-                <div>
-                  <span class="offre-detail__totals-num">{{ counts.total }}</span>
-                  <span class="offre-detail__muted"> candidatures</span>
-                </div>
-                <div>
-                  <span class="offre-detail__totals-num">{{ counts.aTraiter }}</span>
-                  <span class="offre-detail__muted"> à traiter</span>
-                </div>
-              </div>
-              <ul class="offre-detail__pipeline-list">
-                <li
-                  v-for="etape in etapes"
-                  :key="etape.id"
-                  class="offre-detail__pipeline-row"
-                >
-                  <span class="offre-detail__pipeline-label">{{ etape.libelle }}</span>
-                  <Badge variant="secondary">
-                    {{ candidatsParEtape.get(etape.id) ?? 0 }}
-                  </Badge>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </header>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Intervieweurs par défaut</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul
-                v-if="intervieweursDefaut.length > 0"
-                class="offre-detail__people"
-              >
-                <li
-                  v-for="i in intervieweursDefaut"
-                  :key="i.id"
+          <div class="offre-detail__grid">
+            <div class="offre-detail__main">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Descriptif</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div
+                    v-if="offre.descriptif"
+                    class="offre-detail__prose"
+                  >
+                    <p
+                      v-for="(paragraph, idx) in offre.descriptif.split(/\n\n+/).filter(Boolean)"
+                      :key="idx"
+                    >
+                      {{ paragraph }}
+                    </p>
+                  </div>
+                  <p
+                    v-else
+                    class="offre-detail__muted"
+                  >
+                    Aucun descriptif renseigné.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Étapes du pipeline</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ol
+                    v-if="etapes.length > 0"
+                    class="offre-detail__steps"
+                  >
+                    <li
+                      v-for="etape in etapes"
+                      :key="etape.id"
+                      class="offre-detail__step"
+                    >
+                      <span
+                        class="offre-detail__step-dot"
+                        :style="{ background: `var(--${etape.couleur})` }"
+                        aria-hidden="true"
+                      />
+                      <span class="offre-detail__step-label">{{ etape.libelle }}</span>
+                      <Badge
+                        variant="secondary"
+                        class="offre-detail__step-count"
+                      >
+                        {{ candidatsParEtape.get(etape.id) ?? 0 }}
+                      </Badge>
+                    </li>
+                  </ol>
+                  <p
+                    v-else
+                    class="offre-detail__muted"
+                  >
+                    Aucune étape définie.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <aside class="offre-detail__side">
+              <section class="offre-detail__block">
+                <h3 class="offre-detail__block-title">
+                  Critères
+                </h3>
+                <dl class="offre-detail__dl">
+                  <div class="offre-detail__dl-row">
+                    <dt>Type de contrat</dt>
+                    <dd class="offre-detail__type">
+                      {{ offre.typeContrat }}
+                    </dd>
+                  </div>
+                  <div
+                    v-if="offre.corps"
+                    class="offre-detail__dl-row"
+                  >
+                    <dt>Corps</dt>
+                    <dd>{{ offre.corps }}</dd>
+                  </div>
+                  <div
+                    v-if="offre.grade"
+                    class="offre-detail__dl-row"
+                  >
+                    <dt>Grade</dt>
+                    <dd>{{ offre.grade }}</dd>
+                  </div>
+                  <div class="offre-detail__dl-row">
+                    <dt>Lieu</dt>
+                    <dd>{{ offre.localisation }}</dd>
+                  </div>
+                  <div class="offre-detail__dl-row">
+                    <dt>Direction</dt>
+                    <dd>{{ offre.direction }}</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section class="offre-detail__block">
+                <h3 class="offre-detail__block-title">
+                  Responsable
+                </h3>
+                <div
+                  v-if="responsable"
                   class="offre-detail__person"
                 >
-                  <Avatar class="h-7 w-7">
+                  <Avatar class="h-9 w-9">
                     <AvatarImage
-                      :src="i.avatarUrl ?? ''"
-                      :alt="`${i.prenom} ${i.nom}`"
+                      :src="responsable.avatarUrl ?? ''"
+                      :alt="`${responsable.prenom} ${responsable.nom}`"
                     />
-                    <AvatarFallback class="text-xs">
-                      {{ i.prenom.charAt(0) }}{{ i.nom.charAt(0) }}
+                    <AvatarFallback>
+                      {{ responsable.prenom.charAt(0) }}{{ responsable.nom.charAt(0) }}
                     </AvatarFallback>
                   </Avatar>
-                  <span>{{ i.prenom }} {{ i.nom }}</span>
-                </li>
-              </ul>
-              <p
-                v-else
-                class="offre-detail__muted"
-              >
-                Aucun intervieweur par défaut.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Responsable</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                v-if="responsable"
-                class="offre-detail__person"
-              >
-                <Avatar class="h-9 w-9">
-                  <AvatarImage
-                    :src="responsable.avatarUrl ?? ''"
-                    :alt="`${responsable.prenom} ${responsable.nom}`"
-                  />
-                  <AvatarFallback>
-                    {{ responsable.prenom.charAt(0) }}{{ responsable.nom.charAt(0) }}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <div class="offre-detail__person-name">
-                    {{ responsable.prenom }} {{ responsable.nom }}
-                  </div>
-                  <div class="offre-detail__muted">
-                    {{ responsable.role === 'manager' ? 'Manager' : responsable.role === 'rh' ? 'RH' : 'Expert' }}
+                  <div>
+                    <div class="offre-detail__person-name">
+                      {{ responsable.prenom }} {{ responsable.nom }}
+                    </div>
+                    <div class="offre-detail__muted">
+                      {{ responsable.role === 'manager' ? 'Manager' : responsable.role === 'rh' ? 'RH' : 'Expert' }}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <p
-                v-else
-                class="offre-detail__muted"
-              >
-                Aucun responsable assigné.
-              </p>
-            </CardContent>
-          </Card>
-        </aside>
+                <p
+                  v-else
+                  class="offre-detail__muted"
+                >
+                  Aucun responsable assigné.
+                </p>
+              </section>
+
+              <section class="offre-detail__block">
+                <h3 class="offre-detail__block-title">
+                  Intervieweurs par défaut
+                </h3>
+                <ul
+                  v-if="intervieweursDefaut.length > 0"
+                  class="offre-detail__people"
+                >
+                  <li
+                    v-for="i in intervieweursDefaut"
+                    :key="i.id"
+                    class="offre-detail__person"
+                  >
+                    <Avatar class="h-7 w-7">
+                      <AvatarImage
+                        :src="i.avatarUrl ?? ''"
+                        :alt="`${i.prenom} ${i.nom}`"
+                      />
+                      <AvatarFallback class="text-xs">
+                        {{ i.prenom.charAt(0) }}{{ i.nom.charAt(0) }}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span>{{ i.prenom }} {{ i.nom }}</span>
+                  </li>
+                </ul>
+                <p
+                  v-else
+                  class="offre-detail__muted"
+                >
+                  Aucun intervieweur par défaut.
+                </p>
+              </section>
+            </aside>
+          </div>
+        </div>
       </div>
     </template>
   </div>
@@ -423,13 +395,96 @@ function goBack(): void {
   gap: var(--csplab-space-2);
 }
 
-.offre-detail__grid {
+.offre-detail__scroll {
   flex: 1;
   overflow: auto;
-  padding: var(--csplab-space-4);
+}
+
+.offre-detail__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-6);
+}
+
+.offre-detail__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-3);
+}
+
+.offre-detail__meta {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--csplab-space-2) var(--csplab-space-3);
+  font-size: var(--csplab-font-size-sm);
+  color: var(--text-mention-grey);
+}
+
+.offre-detail__meta li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.offre-detail__meta li + li::before {
+  content: '·';
+  margin-right: var(--csplab-space-3);
+  color: var(--border-default-grey);
+}
+
+.offre-detail__meta-type {
+  text-transform: capitalize;
+}
+
+.offre-detail__counter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--csplab-space-3) var(--csplab-space-4);
+}
+
+.offre-detail__counter-text {
+  font-size: var(--csplab-font-size-lg);
+  color: var(--text-default-grey);
+}
+
+.offre-detail__counter-num {
+  font-weight: 700;
+  color: var(--text-title-grey);
+}
+
+.offre-detail__counter-label {
+  color: var(--text-mention-grey);
+  font-weight: 400;
+}
+
+.offre-detail__counter-sep {
+  margin: 0 var(--csplab-space-2);
+  color: var(--border-default-grey);
+}
+
+.offre-detail__counter-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--csplab-font-size-sm);
+  color: var(--text-action-high-blue-france);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--csplab-space-1);
+}
+
+.offre-detail__counter-link:hover {
+  text-decoration: underline;
+}
+
+.offre-detail__grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
-  gap: var(--csplab-space-4);
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: var(--csplab-space-6);
   align-items: start;
 }
 
@@ -437,7 +492,24 @@ function goBack(): void {
 .offre-detail__side {
   display: flex;
   flex-direction: column;
-  gap: var(--csplab-space-4);
+  gap: var(--csplab-space-6);
+}
+
+.offre-detail__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--csplab-space-2);
+}
+
+.offre-detail__block-title {
+  margin: 0;
+  font-size: var(--csplab-font-size-sm);
+  font-weight: 600;
+  color: var(--text-mention-grey);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: var(--csplab-space-2);
+  border-bottom: 1px solid var(--border-default-grey);
 }
 
 .offre-detail__prose p {
@@ -469,7 +541,7 @@ function goBack(): void {
 
 .offre-detail__dl-row {
   display: grid;
-  grid-template-columns: 130px 1fr;
+  grid-template-columns: 110px 1fr;
   gap: var(--csplab-space-2);
   font-size: var(--csplab-font-size-sm);
 }
@@ -494,7 +566,7 @@ function goBack(): void {
 }
 
 .offre-detail__step {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--csplab-space-2);
   font-size: var(--csplab-font-size-sm);
@@ -513,45 +585,11 @@ function goBack(): void {
 
 .offre-detail__step-label {
   color: var(--text-default-grey);
+  flex: 1;
 }
 
-.offre-detail__status-line {
-  margin-bottom: var(--csplab-space-3);
-}
-
-.offre-detail__totals {
-  display: flex;
-  gap: var(--csplab-space-4);
-  margin-bottom: var(--csplab-space-3);
-  padding-bottom: var(--csplab-space-3);
-  border-bottom: 1px solid var(--border-default-grey);
-}
-
-.offre-detail__totals-num {
-  font-size: var(--csplab-font-size-lg);
-  font-weight: 600;
-  color: var(--text-title-grey);
-}
-
-.offre-detail__pipeline-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--csplab-space-1);
-}
-
-.offre-detail__pipeline-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--csplab-font-size-sm);
-  padding: var(--csplab-space-1) 0;
-}
-
-.offre-detail__pipeline-label {
-  color: var(--text-default-grey);
+.offre-detail__step-count {
+  flex-shrink: 0;
 }
 
 .offre-detail__people {
@@ -573,27 +611,6 @@ function goBack(): void {
 .offre-detail__person-name {
   font-weight: 500;
   color: var(--text-default-grey);
-}
-
-.offre-detail__card-header-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--csplab-space-2);
-}
-
-.offre-detail__link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: var(--csplab-font-size-sm);
-  color: var(--text-action-high-blue-france);
-  padding: 0;
-}
-
-.offre-detail__link:hover {
-  text-decoration: underline;
 }
 
 @media (max-width: 900px) {

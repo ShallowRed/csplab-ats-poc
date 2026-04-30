@@ -187,304 +187,308 @@ onMounted(() => {
 
 <template>
   <form
-    class="offre-form"
+    class="offre-form csplab-page-surface"
     novalidate
     @submit.prevent="handleSubmit(isEdit ? 'enregistrer' : 'publier')"
   >
-    <div class="offre-form__content">
-      <Card>
-        <CardHeader>
-          <CardTitle>Identité</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div class="offre-form__grid">
-            <label class="offre-form__field offre-form__field--full">
-              <span class="offre-form__label">Intitulé du poste *</span>
-              <Input
-                v-model="form.titre"
-                placeholder="Ex. Chargé de mission numérique"
-                :data-error="Boolean(errors.titre) || undefined"
-                :aria-invalid="Boolean(errors.titre)"
-              />
-              <span
-                v-if="errors.titre"
-                class="offre-form__error"
-              >{{ errors.titre }}</span>
-            </label>
+    <div class="offre-form__scroll">
+      <div class="offre-form__content csplab-form-container">
+        <Card>
+          <CardHeader>
+            <CardTitle>Identité</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="offre-form__grid">
+              <label class="offre-form__field offre-form__field--full">
+                <span class="offre-form__label">Intitulé du poste *</span>
+                <Input
+                  v-model="form.titre"
+                  placeholder="Ex. Chargé de mission numérique"
+                  :data-error="Boolean(errors.titre) || undefined"
+                  :aria-invalid="Boolean(errors.titre)"
+                />
+                <span
+                  v-if="errors.titre"
+                  class="offre-form__error"
+                >{{ errors.titre }}</span>
+              </label>
 
-            <label class="offre-form__field">
-              <span class="offre-form__label">Direction *</span>
-              <select
-                v-model="form.direction"
-                class="offre-form__select"
-                :data-error="Boolean(errors.direction) || undefined"
-                :aria-invalid="Boolean(errors.direction)"
-              >
-                <option value="">
-                  Sélectionner…
-                </option>
-                <option
-                  v-for="d in DIRECTIONS"
-                  :key="d"
-                  :value="d"
+              <label class="offre-form__field">
+                <span class="offre-form__label">Direction *</span>
+                <select
+                  v-model="form.direction"
+                  class="offre-form__select"
+                  :data-error="Boolean(errors.direction) || undefined"
+                  :aria-invalid="Boolean(errors.direction)"
                 >
-                  {{ d }}
-                </option>
-              </select>
-              <span
-                v-if="errors.direction"
-                class="offre-form__error"
-              >{{ errors.direction }}</span>
-            </label>
+                  <option value="">
+                    Sélectionner…
+                  </option>
+                  <option
+                    v-for="d in DIRECTIONS"
+                    :key="d"
+                    :value="d"
+                  >
+                    {{ d }}
+                  </option>
+                </select>
+                <span
+                  v-if="errors.direction"
+                  class="offre-form__error"
+                >{{ errors.direction }}</span>
+              </label>
 
-            <label class="offre-form__field">
-              <span class="offre-form__label">Responsable</span>
-              <select
-                v-model="form.responsableId"
-                class="offre-form__select"
-              >
-                <option value="">
-                  Aucun
-                </option>
-                <option
-                  v-for="r in responsablesOptions"
-                  :key="r.id"
-                  :value="r.id"
+              <label class="offre-form__field">
+                <span class="offre-form__label">Responsable</span>
+                <select
+                  v-model="form.responsableId"
+                  class="offre-form__select"
                 >
-                  {{ r.prenom }} {{ r.nom }}
-                </option>
-              </select>
-            </label>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Type de poste</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <fieldset
-            class="offre-form__fieldset"
-            :data-error="Boolean(errors.typeContrat) || undefined"
-          >
-            <legend class="offre-form__label">
-              Type de contrat *
-            </legend>
-            <div class="offre-form__radio-group">
-              <label
-                v-for="t in TYPES_CONTRAT"
-                :key="t.value"
-                class="offre-form__radio"
-              >
-                <input
-                  v-model="form.typeContrat"
-                  type="radio"
-                  name="typeContrat"
-                  :value="t.value"
-                >
-                <span>{{ t.label }}</span>
+                  <option value="">
+                    Aucun
+                  </option>
+                  <option
+                    v-for="r in responsablesOptions"
+                    :key="r.id"
+                    :value="r.id"
+                  >
+                    {{ r.prenom }} {{ r.nom }}
+                  </option>
+                </select>
               </label>
             </div>
-            <span
-              v-if="errors.typeContrat"
-              class="offre-form__error"
-            >{{ errors.typeContrat }}</span>
-          </fieldset>
+          </CardContent>
+        </Card>
 
-          <div class="offre-form__grid offre-form__grid--mt">
-            <label
-              v-if="form.typeContrat === 'titulaire'"
-              class="offre-form__field"
+        <Card>
+          <CardHeader>
+            <CardTitle>Type de poste</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <fieldset
+              class="offre-form__fieldset"
+              :data-error="Boolean(errors.typeContrat) || undefined"
             >
-              <span class="offre-form__label">Corps</span>
-              <select
-                v-model="form.corps"
-                class="offre-form__select"
-              >
-                <option value="">
-                  —
-                </option>
-                <option
-                  v-for="c in CORPS"
-                  :key="c"
-                  :value="c"
+              <legend class="offre-form__label">
+                Type de contrat *
+              </legend>
+              <div class="offre-form__radio-group">
+                <label
+                  v-for="t in TYPES_CONTRAT"
+                  :key="t.value"
+                  class="offre-form__radio"
                 >
-                  {{ c }}
-                </option>
-              </select>
-            </label>
+                  <input
+                    v-model="form.typeContrat"
+                    type="radio"
+                    name="typeContrat"
+                    :value="t.value"
+                  >
+                  <span>{{ t.label }}</span>
+                </label>
+              </div>
+              <span
+                v-if="errors.typeContrat"
+                class="offre-form__error"
+              >{{ errors.typeContrat }}</span>
+            </fieldset>
 
-            <label
-              v-if="form.typeContrat === 'titulaire'"
-              class="offre-form__field"
+            <div class="offre-form__grid offre-form__grid--mt">
+              <label
+                v-if="form.typeContrat === 'titulaire'"
+                class="offre-form__field"
+              >
+                <span class="offre-form__label">Corps</span>
+                <select
+                  v-model="form.corps"
+                  class="offre-form__select"
+                >
+                  <option value="">
+                    —
+                  </option>
+                  <option
+                    v-for="c in CORPS"
+                    :key="c"
+                    :value="c"
+                  >
+                    {{ c }}
+                  </option>
+                </select>
+              </label>
+
+              <label
+                v-if="form.typeContrat === 'titulaire'"
+                class="offre-form__field"
+              >
+                <span class="offre-form__label">Grade</span>
+                <select
+                  v-model="form.grade"
+                  class="offre-form__select"
+                >
+                  <option value="">
+                    —
+                  </option>
+                  <option
+                    v-for="g in GRADES"
+                    :key="g"
+                    :value="g"
+                  >
+                    {{ g }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="offre-form__field">
+                <span class="offre-form__label">Lieu</span>
+                <select
+                  v-model="form.localisation"
+                  class="offre-form__select"
+                >
+                  <option value="">
+                    Sélectionner…
+                  </option>
+                  <option
+                    v-for="l in LOCALISATIONS"
+                    :key="l"
+                    :value="l"
+                  >
+                    {{ l }}
+                  </option>
+                </select>
+              </label>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Descriptif</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              v-model="form.descriptif"
+              class="offre-form__textarea"
+              placeholder="Missions, contexte, profil recherché…"
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Pipeline</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <fieldset
+              class="offre-form__fieldset"
+              :data-error="Boolean(errors.etapesIds) || undefined"
             >
-              <span class="offre-form__label">Grade</span>
-              <select
-                v-model="form.grade"
-                class="offre-form__select"
-              >
-                <option value="">
-                  —
-                </option>
-                <option
-                  v-for="g in GRADES"
-                  :key="g"
-                  :value="g"
+              <legend class="offre-form__label">
+                Étapes utilisées pour cette offre *
+              </legend>
+              <ul class="offre-form__check-list">
+                <li
+                  v-for="etape in etapesAll"
+                  :key="etape.id"
+                  class="offre-form__check-item"
                 >
-                  {{ g }}
-                </option>
-              </select>
-            </label>
+                  <label class="offre-form__check">
+                    <input
+                      type="checkbox"
+                      :checked="form.etapesIds.includes(etape.id)"
+                      @change="toggleEtape(etape.id)"
+                    >
+                    <span
+                      class="offre-form__step-dot"
+                      :style="{ background: `var(--${etape.couleur})` }"
+                      aria-hidden="true"
+                    />
+                    <span>{{ etape.libelle }}</span>
+                  </label>
+                </li>
+              </ul>
+              <span
+                v-if="errors.etapesIds"
+                class="offre-form__error"
+              >{{ errors.etapesIds }}</span>
+            </fieldset>
+          </CardContent>
+        </Card>
 
-            <label class="offre-form__field">
-              <span class="offre-form__label">Lieu</span>
-              <select
-                v-model="form.localisation"
-                class="offre-form__select"
-              >
-                <option value="">
-                  Sélectionner…
-                </option>
-                <option
-                  v-for="l in LOCALISATIONS"
-                  :key="l"
-                  :value="l"
-                >
-                  {{ l }}
-                </option>
-              </select>
-            </label>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Descriptif</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Textarea
-            v-model="form.descriptif"
-            class="offre-form__textarea"
-            placeholder="Missions, contexte, profil recherché…"
-          />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Pipeline</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <fieldset
-            class="offre-form__fieldset"
-            :data-error="Boolean(errors.etapesIds) || undefined"
-          >
-            <legend class="offre-form__label">
-              Étapes utilisées pour cette offre *
-            </legend>
+        <Card>
+          <CardHeader>
+            <CardTitle>Intervieweurs par défaut</CardTitle>
+          </CardHeader>
+          <CardContent>
             <ul class="offre-form__check-list">
               <li
-                v-for="etape in etapesAll"
-                :key="etape.id"
+                v-for="i in seed.intervieweurs"
+                :key="i.id"
                 class="offre-form__check-item"
               >
                 <label class="offre-form__check">
                   <input
                     type="checkbox"
-                    :checked="form.etapesIds.includes(etape.id)"
-                    @change="toggleEtape(etape.id)"
+                    :checked="form.intervieweursDefautIds.includes(i.id)"
+                    @change="toggleIntervieweur(i.id)"
                   >
-                  <span
-                    class="offre-form__step-dot"
-                    :style="{ background: `var(--${etape.couleur})` }"
-                    aria-hidden="true"
-                  />
-                  <span>{{ etape.libelle }}</span>
+                  <span>{{ i.prenom }} {{ i.nom }}</span>
+                  <span class="offre-form__role">
+                    {{ i.role === 'rh' ? 'RH' : i.role === 'manager' ? 'Manager' : 'Expert' }}
+                  </span>
                 </label>
               </li>
             </ul>
-            <span
-              v-if="errors.etapesIds"
-              class="offre-form__error"
-            >{{ errors.etapesIds }}</span>
-          </fieldset>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Intervieweurs par défaut</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul class="offre-form__check-list">
-            <li
-              v-for="i in seed.intervieweurs"
-              :key="i.id"
-              class="offre-form__check-item"
-            >
-              <label class="offre-form__check">
-                <input
-                  type="checkbox"
-                  :checked="form.intervieweursDefautIds.includes(i.id)"
-                  @change="toggleIntervieweur(i.id)"
-                >
-                <span>{{ i.prenom }} {{ i.nom }}</span>
-                <span class="offre-form__role">
-                  {{ i.role === 'rh' ? 'RH' : i.role === 'manager' ? 'Manager' : 'Expert' }}
-                </span>
-              </label>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
 
     <div class="offre-form__footer">
-      <div class="offre-form__autosave">
-        <RiIcon
-          name="ri:save-line"
-          :size="14"
-        />
-        <span v-if="lastSavedAt">Brouillon enregistré à {{ formatLastSaved() }}</span>
-        <span v-else>Enregistrement automatique activé</span>
-      </div>
-      <div class="offre-form__footer-actions">
-        <Button
-          type="button"
-          variant="tertiary-no-outline"
-          :disabled="isSubmitting"
-          @click="onCancel"
-        >
-          Annuler
-        </Button>
-        <template v-if="!isEdit">
+      <div class="offre-form__footer-inner">
+        <div class="offre-form__autosave">
+          <RiIcon
+            name="ri:save-line"
+            :size="14"
+          />
+          <span v-if="lastSavedAt">Brouillon enregistré à {{ formatLastSaved() }}</span>
+          <span v-else>Enregistrement automatique activé</span>
+        </div>
+        <div class="offre-form__footer-actions">
           <Button
             type="button"
-            variant="secondary"
+            variant="tertiary-no-outline"
             :disabled="isSubmitting"
-            @click="handleSubmit('brouillon')"
+            @click="onCancel"
           >
-            Enregistrer en brouillon
+            Annuler
           </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            :disabled="isSubmitting"
-          >
-            Publier
-          </Button>
-        </template>
-        <template v-else>
-          <Button
-            type="submit"
-            variant="primary"
-            :disabled="isSubmitting"
-          >
-            Enregistrer
-          </Button>
-        </template>
+          <template v-if="!isEdit">
+            <Button
+              type="button"
+              variant="secondary"
+              :disabled="isSubmitting"
+              @click="handleSubmit('brouillon')"
+            >
+              Enregistrer en brouillon
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              :disabled="isSubmitting"
+            >
+              Publier
+            </Button>
+          </template>
+          <template v-else>
+            <Button
+              type="submit"
+              variant="primary"
+              :disabled="isSubmitting"
+            >
+              Enregistrer
+            </Button>
+          </template>
+        </div>
       </div>
     </div>
   </form>
@@ -498,13 +502,15 @@ onMounted(() => {
   min-height: 0;
 }
 
-.offre-form__content {
+.offre-form__scroll {
   flex: 1;
   overflow: auto;
-  padding: var(--csplab-space-4);
+}
+
+.offre-form__content {
   display: flex;
   flex-direction: column;
-  gap: var(--csplab-space-4);
+  gap: var(--csplab-space-6);
 }
 
 .offre-form__grid {
@@ -626,11 +632,22 @@ onMounted(() => {
   bottom: 0;
   background: var(--background-default-grey);
   border-top: 1px solid var(--border-default-grey);
-  padding: var(--csplab-space-3) var(--csplab-space-4);
+}
+
+.offre-form__footer-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--csplab-space-3) var(--csplab-space-6);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--csplab-space-3);
+}
+
+@media (max-width: 1024px) {
+  .offre-form__footer-inner {
+    padding: var(--csplab-space-3) var(--csplab-space-4);
+  }
 }
 
 .offre-form__autosave {
