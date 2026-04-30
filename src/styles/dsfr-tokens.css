@@ -48,6 +48,7 @@
   --background-alt-grey: #f6f6f6;
   --background-alt-blue-france: #f5f5fe;
   --background-contrast-grey: #eeeeee;
+  --background-elevated-grey: #ffffff;
   --background-contrast-info: #e8edff;
   --background-contrast-success: #b8fec9;
   --background-contrast-warning: #fee9e6;
@@ -128,6 +129,9 @@
   --csplab-shadow-md: 0 4px 6px -1px rgba(0, 0, 18, 0.1), 0 2px 4px -1px rgba(0, 0, 18, 0.06);
   --csplab-shadow-lg: 0 10px 15px -3px rgba(0, 0, 18, 0.1), 0 4px 6px -2px rgba(0, 0, 18, 0.05);
 
+  /* Overlay scrim (Dialog / Drawer) */
+  --csplab-overlay-scrim: rgba(22, 22, 22, 0.64);
+
   /* Z-index */
   --csplab-z-base: 0;
   --csplab-z-dropdown: 100;
@@ -151,6 +155,7 @@
   --background-alt-grey: #242424;
   --background-alt-blue-france: #1b1b35;
   --background-contrast-grey: #2a2a2a;
+  --background-elevated-grey: #262626;
   --background-action-high-blue-france: #8585f6;
   --background-action-high-blue-france-hover: #a4a4ff;
   --background-action-high-blue-france-active: #b8b8ff;
@@ -170,6 +175,8 @@
   --csplab-status-submitted: #8585f6;
   --csplab-status-screening: #a4a4ff;
   --csplab-status-interview: #ffb84d;
+
+  --csplab-overlay-scrim: rgba(0, 0, 0, 0.72);
   --csplab-status-offer: #5cb85c;
   --csplab-status-rejected: #ff7676;
   --csplab-status-archived: #666666;

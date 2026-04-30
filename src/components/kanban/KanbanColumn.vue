@@ -154,7 +154,7 @@ const colorVar = computed(() => `var(--${props.etape.couleur})`)
   gap: var(--csplab-space-2);
   padding: 0 var(--csplab-space-3);
   border-bottom: 1px solid var(--border-default-grey);
-  background: var(--background-default-grey);
+  background: transparent;
 }
 
 .csplab-kanban-column__dot {

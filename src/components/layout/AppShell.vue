@@ -66,6 +66,7 @@ import { RouterView } from 'vue-router'
 }
 
 .csplab-shell__sidebar {
+  background: var(--background-alt-grey);
   border-right: 1px solid var(--border-default-grey);
   overflow: hidden;
 }

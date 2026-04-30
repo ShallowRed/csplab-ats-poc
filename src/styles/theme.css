@@ -28,10 +28,10 @@
   --color-input: var(--border-default-grey);
   --color-ring: var(--csplab-focus-ring-color);
   
-  --color-card: var(--background-default-grey);
+  --color-card: var(--background-contrast-grey);
   --color-card-foreground: var(--text-default-grey);
   
-  --color-popover: var(--background-default-grey);
+  --color-popover: var(--background-elevated-grey);
   --color-popover-foreground: var(--text-default-grey);
   
   /* Map DSFR tokens to Tailwind semantic colors (legacy) */
