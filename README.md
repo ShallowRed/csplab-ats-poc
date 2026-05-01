@@ -6,7 +6,7 @@ POC d'un Applicant Tracking System (ATS) pour le secteur public français utilis
 
 Valider une architecture UI 3 couches pour une app métier CSPLab conforme au DSFR et maintenable à long terme.
 
-**Lien vers le plan d'exécution** : `~/Projects/shallowred-garden/agents/workspace-pawn/content/projets/csplab/poc-01-plan-execution.md`
+Détails architecturaux et décisions : voir [docs/decisions/ats-ui-choix-implementation.md](docs/decisions/ats-ui-choix-implementation.md).
 
 ## Stack Technique
 
@@ -24,26 +24,11 @@ Valider une architecture UI 3 couches pour une app métier CSPLab conforme au DS
 
 ## Architecture 3 Couches
 
-### Couche 1 : Tokens DSFR
-
-Source de vérité visuelle — Tokens design extraits du DSFR v1.14.4 :
-- Couleurs sémantiques (action, success, warning, error, info)
-- 7 statuts métier CSPLab
-- Échelle typographique
-- Espacements, radius, ombres, z-index
-
-Fichier : `src/styles/dsfr-tokens.css`
-
-### Couche 2 : Primitives headless (Lot 1)
-
-À installer au Lot 1 : Reka UI via shadcn-vue (composants accessibles sans style).
-
-### Couche 3 : Thème CSPLab
-
-Tailwind v4 utility-first mappé sur les tokens DSFR.  
-Fichier : `src/styles/theme.css`
-
-**Note** : Tailwind v4 (`@tailwindcss/vite` 4.0.0) n'est pas officiellement compatible avec Vite 8. Installation avec `--legacy-peer-deps` réussie, fonctionnel en pratique.
+| Couche | Rôle | Fichier |
+|--------|------|---------|
+| 1 — Tokens DSFR | Source de vérité visuelle (couleurs, typo, espacements, statuts métier) | `src/styles/dsfr-tokens.css` |
+| 2 — Primitives headless | Reka UI via shadcn-vue (accessibilité sans style) | `src/components/ui/` |
+| 3 — Thème CSPLab | Tailwind v4 `@theme inline` mappé sur les tokens DSFR | `src/styles/theme.css` |
 
 ## Commandes
 
@@ -74,50 +59,57 @@ npm run build-storybook
 
 ## Statut
 
-✅ **Lot 0 terminé**
+### POC 01 — Vue 3 + Reka UI ✅ terminé (lots 0–14)
 
-Fondations posées :
-- Architecture 3 couches définie
-- Tokens DSFR v1.14.4 intégrés (sans fonte Marianne, fallback arial)
-- Tailwind v4 configuré (mapping tokens → utils)
-- Structure de dossiers pour les 10 lots
-- App de smoke test fonctionnelle
-- Storybook 10 configuré avec story de référence (Tokens)
-- Vitest + ESLint + Prettier opérationnels
+| Lot | Contenu | Statut |
+|-----|---------|--------|
+| Lot 0 | Bootstrap : Vite, Tailwind v4, tokens DSFR, Storybook, Vitest | ✅ |
+| Lot 1 | shadcn-vue : Button, Badge, Dialog, Drawer, Tabs, Combobox… | ✅ |
+| Lot 2 | Types domaine, mock API, stores Pinia | ✅ |
+| Lot 3 | App shell, sidebar, header contextuel, routing | ✅ |
+| Lot 4 | Kanban pipeline (DnD souris + clavier) | ✅ |
+| Lot 5 | Table candidatures (TanStack, filtres, sélection bulk) | ✅ |
+| Lot 6 | Fiche candidat (drawer, timeline, Tiptap) | ✅ |
+| Lot 7 | Planification entretien (slide-over) | ✅ |
+| Lot 8 | Formulaire d'évaluation | ✅ |
+| Lot A/B/C | Alignement DSFR (focus, radius, boutons), migration icônes Remix | ✅ |
+| Lot 10 | Consolidation routing, EmptyState, breadcrumb | ✅ |
+| Lot 11 | Gestion des offres (list, détail, CRUD) | ✅ |
+| Lot 12 | Paramètres (étapes, motifs de refus, templates, intervieweurs) | ✅ |
+| Lot 14 | Tableau de bord RH (KPIs, todo, délais étapes) | ✅ |
 
-**Prochaine étape** : Lot 1 — Installation shadcn-vue + primitives headless (Button, Badge, Select, Dialog, DataTable).
+### POC 03 — React + ui-kit Suite numérique 🔜 à démarrer
+
+Réplique fonctionnelle sur stack React 19 + ui-kit Suite numérique pour comparatif terrain. Voir [docs/pilotage/poc-03-react-suite-ui-kit.md](docs/pilotage/poc-03-react-suite-ui-kit.md).
+
+## Documentation
+
+La documentation de cadrage (décisions architecturales, sessions de recherche, pilotage POC) est dans le dossier `docs/` (submodule git privé) :
+
+```
+docs/
+  index.md                          # Table des matières
+  decisions/
+    ats-ui-choix-implementation.md  # ADR principal (architecture 3 couches)
+  recherche/                        # 5 sessions d'exploration pre-POC
+    session-01-benchmark-headless.md
+    session-02-audit-tokens-dsfr.md
+    session-03-audit-ui-kit.md
+    session-04-vue-composants-ats.md
+    session-05-analyse-ui-ats-reference.md
+  pilotage/                         # Plans et suivi POC
+    session-06-synthese-specs-poc.md
+    poc-01-plan-execution.md
+    poc-02-plan-extension.md
+    poc-03-react-suite-ui-kit.md
+```
+
+> **Note** : `docs/` est un submodule git pointant vers un repo privé. Pour le cloner avec la doc : `git clone --recurse-submodules`.
 
 ## Notes Techniques
 
-### Downgrade Vite 8→6 (30 avril 2026)
-
-**Problème** : Après le Lot 1 (installation shadcn-vue), le build de production était cassé :
-```
-TypeError: Cannot convert undefined or null to object
-    at B.generate (node_modules/@tailwindcss/vite/dist/index.mjs:1:5598)
-```
-
-**Cause** : Incompatibilité `@tailwindcss/vite@4.0.0` + `vite@8.0.10`. Le plugin Tailwind v4 n'est officiellement testé que sur Vite 5/6.
-
-**Solution** : Downgrade Vite 8→6 (LTS) + dépendances associées :
-- `vite: ^6.0.0`
-- `@vitejs/plugin-vue: ^5.2.0`
-- `vitest: ^2.1.8`
-- `storybook: ^8.4.7` (Storybook 10 requiert Vite 7+)
-
-Résultat : Build de production restauré, tous les checks passent.
-
-### Compatibilité Tailwind v4 + Vite 6
-
-`@tailwindcss/vite` 4.0.0 est pleinement compatible avec Vite 6 (déclaré dans `peerDependencies: vite ^5.2.0 || ^6`). Aucun flag `--legacy-peer-deps` nécessaire.
-
-### Fonte Marianne
-
-Les fichiers `.woff2` Marianne ne sont pas inclus dans ce Lot. Le `@font-face` est commenté dans `dsfr-tokens.css`. Fallback : `arial, sans-serif`. Intégration prévue au **Lot 9**.
-
-### Storybook avec Playwright
-
-Storybook 10 a installé Playwright + Chromium pour les tests visuels (addon-vitest). Non utilisé dans ce Lot mais disponible pour les suivants.
+- **Vite 6 (LTS)** : `@tailwindcss/vite@4.0.0` est incompatible avec Vite 7+. Stack bloquée sur Vite 6 + Storybook 8.
+- **Fonte Marianne** : non incluse. Fallback `arial, sans-serif`. Intégration prévue au Lot 9.
 
 ## Licence
 
