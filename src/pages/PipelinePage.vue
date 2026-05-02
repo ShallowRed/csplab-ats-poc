@@ -44,9 +44,10 @@ const totalFilteredCount = computed(() => {
   }).length
 })
 
-const showKanbanHint = computed(
-  () => view.value === 'kanban' && selection.count === 0,
-)
+// const showKanbanHint = computed(
+//   () => view.value === 'kanban' && selection.count === 0,
+// )
+const showKanbanHint = false
 
 watchEffect(() => {
   if (offreId.value) {
