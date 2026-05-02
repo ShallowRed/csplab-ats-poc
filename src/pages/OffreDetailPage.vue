@@ -156,17 +156,6 @@ function goBack(): void {
                 <span class="offre-detail__counter-num">{{ counts.aTraiter }}</span>
                 <span class="offre-detail__counter-label"> à traiter</span>
               </div>
-              <button
-                type="button"
-                class="offre-detail__counter-link"
-                @click="goPipeline"
-              >
-                Ouvrir le pipeline
-                <RiIcon
-                  name="ri:arrow-right-line"
-                  :size="14"
-                />
-              </button>
             </div>
           </header>
 
