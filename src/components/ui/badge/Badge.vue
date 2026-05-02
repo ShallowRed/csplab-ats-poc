@@ -1,34 +1,51 @@
 <script setup lang="ts">
-import { type HTMLAttributes } from 'vue'
+import { type HTMLAttributes, computed } from 'vue'
 import { type VariantProps, cva } from 'class-variance-authority'
+import { Icon } from '@iconify/vue'
 import { cn } from '@/lib/utils'
 
+// Icônes Remix Icons pour les badges système DSFR
+const SYSTEM_ICONS: Record<string, string> = {
+  default: '',
+  secondary: '',
+  destructive: 'ri:close-circle-fill',
+  outline: '',
+  'status-draft': '',
+  'status-submitted': 'ri:information-fill',
+  'status-screening': 'ri:search-2-line',
+  'status-interview': 'ri:calendar-event-fill',
+  'status-offer': 'ri:checkbox-circle-fill',
+  'status-rejected': 'ri:close-circle-fill',
+  'status-archived': 'ri:archive-fill',
+}
+
 const badgeVariants = cva(
-  'inline-flex items-center rounded-sm border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center gap-1 rounded-sm px-2 py-0.5 text-xs font-bold uppercase tracking-wide',
   {
     variants: {
       variant: {
         default:
-          'border-transparent bg-primary text-primary-foreground shadow',
+          'bg-[var(--background-contrast-grey)] text-[var(--text-default-grey)]',
         secondary:
-          'border-transparent bg-secondary text-secondary-foreground',
+          'bg-[var(--background-alt-grey)] text-[var(--text-mention-grey)]',
         destructive:
-          'border-transparent bg-destructive text-destructive-foreground shadow',
-        outline: 'text-foreground',
+          'bg-[var(--background-contrast-error)] text-[var(--text-default-error)]',
+        outline:
+          'bg-transparent shadow-[inset_0_0_0_1px_var(--border-default-grey)] text-[var(--text-default-grey)]',
         'status-draft':
-          'border-[var(--csplab-status-draft)] bg-[color-mix(in_srgb,var(--csplab-status-draft)_15%,transparent)] text-[var(--csplab-status-draft)]',
+          'bg-[color-mix(in_srgb,var(--csplab-status-draft)_12%,transparent)] text-[var(--csplab-status-draft)]',
         'status-submitted':
-          'border-[var(--csplab-status-submitted)] bg-[color-mix(in_srgb,var(--csplab-status-submitted)_15%,transparent)] text-[var(--csplab-status-submitted)]',
+          'bg-[var(--background-contrast-info)] text-[var(--text-default-info)]',
         'status-screening':
-          'border-[var(--csplab-status-screening)] bg-[color-mix(in_srgb,var(--csplab-status-screening)_15%,transparent)] text-[var(--csplab-status-screening)]',
+          'bg-[color-mix(in_srgb,var(--csplab-status-screening)_12%,transparent)] text-[var(--csplab-status-screening)]',
         'status-interview':
-          'border-[var(--csplab-status-interview)] bg-[color-mix(in_srgb,var(--csplab-status-interview)_15%,transparent)] text-[var(--csplab-status-interview)]',
+          'bg-[var(--background-contrast-warning)] text-[var(--text-default-warning)]',
         'status-offer':
-          'border-[var(--csplab-status-offer)] bg-[color-mix(in_srgb,var(--csplab-status-offer)_15%,transparent)] text-[var(--csplab-status-offer)]',
+          'bg-[var(--background-contrast-success)] text-[var(--text-default-success)]',
         'status-rejected':
-          'border-[var(--csplab-status-rejected)] bg-[color-mix(in_srgb,var(--csplab-status-rejected)_15%,transparent)] text-[var(--csplab-status-rejected)]',
+          'bg-[var(--background-contrast-error)] text-[var(--text-default-error)]',
         'status-archived':
-          'border-[var(--csplab-status-archived)] bg-[color-mix(in_srgb,var(--csplab-status-archived)_15%,transparent)] text-[var(--csplab-status-archived)]',
+          'bg-[color-mix(in_srgb,var(--csplab-status-archived)_12%,transparent)] text-[var(--csplab-status-archived)]',
       },
     },
     defaultVariants: {
@@ -39,16 +56,32 @@ const badgeVariants = cva(
 
 interface Props {
   variant?: VariantProps<typeof badgeVariants>['variant']
+  /** Forcer ou supprimer l'icône système. `false` = pas d'icône. */
+  icon?: string | false
   class?: HTMLAttributes['class']
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
 })
+
+const resolvedIcon = computed(() => {
+  if (props.icon === false) return ''
+  if (props.icon) return props.icon
+  return SYSTEM_ICONS[props.variant ?? 'default'] ?? ''
+})
 </script>
 
 <template>
-  <div :class="cn(badgeVariants({ variant }), props.class)">
+  <p :class="cn(badgeVariants({ variant }), props.class)">
+    <Icon
+      v-if="resolvedIcon"
+      :icon="resolvedIcon"
+      :width="12"
+      :height="12"
+      aria-hidden="true"
+      class="shrink-0"
+    />
     <slot />
-  </div>
+  </p>
 </template>

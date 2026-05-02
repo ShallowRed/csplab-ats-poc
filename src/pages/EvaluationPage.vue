@@ -6,7 +6,7 @@ import { useToastStore } from '@/stores/toast'
 import { mockApi } from '@/lib/mockApi'
 import { seed } from '@/data/seed'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import EvaluationForm from '@/components/evaluation/EvaluationForm.vue'
@@ -197,15 +197,15 @@ watch(notations, () => { /* side-effects handled by interval */ }, { deep: true 
       <div class="eval-page__header-card">
         <div class="eval-page__header-row">
           <div class="eval-page__header-meta">
-            <Badge variant="secondary">
+            <Tag size="sm">
               Entretien {{ entretien ? typeLabel[entretien.type] : '' }}
-            </Badge>
-            <Badge
+            </Tag>
+            <Tag
               v-if="entretien"
-              variant="secondary"
+              size="sm"
             >
               {{ statutLabel[entretien.statut] }}
-            </Badge>
+            </Tag>
           </div>
 
           <div

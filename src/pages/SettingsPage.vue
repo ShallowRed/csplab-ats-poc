@@ -329,7 +329,7 @@ function roleLabel(role: Intervieweur['role']): string {
                   <Button
                     type="button"
                     variant="tertiary"
-                    size="sm"
+                    size="icon-sm"
                     :aria-label="`Supprimer ${etape.libelle}`"
                     @click="supprimerEtape(etape.id)"
                   >
@@ -378,7 +378,7 @@ function roleLabel(role: Intervieweur['role']): string {
               <Button
                 type="button"
                 variant="tertiary"
-                size="sm"
+                size="icon-sm"
                 :aria-label="`Supprimer ${motif.libelle}`"
                 @click="supprimerMotif(motif.id)"
               >
@@ -543,7 +543,7 @@ function roleLabel(role: Intervieweur['role']): string {
                     <Button
                       type="button"
                       variant="tertiary"
-                      size="sm"
+                      size="icon-sm"
                       :aria-label="`Modifier ${intervieweur.prenom} ${intervieweur.nom}`"
                       @click="openEditIntervieweur(intervieweur)"
                     >
@@ -552,7 +552,7 @@ function roleLabel(role: Intervieweur['role']): string {
                     <Button
                       type="button"
                       variant="tertiary"
-                      size="sm"
+                      size="icon-sm"
                       :aria-label="`Supprimer ${intervieweur.prenom} ${intervieweur.nom}`"
                       @click="supprimerIntervieweur(intervieweur)"
                     >

@@ -13,6 +13,7 @@ import {
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -381,21 +382,21 @@ defineExpose({ filteredCount: computed(() => filteredRows.value.length) })
 
           <td class="cand-table__td">
             <div class="cand-table__tags">
-              <Badge
+              <Tag
                 v-for="tag in row.original.candidature.tags.slice(0, 2)"
                 :key="tag"
-                variant="secondary"
+                size="sm"
                 class="cand-table__tag"
               >
                 {{ tag }}
-              </Badge>
-              <Badge
+              </Tag>
+              <Tag
                 v-if="row.original.candidature.tags.length > 2"
-                variant="secondary"
+                size="sm"
                 class="cand-table__tag"
               >
                 +{{ row.original.candidature.tags.length - 2 }}
-              </Badge>
+              </Tag>
             </div>
           </td>
 

@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -73,9 +73,7 @@ const label = computed(() => {
     aria-live="polite"
   >
     <div class="bulk-bar__left">
-      <Badge variant="secondary">
-        {{ label }}
-      </Badge>
+      <Tag size="sm">{{ label }}</Tag>
 
       <Button
         type="button"

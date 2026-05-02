@@ -5,6 +5,7 @@ import { useSortable } from '@dnd-kit/vue/sortable'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -216,30 +217,30 @@ function stop(event: Event): void {
         </div>
 
         <div class="csplab-kanban-card__tags">
-          <Badge
+          <Tag
             v-for="tag in tagsDisplay.visible"
             :key="tag"
-            variant="secondary"
+            size="sm"
             class="csplab-kanban-card__tag"
           >
             {{ tag }}
-          </Badge>
-          <Badge
+          </Tag>
+          <Tag
             v-if="tagsDisplay.remaining > 0"
-            variant="secondary"
+            size="sm"
             class="csplab-kanban-card__tag"
           >
             +{{ tagsDisplay.remaining }}
-          </Badge>
+          </Tag>
         </div>
 
         <div class="csplab-kanban-card__row csplab-kanban-card__row--bottom">
-          <Badge
+          <Tag
             v-if="props.candidature.score !== undefined"
-            variant="secondary"
+            size="sm"
           >
             ★ {{ props.candidature.score }}/4
-          </Badge>
+          </Tag>
 
           <div class="csplab-kanban-card__assignee">
             <template v-if="props.intervieweurAssigne">

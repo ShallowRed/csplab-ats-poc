@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import {
   Popover,
   PopoverContent,
@@ -155,26 +155,18 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
       role="list"
       aria-label="Filtres actifs"
     >
-      <Badge
+      <Tag
         v-for="chip in filters.chipsActifs"
         :key="chip.id"
-        variant="secondary"
+        type="dismissible"
+        size="sm"
         class="filter-chips__chip"
+        :aria-label="`Retirer le filtre ${chip.label}`"
         role="listitem"
+        @dismiss="chip.onRemove()"
       >
         {{ chip.label }}
-        <button
-          type="button"
-          class="filter-chips__chip-remove"
-          :aria-label="`Supprimer le filtre ${chip.label}`"
-          @click="chip.onRemove()"
-        >
-          <RiIcon
-            name="ri:close-line"
-            :size="12"
-          />
-        </button>
-      </Badge>
+      </Tag>
 
       <Button
         type="button"

@@ -2,7 +2,7 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -376,9 +376,7 @@ const stepLabels: Record<Step, string> = {
           <div class="slideover-recap">
             <div class="slideover-recap__row">
               <span class="slideover-recap__label">Type</span>
-              <Badge variant="secondary">
-                {{ typeLabel }}
-              </Badge>
+              <Tag size="sm">{{ typeLabel }}</Tag>
             </div>
 
             <div class="slideover-recap__row">

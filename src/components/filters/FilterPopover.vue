@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import {
   Popover,
   PopoverContent,
@@ -62,13 +62,13 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
           :size="16"
         />
         Filtres
-        <Badge
+        <Tag
           v-if="hasActiveFilters"
-          variant="secondary"
+          size="sm"
           class="ml-1"
         >
           {{ filters.chipsActifs.length }}
-        </Badge>
+        </Tag>
       </Button>
     </PopoverTrigger>
 

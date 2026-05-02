@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/components/ui/tag'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -301,23 +302,23 @@ watch(isOpen, (val) => {
             </TabsTrigger>
             <TabsTrigger value="activite">
               Activité
-              <Badge
+              <Tag
                 v-if="data.evenements.length > 0"
-                variant="secondary"
+                size="sm"
                 class="ml-1"
               >
                 {{ data.evenements.length }}
-              </Badge>
+              </Tag>
             </TabsTrigger>
             <TabsTrigger value="entretiens">
               Entretiens
-              <Badge
+              <Tag
                 v-if="data.entretiens.length > 0"
-                variant="secondary"
+                size="sm"
                 class="ml-1"
               >
                 {{ data.entretiens.length }}
-              </Badge>
+              </Tag>
             </TabsTrigger>
             <TabsTrigger value="documents">
               Documents
@@ -363,13 +364,13 @@ watch(isOpen, (val) => {
               >
                 <span class="candidate-drawer__field-label">Tags</span>
                 <div class="candidate-drawer__tags">
-                  <Badge
+                  <Tag
                     v-for="tag in data.candidature.tags"
                     :key="tag"
-                    variant="secondary"
+                    size="sm"
                   >
                     {{ tag }}
-                  </Badge>
+                  </Tag>
                 </div>
               </div>
             </div>

@@ -12,9 +12,9 @@ const buttonVariants = cva(
         primary:
           'bg-[var(--background-action-high-blue-france)] text-[var(--text-inverted-grey)] hover:bg-[var(--background-action-high-blue-france-hover)] active:bg-[var(--background-action-high-blue-france-active)]',
         secondary:
-          'bg-transparent text-[var(--text-action-high-blue-france)] border border-[var(--border-action-high-blue-france)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
+          'bg-transparent text-[var(--text-action-high-blue-france)] shadow-[inset_0_0_0_1px_var(--border-action-high-blue-france)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
         tertiary:
-          'bg-transparent text-[var(--text-action-high-grey)] border border-[var(--border-default-grey)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
+          'bg-transparent text-[var(--text-action-high-blue-france)] shadow-[inset_0_0_0_1px_var(--border-default-grey)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
         'tertiary-no-outline':
           'bg-transparent text-[var(--text-action-high-grey)] hover:bg-[var(--background-default-grey-hover)] active:bg-[var(--background-default-grey-active)]',
         destructive:
@@ -27,6 +27,7 @@ const buttonVariants = cva(
         md: 'py-2 px-4 text-sm',
         lg: 'py-3 px-6 text-base',
         icon: 'h-9 w-9 p-0',
+        'icon-sm': 'h-8 w-8 p-0',
       },
     },
     defaultVariants: {
