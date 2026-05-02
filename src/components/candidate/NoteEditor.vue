@@ -115,7 +115,7 @@ onBeforeUnmount(() => {
     </div>
 
     <EditorContent
-      class="note-editor__content"
+      class="note-editor__content bg-background"
       :editor="editor"
     />
   </div>

@@ -294,11 +294,22 @@ watch(isOpen, (val) => {
           class="candidate-drawer__tabs"
           @update:model-value="drawer.setOnglet($event as 'profil' | 'activite' | 'entretiens' | 'documents')"
         >
-          <TabsList class="candidate-drawer__tabs-list">
-            <TabsTrigger value="profil">
+          <TabsList
+            variant="segment"
+            class="candidate-drawer__tabs-list"
+          >
+            <TabsTrigger
+              value="profil"
+              variant="segment"
+            >
+              <RiIcon name="ri:user-line" :size="14" aria-hidden="true" />
               Profil
             </TabsTrigger>
-            <TabsTrigger value="activite">
+            <TabsTrigger
+              value="activite"
+              variant="segment"
+            >
+              <RiIcon name="ri:time-line" :size="14" aria-hidden="true" />
               Activité
               <Tag
                 v-if="data.evenements.length > 0"
@@ -307,7 +318,11 @@ watch(isOpen, (val) => {
                 {{ data.evenements.length }}
               </Tag>
             </TabsTrigger>
-            <TabsTrigger value="entretiens">
+            <TabsTrigger
+              value="entretiens"
+              variant="segment"
+            >
+              <RiIcon name="ri:calendar-line" :size="14" aria-hidden="true" />
               Entretiens
               <Tag
                 v-if="data.entretiens.length > 0"
@@ -316,7 +331,11 @@ watch(isOpen, (val) => {
                 {{ data.entretiens.length }}
               </Tag>
             </TabsTrigger>
-            <TabsTrigger value="documents">
+            <TabsTrigger
+              value="documents"
+              variant="segment"
+            >
+              <RiIcon name="ri:file-line" :size="14" aria-hidden="true" />
               Documents
             </TabsTrigger>
           </TabsList>
@@ -611,8 +630,7 @@ watch(isOpen, (val) => {
 
 .candidate-drawer__tabs-list {
   flex-shrink: 0;
-  margin: 0 var(--csplab-space-4);
-  margin-top: var(--csplab-space-2);
+  margin: var(--csplab-space-3) var(--csplab-space-4);
 }
 
 .candidate-drawer__tab-content {

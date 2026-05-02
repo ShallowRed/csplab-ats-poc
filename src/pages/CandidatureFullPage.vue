@@ -342,8 +342,15 @@ async function submitNote(): Promise<void> {
           default-value="activite"
           class="cfp__tabs"
         >
-          <TabsList class="cfp__tabs-list">
-            <TabsTrigger value="activite">
+          <TabsList
+            variant="segment"
+            class="cfp__tabs-list"
+          >
+            <TabsTrigger
+              value="activite"
+              variant="segment"
+            >
+              <RiIcon name="ri:time-line" :size="14" aria-hidden="true" />
               Activité
               <Tag
                 v-if="data.evenements.length > 0"
@@ -352,7 +359,11 @@ async function submitNote(): Promise<void> {
                 {{ data.evenements.length }}
               </Tag>
             </TabsTrigger>
-            <TabsTrigger value="entretiens">
+            <TabsTrigger
+              value="entretiens"
+              variant="segment"
+            >
+              <RiIcon name="ri:calendar-line" :size="14" aria-hidden="true" />
               Entretiens
               <Tag
                 v-if="data.entretiens.length > 0"
@@ -361,7 +372,11 @@ async function submitNote(): Promise<void> {
                 {{ data.entretiens.length }}
               </Tag>
             </TabsTrigger>
-            <TabsTrigger value="documents">
+            <TabsTrigger
+              value="documents"
+              variant="segment"
+            >
+              <RiIcon name="ri:file-line" :size="14" aria-hidden="true" />
               Documents
             </TabsTrigger>
           </TabsList>
@@ -679,8 +694,7 @@ async function submitNote(): Promise<void> {
 
 .cfp__tabs-list {
   flex-shrink: 0;
-  border-bottom: 1px solid var(--border-default-grey);
-  padding: 0 var(--csplab-space-4);
+  padding: var(--csplab-space-3) var(--csplab-space-4);
 }
 
 .cfp__tab-content {

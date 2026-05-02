@@ -10,6 +10,8 @@ const tabsListVariants = cva('', {
       pill: 'inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground',
       underline:
         'inline-flex items-stretch h-auto bg-transparent border-b border-[var(--border-default-grey)] rounded-none p-0',
+      segment:
+        'inline-flex items-center gap-0.5 bg-[var(--background-alt-grey)] rounded-[var(--csplab-radius-md)] p-0.5 h-auto',
     },
   },
   defaultVariants: {
