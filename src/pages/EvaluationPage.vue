@@ -56,11 +56,10 @@ async function saveDraft(): Promise<void> {
 }
 
 onMounted(async () => {
-  // Find entretien in seed / mockApi data
-  const found = seed.entretiens.find(e => e.id === props.id)
-    ?? seed.entretiens[0] // fallback for dev navigation without a real id
-
-  if (!found) {
+  let found: Entretien | null = null
+  try {
+    found = await mockApi.getEntretien(props.id)
+  } catch {
     loadError.value = 'Entretien introuvable.'
     loading.value = false
     return
@@ -76,6 +75,8 @@ onMounted(async () => {
     offre.value = data.offre
   } catch {
     loadError.value = 'Impossible de charger la candidature.'
+    loading.value = false
+    return
   }
 
   // Load modele evaluation critères
@@ -197,8 +198,11 @@ watch(notations, () => { /* side-effects handled by interval */ }, { deep: true 
       <div class="eval-page__header-card">
         <div class="eval-page__header-row">
           <div class="eval-page__header-meta">
-            <Tag size="sm">
-              Entretien {{ entretien ? typeLabel[entretien.type] : '' }}
+            <Tag
+              v-if="entretien"
+              size="sm"
+            >
+              Entretien {{ typeLabel[entretien.type] }}
             </Tag>
             <Tag
               v-if="entretien"

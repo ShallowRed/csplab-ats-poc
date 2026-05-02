@@ -259,6 +259,12 @@ export const mockApi = {
     return delay(seed.etapes.filter(e => e.pipelineId === pipelineId))
   },
 
+  async getEntretien(id: string): Promise<Entretien> {
+    const entretien = inMemoryData.entretiens.find(e => e.id === id)
+    if (!entretien) throw new Error(`Entretien ${id} introuvable`)
+    return delay({ ...entretien })
+  },
+
   async ajouterTag(candidatureId: string, tag: string): Promise<Candidature> {
     const candidature = inMemoryData.candidatures.find(c => c.id === candidatureId)
     if (!candidature) throw new Error('Candidature not found')

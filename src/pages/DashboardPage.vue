@@ -11,7 +11,7 @@ const { kpis, todos, delaisParEtape } = useDashboardMetrics()
 </script>
 
 <template>
-  <div class="">
+  <div class="csplab-page-surface">
     <div class="csplab-page-content dashboard min-h-screen">
       <header class="dashboard__header">
         <p class="dashboard__intro">
