@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Tag } from '@/components/ui/tag'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -216,7 +215,6 @@ watch(isOpen, (val) => {
                 <RiIcon
                   name="ri:arrow-down-s-line"
                   :size="12"
-                  class="ml-1"
                 />
               </Button>
             </DropdownMenuTrigger>
@@ -305,7 +303,6 @@ watch(isOpen, (val) => {
               <Tag
                 v-if="data.evenements.length > 0"
                 size="sm"
-                class="ml-1"
               >
                 {{ data.evenements.length }}
               </Tag>
@@ -315,7 +312,6 @@ watch(isOpen, (val) => {
               <Tag
                 v-if="data.entretiens.length > 0"
                 size="sm"
-                class="ml-1"
               >
                 {{ data.entretiens.length }}
               </Tag>

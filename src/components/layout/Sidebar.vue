@@ -5,6 +5,7 @@ import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useOffresStore } from '@/stores/offres'
 import ThemeSwitcher from '@/components/ui/ThemeSwitcher.vue'
+import RadiusSwitcher from '@/components/ui/RadiusSwitcher.vue'
 
 type NavItem = {
   key: string
@@ -171,6 +172,7 @@ function isItemActive(item: NavItem): boolean {
         </div>
       </div>
       <div class="csplab-sidebar__actions">
+        <RadiusSwitcher />
         <ThemeSwitcher />
       </div>
     </div>

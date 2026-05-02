@@ -141,6 +141,22 @@
   --csplab-z-toast: 1200;
 }
 
+/* soft = valeurs par défaut (:root), pas besoin d'override */
+
+[data-radius-mode="square"] {
+  --csplab-radius-sm: 0;
+  --csplab-radius-md: 0;
+  --csplab-radius-lg: 0;
+  /* --csplab-radius-full conservé pour les pills (Tag) */
+}
+
+[data-radius-mode="rounded"] {
+  --csplab-radius-sm: 4px;
+  --csplab-radius-md: 8px;
+  --csplab-radius-lg: 16px;
+  /* --csplab-radius-full conservé pour les pills (Tag) */
+}
+
 [data-fr-theme="dark"] {
   --text-default-grey: #cecece;
   --text-title-grey: #f5f5f5;

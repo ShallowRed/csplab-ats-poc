@@ -65,7 +65,6 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
         <Tag
           v-if="hasActiveFilters"
           size="sm"
-          class="ml-1"
         >
           {{ filters.chipsActifs.length }}
         </Tag>

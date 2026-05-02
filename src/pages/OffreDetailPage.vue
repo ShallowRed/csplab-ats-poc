@@ -125,7 +125,6 @@ function goBack(): void {
             <RiIcon
               name="ri:layout-column-line"
               :size="16"
-              class="mr-1"
             />
             Ouvrir le pipeline
           </Button>

@@ -66,7 +66,6 @@ const hasActiveFilters = computed(() => filters.chipsActifs.length > 0)
           <Badge
             v-if="hasActiveFilters"
             variant="secondary"
-            class="ml-1"
           >
             {{ filters.chipsActifs.length }}
           </Badge>

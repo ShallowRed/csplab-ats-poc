@@ -16,5 +16,5 @@ const fullName = computed(() =>
 </script>
 
 <template>
-  <Icon :icon="fullName" :width="size" :height="size" :class="props.class" aria-hidden="true" />
+  <Icon :icon="fullName" :width="size" :height="size" :class="props.class" style="display:block" aria-hidden="true" />
 </template>

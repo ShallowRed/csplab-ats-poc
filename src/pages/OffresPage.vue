@@ -5,12 +5,20 @@ import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { Tag } from '@/components/ui/tag'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { EmptyState } from '@/components/ui/empty-state'
 import OffreStatusBadge from '@/components/offres/OffreStatusBadge.vue'
 import PageToolbar from '@/components/layout/PageToolbar.vue'
@@ -182,104 +190,136 @@ function onDuplicate(id: string): void {
   <div class="offres-page">
     <PageToolbar>
       <template #left>
-        <details class="offres-page__filter">
-          <summary class="offres-page__filter-trigger">
-            <span>Statut</span>
-            <Badge
-              v-if="filtreStatuts.length > 0"
-              variant="secondary"
+        <Popover>
+          <PopoverTrigger as-child>
+            <Button
+              type="button"
+              variant="tertiary"
+              size="sm"
             >
-              {{ filtreStatuts.length }}
-            </Badge>
-            <RiIcon
-              name="ri:arrow-down-s-line"
-              :size="14"
-            />
-          </summary>
-          <div class="offres-page__filter-panel">
-            <label
+              Statut
+              <Tag
+                v-show="filtreStatuts.length > 0"
+                size="sm"
+              >
+                {{ filtreStatuts.length }}
+              </Tag>
+              <RiIcon
+                name="ri:arrow-down-s-line"
+                :size="14"
+              />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            class="offres-page__filter-popover"
+            align="start"
+          >
+            <div
               v-for="opt in STATUTS_OPTIONS"
               :key="opt.value"
               class="offres-page__filter-option"
             >
-              <input
-                type="checkbox"
+              <Checkbox
+                :id="`statut-${opt.value}`"
                 :checked="filtreStatuts.includes(opt.value)"
-                @change="toggleStatutFilter(opt.value)"
-              >
-              <span>{{ opt.label }}</span>
-            </label>
-          </div>
-        </details>
+                @update:checked="toggleStatutFilter(opt.value)"
+              />
+              <Label :for="`statut-${opt.value}`">{{ opt.label }}</Label>
+            </div>
+          </PopoverContent>
+        </Popover>
 
-        <details class="offres-page__filter">
-          <summary class="offres-page__filter-trigger">
-            <span>Direction</span>
-            <Badge
-              v-if="filtreDirections.length > 0"
-              variant="secondary"
+        <Popover>
+          <PopoverTrigger as-child>
+            <Button
+              type="button"
+              variant="tertiary"
+              size="sm"
             >
-              {{ filtreDirections.length }}
-            </Badge>
-            <RiIcon
-              name="ri:arrow-down-s-line"
-              :size="14"
-            />
-          </summary>
-          <div class="offres-page__filter-panel">
-            <label
+              Direction
+              <Tag
+                v-show="filtreDirections.length > 0"
+                size="sm"
+              >
+                {{ filtreDirections.length }}
+              </Tag>
+              <RiIcon
+                name="ri:arrow-down-s-line"
+                :size="14"
+              />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            class="offres-page__filter-popover"
+            align="start"
+          >
+            <div
               v-for="d in directions"
               :key="d"
               class="offres-page__filter-option"
             >
-              <input
-                type="checkbox"
+              <Checkbox
+                :id="`dir-${d}`"
                 :checked="filtreDirections.includes(d)"
-                @change="toggleDirectionFilter(d)"
-              >
-              <span>{{ d }}</span>
-            </label>
-          </div>
-        </details>
+                @update:checked="toggleDirectionFilter(d)"
+              />
+              <Label :for="`dir-${d}`">{{ d }}</Label>
+            </div>
+          </PopoverContent>
+        </Popover>
 
-        <details class="offres-page__filter">
-          <summary class="offres-page__filter-trigger">
-            <span>Responsable</span>
-            <Badge
-              v-if="filtreResponsables.length > 0"
-              variant="secondary"
+        <Popover>
+          <PopoverTrigger as-child>
+            <Button
+              type="button"
+              variant="tertiary"
+              size="sm"
             >
-              {{ filtreResponsables.length }}
-            </Badge>
-            <RiIcon
-              name="ri:arrow-down-s-line"
-              :size="14"
-            />
-          </summary>
-          <div class="offres-page__filter-panel">
-            <label
+              Responsable
+              <Tag
+                v-show="filtreResponsables.length > 0"
+                size="sm"
+              >
+                {{ filtreResponsables.length }}
+              </Tag>
+              <RiIcon
+                name="ri:arrow-down-s-line"
+                :size="14"
+              />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            class="offres-page__filter-popover"
+            align="start"
+          >
+            <div
               v-for="r in responsables"
               :key="r.id"
               class="offres-page__filter-option"
             >
-              <input
-                type="checkbox"
+              <Checkbox
+                :id="`resp-${r.id}`"
                 :checked="filtreResponsables.includes(r.id)"
-                @change="toggleResponsableFilter(r.id)"
+                @update:checked="toggleResponsableFilter(r.id)"
+              />
+              <Label
+                :for="`resp-${r.id}`"
+                class="offres-page__filter-label-avatar"
               >
-              <Avatar class="h-5 w-5">
-                <AvatarImage
-                  :src="r.avatarUrl ?? ''"
-                  :alt="`${r.prenom} ${r.nom}`"
-                />
-                <AvatarFallback class="text-xs">
-                  {{ r.prenom.charAt(0) }}{{ r.nom.charAt(0) }}
-                </AvatarFallback>
-              </Avatar>
-              <span>{{ r.prenom }} {{ r.nom }}</span>
-            </label>
-          </div>
-        </details>
+                <Avatar class="h-5 w-5">
+                  <AvatarImage
+                    :src="r.avatarUrl ?? ''"
+                    :alt="`${r.prenom} ${r.nom}`"
+                  />
+                  <AvatarFallback class="text-xs">
+                    {{ r.prenom.charAt(0) }}{{ r.nom.charAt(0) }}
+                  </AvatarFallback>
+                </Avatar>
+                {{ r.prenom }} {{ r.nom }}
+              </Label>
+            </div>
+          </PopoverContent>
+        </Popover>
 
         <Button
           v-if="hasActiveFilters"
@@ -301,7 +341,6 @@ function onDuplicate(id: string): void {
           <RiIcon
             name="ri:add-line"
             :size="16"
-            class="mr-1"
           />
           Nouvelle offre
         </Button>
@@ -582,47 +621,20 @@ function onDuplicate(id: string): void {
   min-height: 0;
 }
 
-.offres-page__filter {
-  position: relative;
-}
-
-.offres-page__filter-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--csplab-space-1);
-  padding: var(--csplab-space-1) var(--csplab-space-2);
-  border: 1px solid var(--border-default-grey);
-  border-radius: var(--csplab-radius-md);
-  font-size: var(--csplab-font-size-sm);
-  background: var(--background-default-grey);
-  cursor: pointer;
-  list-style: none;
-}
-
-.offres-page__filter-trigger::-webkit-details-marker {
-  display: none;
-}
-
-.offres-page__filter-panel {
-  position: absolute;
-  z-index: 10;
-  margin-top: var(--csplab-space-1);
-  padding: var(--csplab-space-2);
-  background: var(--background-default-grey);
-  border: 1px solid var(--border-default-grey);
-  border-radius: var(--csplab-radius-md);
-  box-shadow: 0 4px 12px var(--csplab-shadow-color, rgba(0, 0, 0, 0.08));
+.offres-page__filter-popover {
   min-width: 200px;
   max-height: 280px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--csplab-space-1);
+  padding: var(--csplab-space-2);
 }
 
 .offres-page__filter-option {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  flex-direction: row;
   gap: var(--csplab-space-2);
   font-size: var(--csplab-font-size-sm);
   padding: var(--csplab-space-1);
@@ -631,6 +643,12 @@ function onDuplicate(id: string): void {
 
 .offres-page__filter-option:hover {
   background: var(--background-alt-grey);
+}
+
+.offres-page__filter-label-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--csplab-space-2);
 }
 
 .offres-page__empty {

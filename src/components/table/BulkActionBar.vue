@@ -73,7 +73,9 @@ const label = computed(() => {
     aria-live="polite"
   >
     <div class="bulk-bar__left">
-      <Tag size="sm">{{ label }}</Tag>
+      <Tag size="sm">
+        {{ label }}
+      </Tag>
 
       <Button
         type="button"
@@ -102,7 +104,6 @@ const label = computed(() => {
             <RiIcon
               name="ri:arrow-down-s-line"
               :size="16"
-              class="ml-1"
             />
           </Button>
         </DropdownMenuTrigger>
