@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, watch, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
-import { Button } from '@/components/ui/button'
+import { useRoute, useRouter } from 'vue-router'
+import OffreSelector from '@/components/pipeline/OffreSelector.vue'
+import FilterPopover from '@/components/filters/FilterPopover.vue'
 import FilterChips from '@/components/filters/FilterChips.vue'
 import KanbanBoard from '@/components/kanban/KanbanBoard.vue'
 import CandidatureTable from '@/components/table/CandidatureTable.vue'
 import BulkActionBar from '@/components/table/BulkActionBar.vue'
+import DensitySelector from '@/components/table/DensitySelector.vue'
 import PageToolbar from '@/components/layout/PageToolbar.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFiltersStore } from '@/stores/filters'
@@ -16,6 +18,7 @@ import { seed } from '@/data/seed'
 const props = defineProps<{ offreId?: string }>()
 
 const route = useRoute()
+const router = useRouter()
 const filters = useFiltersStore()
 const candidaturesStore = useCandidaturesStore()
 const selection = useSelectionStore()
@@ -44,10 +47,9 @@ const totalFilteredCount = computed(() => {
   }).length
 })
 
-// const showKanbanHint = computed(
-//   () => view.value === 'kanban' && selection.count === 0,
-// )
-const showKanbanHint = false
+function onOffreChange(id: string): void {
+  void router.push({ path: `/pipeline/${id}`, query: route.query })
+}
 
 watchEffect(() => {
   if (offreId.value) {
@@ -62,7 +64,6 @@ watch(
       void candidaturesStore.chargerCandidatures(id)
     }
     if (mode === 'kanban' && id) {
-      // Charger aussi pour le calcul du totalFilteredCount kanban
       if (candidaturesStore.candidatures.length === 0) {
         void candidaturesStore.chargerCandidatures(id)
       }
@@ -76,36 +77,25 @@ watch(
   <div class="csplab-pipeline">
     <PageToolbar :selection-active="selection.count > 0">
       <template #left>
-        <FilterChips :show-reset="false" />
+        <OffreSelector
+          v-if="offreId"
+          :offre-id="offreId"
+          @change="onOffreChange"
+        />
+        <FilterPopover />
       </template>
 
       <template #right>
-        <Button
-          type="button"
-          variant="tertiary"
-        >
-          Filtrer
-        </Button>
-        <Button
-          type="button"
-          variant="tertiary-no-outline"
-          @click="filters.reset()"
-        >
-          Réinitialiser
-        </Button>
+        <DensitySelector v-if="view === 'table'" />
+        <span class="csplab-pipeline__count">
+          {{ totalFilteredCount }} candidature{{ totalFilteredCount !== 1 ? 's' : '' }}
+        </span>
       </template>
 
       <template #selection>
         <BulkActionBar :total-filtered="totalFilteredCount" />
       </template>
     </PageToolbar>
-
-    <p
-      v-if="showKanbanHint"
-      class="csplab-pipeline__hint"
-    >
-      ⌘+clic pour sélectionner plusieurs candidatures
-    </p>
 
     <div class="csplab-pipeline__board">
       <KanbanBoard
@@ -143,12 +133,17 @@ watch(
   min-height: 0;
 }
 
-.csplab-pipeline__hint {
-  flex: 0 0 auto;
-  padding: var(--csplab-space-1) var(--csplab-space-4);
-  font-size: var(--csplab-font-size-xs);
+.csplab-pipeline__sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border-default-grey);
+  flex-shrink: 0;
+}
+
+.csplab-pipeline__count {
+  font-size: var(--csplab-font-size-sm);
   color: var(--text-mention-grey);
-  margin: 0;
+  white-space: nowrap;
 }
 
 .csplab-pipeline__board {

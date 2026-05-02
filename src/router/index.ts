@@ -7,7 +7,7 @@ import { usePageHeader, type BreadcrumbItem, type ViewSwitcher } from '@/stores/
 
 declare module 'vue-router' {
   interface RouteMeta {
-    title?: string
+    title?: string | ((route: RouteLocationNormalized) => string)
     breadcrumb?: BreadcrumbItem[] | ((route: RouteLocationNormalized) => BreadcrumbItem[])
     viewSwitcher?: ViewSwitcher | null | ((route: RouteLocationNormalized, router: Router) => ViewSwitcher | null)
   }
@@ -149,13 +149,37 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/PipelinePage.vue'),
     props: true,
     meta: {
-      title: 'Pipeline',
+      title: (route: RouteLocationNormalized): string => {
+        const offreId = String(route.params.offreId ?? '')
+        try {
+          const active = getActivePinia()
+          if (active) {
+            const offresStore = useOffresStore(active)
+            const offre = offresStore.getById(offreId)
+            if (offre) return offre.titre
+          }
+        } catch {
+          // pinia not active
+        }
+        return 'Pipeline'
+      },
       breadcrumb: (route) => {
-        const view = route.query.view === 'table' ? 'Table' : 'Kanban'
+        const offreId = String(route.params.offreId ?? '')
+        let titreOffre = ''
+        try {
+          const active = getActivePinia()
+          if (active) {
+            const offresStore = useOffresStore(active)
+            const offre = offresStore.getById(offreId)
+            if (offre) titreOffre = offre.titre
+          }
+        } catch {
+          // pinia not active
+        }
         return [
           { label: 'Candidatures' },
-          { label: 'Pipeline' },
-          { label: view },
+          { label: 'Pipeline', to: '/pipeline' },
+          ...(titreOffre ? [{ label: titreOffre }] : []),
         ]
       },
       viewSwitcher: (route, router) => ({
@@ -248,9 +272,10 @@ export function createAppRouter(history?: RouterHistory) {
     if (!active) return
     const pageHeader = usePageHeader(active)
 
-    if (typeof to.meta.title === 'string') {
-      pageHeader.setTitle(to.meta.title)
-    }
+    const title = typeof to.meta.title === 'function'
+      ? to.meta.title(to)
+      : to.meta.title
+    if (title) pageHeader.setTitle(title)
 
     const breadcrumb = typeof to.meta.breadcrumb === 'function'
       ? to.meta.breadcrumb(to)
