@@ -235,7 +235,7 @@ function roleLabel(role: Intervieweur['role']): string {
 </script>
 
 <template>
-  <div class="csplab-settings">
+  <div class="csplab-settings page-default">
     <Tabs
       :model-value="activeTab"
       @update:model-value="(v) => (activeTab = v as TabKey)"
@@ -628,9 +628,6 @@ function roleLabel(role: Intervieweur['role']): string {
 
 <style scoped>
 .csplab-settings {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
   display: flex;
   flex-direction: column;
   gap: var(--csplab-space-4);

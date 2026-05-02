@@ -203,7 +203,7 @@ function go(p: number): void {
 }
 
 .dsfr-pagination__link--active:hover {
-  background: var(--background-action-high-blue-france);
+  background: var(--background-action-high-blue-france) !important;
 }
 
 .dsfr-pagination__link--ellipsis {

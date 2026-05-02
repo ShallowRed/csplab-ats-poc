@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-  <div class="csplab-page">
+  <div class="csplab-page page-default">
     <h1 class="csplab-page__title">
       404 — Page introuvable
     </h1>
@@ -23,12 +23,6 @@ import { Button } from '@/components/ui/button'
 </template>
 
 <style scoped>
-.csplab-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
-}
-
 .csplab-page__title {
   font-size: var(--csplab-font-size-2xl);
   font-weight: 700;

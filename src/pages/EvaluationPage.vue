@@ -171,7 +171,7 @@ watch(notations, () => { /* side-effects handled by interval */ }, { deep: true 
 </script>
 
 <template>
-  <div class="eval-page">
+  <div class="eval-page page-narrow">
     <!-- Loading -->
     <div
       v-if="loading"
@@ -339,9 +339,6 @@ watch(notations, () => { /* side-effects handled by interval */ }, { deep: true 
 
 <style scoped>
 .eval-page {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
   padding-bottom: 96px; /* space for sticky footer */
   display: flex;
   flex-direction: column;

@@ -61,7 +61,7 @@ onMounted(async () => {
       </template>
     </PageToolbar>
 
-    <div class="candidatures-page__body">
+    <div class="candidatures-page__body page-wide">
       <div
         v-if="candidaturesStore.isLoading"
         class="candidatures-page__skeleton"
@@ -96,7 +96,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--csplab-space-4);
-  padding: var(--csplab-space-4);
   overflow: auto;
 }
 

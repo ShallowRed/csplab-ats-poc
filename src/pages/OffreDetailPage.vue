@@ -103,36 +103,38 @@ function goBack(): void {
 
     <template v-else>
       <div class="offre-detail__toolbar">
-        <div class="offre-detail__heading">
-          <h2 class="offre-detail__titre">
-            {{ offre.titre }}
-          </h2>
-          <OffreStatusBadge :statut="offre.statut" />
-        </div>
-        <div class="offre-detail__actions">
-          <Button
-            type="button"
-            variant="secondary"
-            @click="goEdit"
-          >
-            Modifier
-          </Button>
-          <Button
-            type="button"
-            variant="primary"
-            @click="goPipeline"
-          >
-            <RiIcon
-              name="ri:layout-column-line"
-              :size="16"
-            />
-            Ouvrir le pipeline
-          </Button>
+        <div class="offre-detail__toolbar-inner">
+          <div class="offre-detail__heading">
+            <h2 class="offre-detail__titre">
+              {{ offre.titre }}
+            </h2>
+            <OffreStatusBadge :statut="offre.statut" />
+          </div>
+          <div class="offre-detail__actions">
+            <Button
+              type="button"
+              variant="secondary"
+              @click="goEdit"
+            >
+              Modifier
+            </Button>
+            <Button
+              type="button"
+              variant="primary"
+              @click="goPipeline"
+            >
+              <RiIcon
+                name="ri:layout-column-line"
+                :size="16"
+              />
+              Ouvrir le pipeline
+            </Button>
+          </div>
         </div>
       </div>
 
       <div class="offre-detail__scroll">
-        <div class="offre-detail__container csplab-page-content">
+        <div class="offre-detail__container page-default">
           <header class="offre-detail__header">
             <ul class="offre-detail__meta">
               <li>{{ offre.direction }}</li>
@@ -355,6 +357,12 @@ function goBack(): void {
   padding: var(--csplab-space-4);
   border-bottom: 1px solid var(--border-default-grey);
   background: var(--background-default-grey);
+}
+
+.offre-detail__toolbar-inner {
+  max-width: var(--width-content-default);
+  margin-inline: auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

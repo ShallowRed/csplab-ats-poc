@@ -347,10 +347,11 @@ function onDuplicate(id: string): void {
       </template>
     </PageToolbar>
 
-    <div
-      v-if="offresStore.offresVisibles.length === 0"
-      class="offres-page__empty"
-    >
+    <div class="offres-page__body page-wide">
+      <div
+        v-if="offresStore.offresVisibles.length === 0"
+        class="offres-page__empty"
+      >
       <EmptyState
         icon="ri:briefcase-line"
         title="Aucune offre"
@@ -610,6 +611,7 @@ function onDuplicate(id: string): void {
         </tbody>
       </table>
     </div>
+    </div>
   </div>
 </template>
 
@@ -651,6 +653,14 @@ function onDuplicate(id: string): void {
   gap: var(--csplab-space-2);
 }
 
+.offres-page__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .offres-page__empty {
   flex: 1;
   display: flex;
@@ -660,8 +670,6 @@ function onDuplicate(id: string): void {
 
 .offres-page__table-wrap {
   flex: 1;
-  overflow: auto;
-  padding: var(--csplab-space-4);
 }
 
 .offres-table {

@@ -528,7 +528,7 @@ watch(isOpen, (val) => {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 520px;
+  width: clamp(520px, 36vw, 680px);
   max-width: 100vw;
   z-index: 50;
   background: var(--background-default-grey);
@@ -703,6 +703,12 @@ a.candidate-drawer__field-value {
 @media (prefers-reduced-motion: reduce) {
   .candidate-drawer {
     animation: none;
+  }
+}
+
+@media (width <= 576px) {
+  .candidate-drawer {
+    width: 100%;
   }
 }
 

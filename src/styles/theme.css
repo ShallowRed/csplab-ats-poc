@@ -62,7 +62,12 @@
   --color-status-offer: var(--csplab-status-offer);
   --color-status-rejected: var(--csplab-status-rejected);
   --color-status-archived: var(--csplab-status-archived);
-  
+
+  /* Content width scale */
+  --width-content-narrow: 720px;
+  --width-content-default: 960px;
+  --width-content-wide: 1440px;
+
   /* Typography */
   --font-sans: var(--csplab-font-family);
   
@@ -106,21 +111,44 @@
   background: var(--background-alt-grey);
 }
 
-.csplab-page-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
+/*
+ * Responsive page padding — single source of truth.
+ * All page-* utilities use var(--page-padding) so the breakpoint is defined once.
+ */
+:root {
+  --page-padding: var(--csplab-space-6);
 }
-
-.csplab-form-container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: var(--csplab-space-6);
-}
-
-@media (max-width: 1024px) {
-  .csplab-page-content,
-  .csplab-form-container {
-    padding: var(--csplab-space-4);
+@media (width <= 1024px) {
+  :root {
+    --page-padding: var(--csplab-space-4);
   }
+}
+
+/*
+ * Page width utilities (Tailwind 4 @utility — work with all variants).
+ *
+ * page-narrow  720px  — forms, focused single-entity views (OffreForm, Evaluation)
+ * page-default 960px  — moderate content: dashboard, detail pages, settings
+ * page-wide    1440px — rich tables (Offres, Candidatures, Entretiens)
+ * (no utility) fluid  — full-width views: kanban, CandidatureFullPage
+ */
+@utility page-narrow {
+  max-width: var(--width-content-narrow);
+  margin-inline: auto;
+  padding: var(--page-padding);
+  width: 100%;
+}
+
+@utility page-default {
+  max-width: var(--width-content-default);
+  margin-inline: auto;
+  padding: var(--page-padding);
+  width: 100%;
+}
+
+@utility page-wide {
+  max-width: var(--width-content-wide);
+  margin-inline: auto;
+  padding: var(--page-padding);
+  width: 100%;
 }

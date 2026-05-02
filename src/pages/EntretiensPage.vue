@@ -223,7 +223,7 @@ function onAction(row: Row): void {
     </PageToolbar>
 
     <div class="entretiens-page__body">
-      <div class="entretiens-page__container csplab-page-content">
+      <div class="entretiens-page__container page-wide">
         <header class="entretiens-page__header">
           <p class="entretiens-page__subtitle">
             <RiIcon

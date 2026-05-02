@@ -495,6 +495,9 @@ async function submitNote(): Promise<void> {
   flex-direction: column;
   height: 100%;
   min-height: 0;
+  max-width: var(--width-content-wide);
+  margin-inline: auto;
+  width: 100%;
 }
 
 /* ── Hero header ─────────────────────────────────────── */
@@ -778,5 +781,24 @@ async function submitNote(): Promise<void> {
 .cfp__entretien-statut--annule {
   background: color-mix(in srgb, var(--csplab-status-rejected) 12%, transparent);
   color: var(--csplab-status-rejected);
+}
+
+@media (width <= 768px) {
+  .cfp__body {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .cfp__sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-default-grey);
+    overflow-y: visible;
+  }
+
+  .cfp__main {
+    overflow-y: visible;
+    flex: none;
+  }
 }
 </style>

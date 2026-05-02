@@ -746,4 +746,10 @@ const stepLabels: Record<Step, string> = {
     transition: none;
   }
 }
+
+@media (width <= 576px) {
+  .interview-slideover {
+    width: 100%;
+  }
+}
 </style>

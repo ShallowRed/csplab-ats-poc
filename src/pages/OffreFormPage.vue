@@ -192,7 +192,7 @@ onMounted(() => {
     @submit.prevent="handleSubmit(isEdit ? 'enregistrer' : 'publier')"
   >
     <div class="offre-form__scroll">
-      <div class="offre-form__content csplab-form-container">
+      <div class="offre-form__content page-narrow">
         <Card>
           <CardHeader>
             <CardTitle>Identité</CardTitle>
@@ -635,7 +635,7 @@ onMounted(() => {
 }
 
 .offre-form__footer-inner {
-  max-width: 720px;
+  max-width: var(--width-content-narrow);
   margin: 0 auto;
   padding: var(--csplab-space-3) var(--csplab-space-6);
   display: flex;
