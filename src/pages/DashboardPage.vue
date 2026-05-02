@@ -14,9 +14,6 @@ const { kpis, todos, delaisParEtape } = useDashboardMetrics()
   <div class="">
     <div class="csplab-page-content dashboard min-h-screen">
       <header class="dashboard__header">
-        <h1 class="dashboard__title">
-          Tableau de bord
-        </h1>
         <p class="dashboard__intro">
           Vue d'ensemble de votre activité de recrutement.
         </p>

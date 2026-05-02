@@ -76,7 +76,7 @@ const orderedIds = computed(() => candidaturesStore.candidatures.map(c => c.id))
 }
 
 .csplab-shell__sidebar {
-  background: var(--background-alt-grey);
+  background: var(--background-default-grey);
   border-right: 1px solid var(--border-default-grey);
   overflow: hidden;
 }

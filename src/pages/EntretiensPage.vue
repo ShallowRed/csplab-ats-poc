@@ -196,9 +196,6 @@ function onAction(row: Row): void {
     <div class="entretiens-page__body">
       <div class="entretiens-page__container csplab-page-content">
         <header class="entretiens-page__header">
-          <h1 class="entretiens-page__title">
-            Mes entretiens
-          </h1>
           <p class="entretiens-page__subtitle">
             {{ aVenirCount }} entretien{{ aVenirCount !== 1 ? 's' : '' }} à venir
           </p>

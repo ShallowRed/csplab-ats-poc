@@ -40,6 +40,7 @@ const isSelectionMode = computed(
 <style scoped>
 .csplab-page-toolbar {
   flex: 0 0 auto;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,12 +48,24 @@ const isSelectionMode = computed(
   gap: var(--csplab-space-3);
   padding: var(--csplab-space-3) var(--csplab-space-4);
   background: var(--background-default-grey);
-  border-bottom: 1px solid var(--border-default-grey);
+}
+
+.csplab-page-toolbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--csplab-space-4);
+  right: var(--csplab-space-4);
+  height: 1px;
+  background: var(--border-default-grey);
 }
 
 .csplab-page-toolbar--selection {
   background: var(--background-contrast-blue-france);
-  border-bottom-color: var(--border-action-high-blue-france);
+}
+
+.csplab-page-toolbar--selection::after {
+  background: var(--border-action-high-blue-france);
 }
 
 .csplab-page-toolbar__left {
