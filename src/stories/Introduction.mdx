@@ -1,0 +1,88 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="00 — Design System/Introduction" />
+
+# Design System — ATS CSPLab
+
+Bienvenue dans le Storybook de référence du POC **CSPLab ATS**. Ce book sert à la fois de
+vitrine vivante des composants et de documentation des choix de conception.
+
+---
+
+## Architecture en 7 couches
+
+L'organisation de la sidebar reflète directement les échelles de composition du design system.
+Chaque couche a une sémantique précise et des frontières claires avec ses voisines.
+
+| # | Couche | Rôle | Exemples |
+|---|--------|------|---------|
+| **00** | Design System | Méta — principes, taxonomie, catalogue global | Cette page, Catalogue UI |
+| **01** | Fondations | Tokens de design, états transversaux | Tokens DSFR, Empty / Loading / Error |
+| **02** | Atomes | Composants UI unitaires, API plate, sans logique métier | `Button`, `Badge`, `Input`, `Avatar` |
+| **03** | Molécules | Compositions UI génériques à base d'atomes | `Card`, `Dialog`, `Drawer`, `Tabs`, `Combobox` |
+| **04** | Composants métier | Atomes/molécules spécialisés pour le domaine ATS | `OffreStatusBadge`, `KpiCard`, `KanbanCard` |
+| **05** | Sections génériques | Blocs fonctionnels réutilisables dans toute webapp | `Sidebar`, `PageToolbar`, `FilterChips`, `BulkActionBar` |
+| **06** | Sections ATS | Assemblages métier riches, contexte Pinia requis | `KanbanBoard`, `CandidatureTable`, `EvaluationForm` |
+| **07** | Vues ATS | Maquettes de pages complètes (mock data, pas de routing) | Dashboard, Pipeline, Candidatures, Entretiens |
+
+### Lire les frontières
+
+**Atome vs Molécule** — un atome a une seule responsabilité visuelle et une API plate (props
+scalaires). Une molécule combine des atomes via des slots ou sous-composants (`CardHeader`,
+`DialogContent`).
+
+**Générique vs Métier** — un composant générique ignore le domaine (`Badge` connaît
+`variant="destructive"`). Un composant métier connaît le domaine (`OffreStatusBadge` connaît
+`statut="brouillon"`).
+
+**Section vs Vue** — une section est un bloc autonome réutilisable dans plusieurs pages. Une
+vue est l'assemblage final, équivalent visuel d'une route.
+
+---
+
+## Stack technique
+
+- **Vue 3** + TypeScript + Vite
+- **Tailwind v4** pour les utilitaires CSS
+- **Reka-UI / Radix Vue** pour les primitives headless (accessibilité, comportements)
+- **Tokens DSFR** — les variables CSS du Système de Design de l'État français servent de
+  charte sémantique (couleurs, typographie, espacements)
+- **Pinia** pour les stores (candidatures, offres, entretiens, drawer, sélection…)
+- **@dnd-kit/vue** pour le drag-and-drop du Kanban
+
+---
+
+## Décisions de design (DDR)
+
+Les DDR (*Design Decision Records*) documentent les choix de pattern qui survivront à la
+migration du POC vers le projet définitif. Ils répondent à : *« pourquoi ce composant
+existe sous cette forme et pas une autre ? »*
+
+| # | Sujet | Couche concernée |
+|---|-------|-----------------|
+| DDR-001 | Couches de composition et frontières | 00 |
+| DDR-002 | Drawer persistant pour le détail candidat | 06 |
+| DDR-003 | Zone de refus implicite vs colonne « Refusé » | 06 |
+| DDR-004 | Sélection multiple et bulk action bar | 05 – 06 |
+| DDR-005 | Badges sémantiques de statut | 04 |
+| DDR-006 | Évaluation sans note neutre | 06 |
+| DDR-007 | Chips actives + Popover avancé pour les filtres | 05 |
+| DDR-008 | États standards Empty / Loading / Error | 01 |
+| DDR-009 | Densité réglable des listes | 05 – 06 |
+| DDR-010 | AppShell en grille Sidebar / Header / Content | 05 |
+
+Les sources complètes se trouvent dans `docs/design/decisions/`.
+
+---
+
+## Conventions stories
+
+- **Format** — CSF v3 + TypeScript (`Meta` / `StoryObj<typeof meta>`).
+- **Tags** — `'autodocs'` pour générer la page de documentation de chaque composant.
+- **Données** — les stories avec contexte métier utilisent `seed` (`src/data/seed.ts`,
+  SEED = 42) et un Pinia frais via décorateur `setActivePinia(createPinia())`.
+- **Layout** — `fullscreen` pour les sections et vues ; `centered` (défaut) pour atomes
+  et molécules.
+- **Render functions** — utilisées pour les showcases multi-variantes (grilles côte à côte).
+- **Router** — `storybookRouter` (`createMemoryHistory`) injecté globalement dans `preview.ts` ;
+  les pages créent un router local `makeRouter()` par story pour isoler l'état de navigation.
