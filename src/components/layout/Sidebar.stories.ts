@@ -4,7 +4,7 @@ import Sidebar from './Sidebar.vue'
 import { storybookRouter } from '@/router/storybook'
 
 const meta = {
-  title: 'Layout/Sidebar',
+  title: '05 — Sections génériques/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
   parameters: {

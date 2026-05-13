@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import OffreStatusBadge from './OffreStatusBadge.vue'
 
 const meta = {
-  title: 'Domain/OffreStatusBadge',
+  title: '04 — Composants métier/Offres/OffreStatusBadge',
   component: OffreStatusBadge,
   tags: ['autodocs'],
   argTypes: {

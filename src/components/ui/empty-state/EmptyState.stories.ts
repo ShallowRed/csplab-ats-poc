@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import EmptyState from './EmptyState.vue'
 
 const meta = {
-  title: 'UI/EmptyState',
+  title: '03 — Molécules/EmptyState',
   component: EmptyState,
   tags: ['autodocs'],
   argTypes: {

@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerFooter, DrawerTrigger } from
 import { Button } from '../button'
 
 const meta = {
-  title: 'UI/Drawer',
+  title: '03 — Molécules/Drawer',
   component: Drawer,
   tags: ['autodocs'],
 } satisfies Meta<typeof Drawer>

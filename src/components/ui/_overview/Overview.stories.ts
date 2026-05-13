@@ -13,7 +13,7 @@ import { Separator } from '../separator'
 import { Skeleton } from '../skeleton'
 
 const meta = {
-  title: 'UI/Overview',
+  title: '00 — Design System/Catalogue UI',
   tags: ['autodocs'],
 } satisfies Meta
 

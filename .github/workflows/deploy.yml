@@ -36,6 +36,10 @@ jobs:
         env:
           VITE_BASE_URL: /${{ github.event.repository.name }}/
 
+      - run: pnpm build-storybook --output-dir dist/storybook
+        env:
+          STORYBOOK_BASE_URL: /${{ github.event.repository.name }}/storybook/
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

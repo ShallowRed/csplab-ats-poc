@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePageHeader } from '@/stores/pageHeader'
 
 const meta = {
-  title: 'Layout/AppShell',
+  title: '05 — Sections génériques/AppShell',
   component: AppShell,
   tags: ['autodocs'],
   parameters: {

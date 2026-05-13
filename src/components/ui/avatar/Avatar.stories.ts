@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { Avatar, AvatarImage, AvatarFallback } from './index'
 
 const meta = {
-  title: 'UI/Avatar',
+  title: '02 — Atomes/Avatar',
   component: Avatar,
   tags: ['autodocs'],
 } satisfies Meta<typeof Avatar>

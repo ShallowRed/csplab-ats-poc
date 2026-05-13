@@ -3,7 +3,7 @@ import RiIcon from '@/components/ui/icon/RiIcon.vue'
 import { Button } from './index'
 
 const meta = {
-  title: 'UI/Button',
+  title: '02 — Atomes/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { usePageHeader } from '@/stores/pageHeader'
 
 const meta = {
-  title: 'Layout/HeaderContextual',
+  title: '05 — Sections génériques/HeaderContextual',
   component: HeaderContextual,
   tags: ['autodocs'],
   parameters: {

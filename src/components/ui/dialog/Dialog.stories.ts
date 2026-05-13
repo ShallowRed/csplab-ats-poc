@@ -6,7 +6,7 @@ import { Input } from '../input'
 import { Label } from '../label'
 
 const meta = {
-  title: 'UI/Dialog',
+  title: '03 — Molécules/Dialog',
   component: Dialog,
   tags: ['autodocs'],
 } satisfies Meta<typeof Dialog>

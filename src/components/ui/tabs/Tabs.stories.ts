@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from './index'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../card'
 
 const meta = {
-  title: 'UI/Tabs',
+  title: '03 — Molécules/Tabs',
   component: Tabs,
   tags: ['autodocs'],
 } satisfies Meta<typeof Tabs>

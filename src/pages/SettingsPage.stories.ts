@@ -17,7 +17,7 @@ function makeRouter(initialPath = '/parametres') {
 }
 
 const meta = {
-  title: 'Pages/SettingsPage',
+  title: '07 — Vues ATS/Paramètres (page)',
   component: SettingsPage,
   tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },

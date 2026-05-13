@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
 const meta = {
-  title: 'Layout/PageToolbar',
+  title: '05 — Sections génériques/PageToolbar',
   component: PageToolbar,
   tags: ['autodocs'],
   parameters: {

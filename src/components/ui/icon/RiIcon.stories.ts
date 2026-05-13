@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import RiIcon from './RiIcon.vue'
 
 const meta = {
-  title: 'UI/RiIcon',
+  title: '02 — Atomes/RiIcon',
   component: RiIcon,
   tags: ['autodocs'],
   argTypes: {

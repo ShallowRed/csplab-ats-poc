@@ -6,7 +6,7 @@ import { useFiltersStore } from '@/stores/filters'
 import { seed } from '@/data/seed'
 
 const meta = {
-  title: 'Filters/FilterChips',
+  title: '05 — Sections génériques/FilterChips',
   component: FilterChips,
   tags: ['autodocs'],
   argTypes: {
